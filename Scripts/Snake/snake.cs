@@ -1,8 +1,10 @@
 using Godot;
 using System.Linq;
 
-public partial class snake : Node2D
+public partial class Snake : Node2D
 {
+	[Export]
+	private string name;
 	[Export]
 	private Timer timer;
 	[Export]
@@ -10,8 +12,8 @@ public partial class snake : Node2D
 	[Export]
 	private Node2D snakeBody;
 
-	private const int _STARTING_BODY_COUNT = 3;
-	private const int _SNAKE_SIZE = 50;
+    public const int SNAKE_SIZE = 60;
+    private const int _STARTING_BODY_COUNT = 3;
 
 	private enum DIRECTION
 	{
@@ -28,8 +30,11 @@ public partial class snake : Node2D
 		// Spawn Body Pieces
 		for (int i = 1; i <= _STARTING_BODY_COUNT; i++) 
 		{
-            AddBodyPiece(new Vector2((-_SNAKE_SIZE * i), 0));
+            AddBodyPiece(new Vector2((-SNAKE_SIZE * i), 0));
         }
+
+		// Get Snake Head
+		CharacterBody2D snakeHead = (CharacterBody2D)snakeBody.GetChildren()[0];
 
         // Connect to Signals
         timer.Timeout += Timer_Timeout;
@@ -73,16 +78,16 @@ public partial class snake : Node2D
                 switch (_direction)
 				{
 					case DIRECTION.North:
-                        newPos = new Vector2(currentPos.X, currentPos.Y - _SNAKE_SIZE); 
+                        newPos = new Vector2(currentPos.X, currentPos.Y - SNAKE_SIZE); 
 						break;
                     case DIRECTION.South:
-                        newPos = new Vector2(currentPos.X, currentPos.Y + _SNAKE_SIZE);
+                        newPos = new Vector2(currentPos.X, currentPos.Y + SNAKE_SIZE);
                         break;
                     case DIRECTION.East:
-                        newPos = new Vector2(currentPos.X + _SNAKE_SIZE, currentPos.Y);
+                        newPos = new Vector2(currentPos.X + SNAKE_SIZE, currentPos.Y);
                         break;
                     case DIRECTION.West:
-                        newPos = new Vector2(currentPos.X - _SNAKE_SIZE, currentPos.Y);
+                        newPos = new Vector2(currentPos.X - SNAKE_SIZE, currentPos.Y);
                         break;
                 }
 
@@ -97,6 +102,24 @@ public partial class snake : Node2D
     #endregion
 
     #region Functions
+
+	public bool AreYouHere(Vector2 position)
+	{
+        // Get Children
+        Node[] snakeBodyPieces = snakeBody.GetChildren().ToArray();
+
+		// Check if in position
+		foreach (Node2D node in snakeBodyPieces)
+		{
+			if (node.GlobalPosition.X < position.X + 30 &&
+				node.GlobalPosition.X + SNAKE_SIZE > position.X &&
+				node.GlobalPosition.Y < position.Y + 30 &&
+				node.GlobalPosition.Y + SNAKE_SIZE > position.Y)
+				return true;
+		}
+
+        return false;
+	}
 
 	private void AddBodyPiece(Vector2 position)
 	{

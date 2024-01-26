@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://b4oc8d6w1m1da"]
 
-[ext_resource type="Script" path="res://Scripts/Snake/snake.cs" id="1_eyik8"]
 [ext_resource type="PackedScene" uid="uid://dfl0lceord6up" path="res://Scenes/Snake/snake_body.tscn" id="1_prnyq"]
+[ext_resource type="Script" path="res://Scripts/Snake/Snake.cs" id="1_v5yrf"]
 
 [node name="Snake" type="Node2D" node_paths=PackedStringArray("timer", "snakeBody")]
-position = Vector2(723, 255)
-script = ExtResource("1_eyik8")
+script = ExtResource("1_v5yrf")
+name = "Dave"
 timer = NodePath("Timer")
 bodyPiece = ExtResource("1_prnyq")
 snakeBody = NodePath("Body")
@@ -15,4 +15,5 @@ snakeBody = NodePath("Body")
 [node name="Head" parent="Body" instance=ExtResource("1_prnyq")]
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
