@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://co25qivtk2cu7"]
+
+[ext_resource type="Texture2D" uid="uid://dd5sgjmb3qxfr" path="res://Assets/Snake_Body.png" id="1_ikyup"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tas22"]
+size = Vector2(59, 59)
+
+[node name="Snake Head" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tas22")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("1_ikyup")

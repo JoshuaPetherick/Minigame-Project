@@ -29,10 +29,12 @@ public partial class SnakeGame : Node2D
 
     private void SnakeHead_BodyEntered(Node2D body)
     {
+		// Debug Logs
 		GD.Print(body);
+        GD.Print(body.Name);
 
-		// Apple
-		if (body is StaticBody2D)
+        // Apple
+        if (body is StaticBody2D)
 		{
 			// Add to Score
 			score++;
@@ -41,7 +43,7 @@ public partial class SnakeGame : Node2D
 			SetScore();
 
             // Remove Apple
-            body.QueueFree();
+            body.GetParent().QueueFree();
 
 			// Spawn New Apple
 			CallDeferred("SpawnApple");
@@ -51,7 +53,7 @@ public partial class SnakeGame : Node2D
 		}
 
         // Snake Body
-        if (body is Area2D)
+        if (body is CharacterBody2D)
 		{
             // Game Over
             score = 0;
@@ -68,6 +70,7 @@ public partial class SnakeGame : Node2D
     private void SpawnApple()
 	{
 		// Setup
+		string name = $"Apple {score}";
 		Vector2 newApplePosition = Vector2.Zero;
 
         // Spawn Apple Piece
@@ -92,11 +95,9 @@ public partial class SnakeGame : Node2D
 				break;
         }
 
-		// Set Position
-		apple.Position = newApplePosition;
-
-		// Tell me where you are
-		GD.Print(newApplePosition);
+		// Set Properties
+		apple.Name = name;
+        apple.Position = newApplePosition;
 
         // Add to Tree
         AddChild(apple);

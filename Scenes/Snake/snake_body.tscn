@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ajfak"]
 size = Vector2(60, 60)
 
-[node name="Snake Body" type="Area2D"]
+[node name="Snake Body" type="CharacterBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ajfak")

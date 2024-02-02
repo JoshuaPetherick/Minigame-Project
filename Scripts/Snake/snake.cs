@@ -60,40 +60,42 @@ public partial class Snake : Node2D
     /// </summary>
     private void Timer_Timeout()
     {
-		// Get Children
-		Node[] snakeBodyPieces = snakeBody.GetChildren().ToArray();
+        // Setup
+        Vector2 newPos = Vector2.Zero;
+
+        // Get Children
+        Node[] snakeBodyPieces = snakeBody.GetChildren().ToArray();
+
+		// Get Snake Head Position
+		Vector2 currentPos = ((Node2D)snakeBodyPieces[0]).Position;
+
+        // Move head based on Direction
+        switch (_direction)
+        {
+            case DIRECTION.North:
+                newPos = new Vector2(currentPos.X, currentPos.Y - SNAKE_SIZE);
+                break;
+            case DIRECTION.South:
+                newPos = new Vector2(currentPos.X, currentPos.Y + SNAKE_SIZE);
+                break;
+            case DIRECTION.East:
+                newPos = new Vector2(currentPos.X + SNAKE_SIZE, currentPos.Y);
+                break;
+            case DIRECTION.West:
+                newPos = new Vector2(currentPos.X - SNAKE_SIZE, currentPos.Y);
+                break;
+        }
+
+        // Assign New Position
+        ((Node2D)snakeBodyPieces[0]).Position = newPos;
 
         // Loop 
-        for (int i = (snakeBodyPieces.Length - 1); i >= 0 ; i--)
+        for (int i = (snakeBodyPieces.Length - 1); i > 0 ; i--)
 		{
 			// Check if the head
-			if (i == 0)
-			{
-				// Get Current Position
-				Vector2 newPos = Vector2.Zero;
-				Vector2 currentPos = ((Node2D)snakeBodyPieces[i]).Position;
-
-                // Move based on Direction
-                switch (_direction)
-				{
-					case DIRECTION.North:
-                        newPos = new Vector2(currentPos.X, currentPos.Y - SNAKE_SIZE); 
-						break;
-                    case DIRECTION.South:
-                        newPos = new Vector2(currentPos.X, currentPos.Y + SNAKE_SIZE);
-                        break;
-                    case DIRECTION.East:
-                        newPos = new Vector2(currentPos.X + SNAKE_SIZE, currentPos.Y);
-                        break;
-                    case DIRECTION.West:
-                        newPos = new Vector2(currentPos.X - SNAKE_SIZE, currentPos.Y);
-                        break;
-                }
-
-                // Assign New Position
-                ((Node2D)snakeBodyPieces[i]).Position = newPos;
-            }
-			else
+			if (i == 1)
+                ((Node2D)snakeBodyPieces[i]).Position = currentPos;
+            else
 				((Node2D)snakeBodyPieces[i]).Position = ((Node2D)snakeBodyPieces[(i - 1)]).Position;
         }
     }
@@ -138,11 +140,15 @@ public partial class Snake : Node2D
 
     private void AddBodyPiece(Vector2 position)
 	{
+		// Setup
+		string name = $"Snake Body {snakeBody.GetChildCount()}";
+
 		// Spawn Body Piece
 		Node2D piece = (Node2D)bodyPiece.Instantiate();
 
-		// Set Position
-		piece.Position = position;
+		// Set Properties
+		piece.Name = name;
+        piece.Position = position;
 
 		// Add to Tree
 		snakeBody.AddChild(piece);
