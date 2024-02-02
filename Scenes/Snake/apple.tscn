@@ -5,10 +5,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mk8ch"]
 size = Vector2(30, 30)
 
-[node name="Apple" type="StaticBody2D"]
+[node name="Apple" type="Node2D"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Area2D" type="StaticBody2D" parent="."]
+position = Vector2(15, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_mk8ch")
 
-[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Area2D/CollisionShape2D"]
 texture = ExtResource("1_c7qly")

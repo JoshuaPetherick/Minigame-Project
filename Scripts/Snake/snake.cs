@@ -14,6 +14,8 @@ public partial class Snake : Node2D
 
     public const int SNAKE_SIZE = 60;
     private const int _STARTING_BODY_COUNT = 3;
+	private const double _SNAKE_SPEED_MINIMUM = 0.150;
+	private const double _SNAKE_SPEED_MODIFIER = 0.025;
 
 	private enum DIRECTION
 	{
@@ -32,9 +34,6 @@ public partial class Snake : Node2D
 		{
             AddBodyPiece(new Vector2((-SNAKE_SIZE * i), 0));
         }
-
-		// Get Snake Head
-		CharacterBody2D snakeHead = (CharacterBody2D)snakeBody.GetChildren()[0];
 
         // Connect to Signals
         timer.Timeout += Timer_Timeout;
@@ -56,9 +55,9 @@ public partial class Snake : Node2D
 
     #region Signals
 
-	/// <summary>
-	/// Ticks every time the snake should be moved. 
-	/// </summary>
+    /// <summary>
+    /// Ticks every time the snake should be moved. 
+    /// </summary>
     private void Timer_Timeout()
     {
 		// Get Children
@@ -121,7 +120,23 @@ public partial class Snake : Node2D
         return false;
 	}
 
-	private void AddBodyPiece(Vector2 position)
+    public void AddBodyPiece()
+    {
+        // Get Body
+        Node[] snakeBodyPieces = snakeBody.GetChildren().ToArray();
+
+		// Get End Position
+		Vector2 position = ((Node2D)snakeBodyPieces[(snakeBodyPieces.Length - 1)]).Position;
+
+		// Add New Piece
+		AddBodyPiece(position);
+
+		// Amend Timer
+		if (timer.WaitTime >= _SNAKE_SPEED_MINIMUM)
+			timer.WaitTime -= _SNAKE_SPEED_MODIFIER;
+    }
+
+    private void AddBodyPiece(Vector2 position)
 	{
 		// Spawn Body Piece
 		Node2D piece = (Node2D)bodyPiece.Instantiate();
@@ -132,6 +147,9 @@ public partial class Snake : Node2D
 		// Add to Tree
 		snakeBody.AddChild(piece);
 	}
+
+	public Area2D GetSnakeHead()
+		=> (Area2D)snakeBody.GetChildren()[0];
 
     #endregion
 }

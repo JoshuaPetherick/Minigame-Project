@@ -11,6 +11,7 @@ bodyPiece = ExtResource("1_prnyq")
 snakeBody = NodePath("Body")
 
 [node name="Body" type="Node2D" parent="."]
+position = Vector2(30, 30)
 
 [node name="Head" parent="Body" instance=ExtResource("1_prnyq")]
 
