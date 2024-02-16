@@ -9,7 +9,7 @@ public partial class SnakeGame : Node2D
 	[Export]
 	private Snake snake;
 
-	private int score = 0;
+	private int apples = 0;
 	private RandomNumberGenerator rng = new RandomNumberGenerator();
 
     // Called when the node enters the scene tree for the first time.
@@ -37,7 +37,7 @@ public partial class SnakeGame : Node2D
         if (body is StaticBody2D)
 		{
 			// Add to Score
-			score++;
+			apples++;
 
 			// Update Label
 			SetScore();
@@ -56,10 +56,14 @@ public partial class SnakeGame : Node2D
         if (body is CharacterBody2D)
 		{
             // Game Over
-            score = 0;
+            apples = 0;
+
+            GetTree().ChangeSceneToFile("res://Scenes/game_over_screen.tscn");
+            //GetTree().Quit();
 
             // Update Label
             SetScore();
+
         }
     }
 
@@ -70,7 +74,7 @@ public partial class SnakeGame : Node2D
     private void SpawnApple()
 	{
 		// Setup
-		string name = $"Apple {score}";
+		string name = $"Apple {apples}";
 		Vector2 newApplePosition = Vector2.Zero;
 
         // Spawn Apple Piece
@@ -104,7 +108,7 @@ public partial class SnakeGame : Node2D
     }
 
 	private void SetScore()
-		=> scoreLabel.Text = $"Score: {score}";
+		=> scoreLabel.Text = $"{apples}";
 
     #endregion
 }

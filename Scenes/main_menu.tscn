@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://daxkssc178ga5"]
+[gd_scene load_steps=6 format=3 uid="uid://daxkssc178ga5"]
 
 [ext_resource type="Texture2D" uid="uid://qm8jopchmfq6" path="res://Assets/menu_bg.jpg" id="1_bgcxk"]
 [ext_resource type="Script" path="res://Scripts/main_menu.cs" id="1_da5ib"]
+[ext_resource type="FontFile" uid="uid://bmjum7dxntree" path="res://Assets/Fonts/Snake Chan.ttf" id="3_vocrj"]
 
 [sub_resource type="SystemFont" id="SystemFont_t113o"]
 font_names = PackedStringArray("Impact")
@@ -78,7 +79,10 @@ theme_override_constants/separation = 20
 
 [node name="Start" type="Button" parent="MarginContainer/Buttons"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vocrj")
+theme_override_font_sizes/font_size = 65
 text = "Start Game"
 
 [node name="Control" type="Control" parent="MarginContainer/Buttons"]
@@ -86,7 +90,10 @@ layout_mode = 2
 
 [node name="Exit" type="Button" parent="MarginContainer/Buttons"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vocrj")
+theme_override_font_sizes/font_size = 65
 text = "Exit Game"
 
 [connection signal="pressed" from="MarginContainer/Buttons/Start" to="." method="_on_start_pressed"]
