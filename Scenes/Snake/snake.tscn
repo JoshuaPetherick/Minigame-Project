@@ -6,7 +6,6 @@
 
 [node name="Snake" type="Node2D" node_paths=PackedStringArray("timer", "snakeBody")]
 script = ExtResource("1_v5yrf")
-name = "Dave"
 timer = NodePath("Timer")
 bodyPiece = ExtResource("1_prnyq")
 snakeBody = NodePath("Body")

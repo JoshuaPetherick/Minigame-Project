@@ -1,0 +1,93 @@
+[gd_scene load_steps=5 format=3 uid="uid://daxkssc178ga5"]
+
+[ext_resource type="Texture2D" uid="uid://qm8jopchmfq6" path="res://Assets/menu_bg.jpg" id="1_bgcxk"]
+[ext_resource type="Script" path="res://Scripts/main_menu.cs" id="1_da5ib"]
+
+[sub_resource type="SystemFont" id="SystemFont_t113o"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="SystemFont" id="SystemFont_deoco"]
+font_names = PackedStringArray("Consolas")
+
+[node name="Main_Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_da5ib")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_bgcxk")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Title" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Seperator" type="Control" parent="MarginContainer/Title"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/Title"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("SystemFont_t113o")
+theme_override_font_sizes/font_size = 100
+text = "SNAKE GAME"
+horizontal_alignment = 1
+
+[node name="Seperator2" type="Control" parent="MarginContainer/Title"]
+layout_mode = 2
+
+[node name="Game_made_by" type="Label" parent="MarginContainer/Title"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_deoco")
+theme_override_font_sizes/font_size = 40
+text = "A snake game made by Joshua Petherick and Cameron Crook to learn Godot Basics
+"
+horizontal_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="Start" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Start Game"
+
+[node name="Control" type="Control" parent="MarginContainer/Buttons"]
+layout_mode = 2
+
+[node name="Exit" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Exit Game"
+
+[connection signal="pressed" from="MarginContainer/Buttons/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/Buttons/Exit" to="." method="_on_exit_pressed"]
