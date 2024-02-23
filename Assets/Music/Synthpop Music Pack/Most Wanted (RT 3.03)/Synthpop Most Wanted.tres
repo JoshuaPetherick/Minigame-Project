@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="OvaniSong" load_steps=7 format=3 uid="uid://cqdqt5w56rbki"]
+
+[ext_resource type="AudioStream" uid="uid://b017oqov01n10" path="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted Intensity 1.wav" id="1_ocvdt"]
+[ext_resource type="AudioStream" uid="uid://d10n8y33vnkvv" path="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted Intensity 2.wav" id="2_687dh"]
+[ext_resource type="AudioStream" uid="uid://btq0r11dp7pyv" path="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted Main.wav" id="3_6vf0h"]
+[ext_resource type="AudioStream" uid="uid://bpdfhbojnutox" path="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted Cut 30.wav" id="4_7xvoo"]
+[ext_resource type="AudioStream" uid="uid://m1ph5nxsuh3v" path="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted Cut 60.wav" id="5_e26dm"]
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd" id="6_mqkpj"]
+
+[resource]
+script = ExtResource("6_mqkpj")
+Intensity1 = ExtResource("1_ocvdt")
+Intensity2 = ExtResource("2_687dh")
+Intensity3 = ExtResource("3_6vf0h")
+Loop30 = ExtResource("4_7xvoo")
+Loop60 = ExtResource("5_e26dm")
+ReverbTail = 3.03
+SongMode = 0

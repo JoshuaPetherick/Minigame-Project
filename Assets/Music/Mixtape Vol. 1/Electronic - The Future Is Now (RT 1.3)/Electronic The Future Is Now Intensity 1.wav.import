@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://rkcvrjyv1w1y"
+path="res://.godot/imported/Electronic The Future Is Now Intensity 1.wav-96fd113c4322d262a70a43330d6009bc.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Mixtape Vol. 1/Electronic - The Future Is Now (RT 1.3)/Electronic The Future Is Now Intensity 1.wav"
+dest_files=["res://.godot/imported/Electronic The Future Is Now Intensity 1.wav-96fd113c4322d262a70a43330d6009bc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

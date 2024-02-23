@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dg50qrmxd53k1"
+path="res://.godot/imported/Synthpop Twinkle Intensity 2.wav-b8df1cc0b41df5ee42d14d475f43a79d.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Synthpop Music Pack/Twinkle (RT 2.107)/Synthpop Twinkle Intensity 2.wav"
+dest_files=["res://.godot/imported/Synthpop Twinkle Intensity 2.wav-b8df1cc0b41df5ee42d14d475f43a79d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

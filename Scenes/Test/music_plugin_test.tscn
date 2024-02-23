@@ -1,0 +1,16 @@
+[gd_scene load_steps=7 format=3 uid="uid://cj0hm43rkutdp"]
+
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="1_lcyf0"]
+[ext_resource type="Resource" uid="uid://cqdqt5w56rbki" path="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted.tres" id="2_kl17x"]
+[ext_resource type="Resource" uid="uid://by1ex1qm0y6ei" path="res://Assets/Music/Synthpop Music Pack/Twinkle (RT 2.107)/Synthpop Twinkle.tres" id="3_vleu0"]
+[ext_resource type="Resource" uid="uid://vr0eku5j4gwl" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run.tres" id="4_aumpi"]
+[ext_resource type="Resource" uid="uid://bmwnriuh3ecvo" path="res://Assets/Music/Mixtape Vol. 1/Electronic - The Future Is Now (RT 1.3)/Electronic The Future Is Now.tres" id="5_mu63x"]
+[ext_resource type="Resource" uid="uid://txgtjfiydg33" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight.tres" id="6_ylt65"]
+
+[node name="MusicPluginTest" type="Node"]
+
+[node name="OvaniPlayer" type="Node" parent="."]
+script = ExtResource("1_lcyf0")
+QueuedSongs = Array[Resource("res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd")]([ExtResource("3_vleu0"), ExtResource("2_kl17x"), ExtResource("4_aumpi"), ExtResource("5_mu63x"), ExtResource("6_ylt65")])
+Intensity = 1.0
+LoopQueue = true

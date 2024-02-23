@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c52jqtlo4p7jl"
+path="res://.godot/imported/Electronic The Future Is Now Cut 60.wav-240e2685678d0c2f583b429aeee67182.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Mixtape Vol. 1/Electronic - The Future Is Now (RT 1.3)/Electronic The Future Is Now Cut 60.wav"
+dest_files=["res://.godot/imported/Electronic The Future Is Now Cut 60.wav-240e2685678d0c2f583b429aeee67182.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

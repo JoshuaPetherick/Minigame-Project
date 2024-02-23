@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="OvaniSong" load_steps=7 format=3 uid="uid://by1ex1qm0y6ei"]
+
+[ext_resource type="AudioStream" uid="uid://dv1772hsp8s31" path="res://Assets/Music/Synthpop Music Pack/Twinkle (RT 2.107)/Synthpop Twinkle Intensity 1.wav" id="1_3yvk4"]
+[ext_resource type="AudioStream" uid="uid://dg50qrmxd53k1" path="res://Assets/Music/Synthpop Music Pack/Twinkle (RT 2.107)/Synthpop Twinkle Intensity 2.wav" id="2_6jhrk"]
+[ext_resource type="AudioStream" uid="uid://cuskswuwaobh8" path="res://Assets/Music/Synthpop Music Pack/Twinkle (RT 2.107)/Synthpop Twinkle Main.wav" id="3_nrmvv"]
+[ext_resource type="AudioStream" uid="uid://dqqxat1nf0d4x" path="res://Assets/Music/Synthpop Music Pack/Twinkle (RT 2.107)/Synthpop Twinkle Cut 30.wav" id="4_3nn82"]
+[ext_resource type="AudioStream" uid="uid://bw06i4f7gtont" path="res://Assets/Music/Synthpop Music Pack/Twinkle (RT 2.107)/Synthpop Twinkle Cut 60.wav" id="5_wi5xn"]
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd" id="6_1nmoh"]
+
+[resource]
+script = ExtResource("6_1nmoh")
+Intensity1 = ExtResource("1_3yvk4")
+Intensity2 = ExtResource("2_6jhrk")
+Intensity3 = ExtResource("3_nrmvv")
+Loop30 = ExtResource("4_3nn82")
+Loop60 = ExtResource("5_wi5xn")
+ReverbTail = 2.107
+SongMode = 0

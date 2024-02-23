@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dqx7gix3iusxe"
+path="res://.godot/imported/Chiptune The Run Intensity 1.wav-28ce3fd12986f1b0fd4b67cd073bd787.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run Intensity 1.wav"
+dest_files=["res://.godot/imported/Chiptune The Run Intensity 1.wav-28ce3fd12986f1b0fd4b67cd073bd787.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="OvaniSong" load_steps=7 format=3 uid="uid://vr0eku5j4gwl"]
+
+[ext_resource type="AudioStream" uid="uid://dqx7gix3iusxe" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run Intensity 1.wav" id="1_buu1i"]
+[ext_resource type="AudioStream" uid="uid://cq76kab2bxc7c" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run Intensity 2.wav" id="2_rr4y0"]
+[ext_resource type="AudioStream" uid="uid://ccebs7mo7e5t" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run Main.wav" id="3_o5hhn"]
+[ext_resource type="AudioStream" uid="uid://beytctw8ldywu" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run Cut 30.wav" id="4_xo3bv"]
+[ext_resource type="AudioStream" uid="uid://15a0c33ontdk" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run Cut 60.wav" id="5_q8qdr"]
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd" id="6_p5ais"]
+
+[resource]
+script = ExtResource("6_p5ais")
+Intensity1 = ExtResource("1_buu1i")
+Intensity2 = ExtResource("2_rr4y0")
+Intensity3 = ExtResource("3_o5hhn")
+Loop30 = ExtResource("4_xo3bv")
+Loop60 = ExtResource("5_q8qdr")
+ReverbTail = 3.134
+SongMode = 0

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="OvaniSong" load_steps=7 format=3 uid="uid://bmwnriuh3ecvo"]
+
+[ext_resource type="AudioStream" uid="uid://rkcvrjyv1w1y" path="res://Assets/Music/Mixtape Vol. 1/Electronic - The Future Is Now (RT 1.3)/Electronic The Future Is Now Intensity 1.wav" id="1_qv3a5"]
+[ext_resource type="AudioStream" uid="uid://c20o8xjhqo2uo" path="res://Assets/Music/Mixtape Vol. 1/Electronic - The Future Is Now (RT 1.3)/Electronic The Future Is Now Intensity 2.wav" id="2_31l2w"]
+[ext_resource type="AudioStream" uid="uid://00rhtup4lbb4" path="res://Assets/Music/Mixtape Vol. 1/Electronic - The Future Is Now (RT 1.3)/Electronic The Future Is Now Main.wav" id="3_4gdyg"]
+[ext_resource type="AudioStream" uid="uid://bed38v4l5an15" path="res://Assets/Music/Mixtape Vol. 1/Electronic - The Future Is Now (RT 1.3)/Electronic The Future Is Now Cut 30.wav" id="4_x0ub0"]
+[ext_resource type="AudioStream" uid="uid://c52jqtlo4p7jl" path="res://Assets/Music/Mixtape Vol. 1/Electronic - The Future Is Now (RT 1.3)/Electronic The Future Is Now Cut 60.wav" id="5_enuj5"]
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd" id="6_fypv4"]
+
+[resource]
+script = ExtResource("6_fypv4")
+Intensity1 = ExtResource("1_qv3a5")
+Intensity2 = ExtResource("2_31l2w")
+Intensity3 = ExtResource("3_4gdyg")
+Loop30 = ExtResource("4_x0ub0")
+Loop60 = ExtResource("5_enuj5")
+ReverbTail = 1.3
+SongMode = 0

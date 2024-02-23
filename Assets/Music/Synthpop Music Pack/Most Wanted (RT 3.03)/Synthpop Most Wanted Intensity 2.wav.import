@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d10n8y33vnkvv"
+path="res://.godot/imported/Synthpop Most Wanted Intensity 2.wav-eb5d6f67aab1edc32edc2fd9e20e5514.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted Intensity 2.wav"
+dest_files=["res://.godot/imported/Synthpop Most Wanted Intensity 2.wav-eb5d6f67aab1edc32edc2fd9e20e5514.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

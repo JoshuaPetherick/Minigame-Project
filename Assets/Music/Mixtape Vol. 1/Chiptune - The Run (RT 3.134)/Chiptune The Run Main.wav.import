@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ccebs7mo7e5t"
+path="res://.godot/imported/Chiptune The Run Main.wav-751fe19adf41f3377beb1f1241212bba.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run Main.wav"
+dest_files=["res://.godot/imported/Chiptune The Run Main.wav-751fe19adf41f3377beb1f1241212bba.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

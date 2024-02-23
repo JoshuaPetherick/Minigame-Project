@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="OvaniSong" load_steps=7 format=3 uid="uid://txgtjfiydg33"]
+
+[ext_resource type="AudioStream" uid="uid://d3hqipe0s77xq" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight Intensity 1.wav" id="1_2tcud"]
+[ext_resource type="AudioStream" uid="uid://chug71xuxvnee" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight Intensity 2.wav" id="2_j6nng"]
+[ext_resource type="AudioStream" uid="uid://cw28s45cv1b22" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight Main.wav" id="3_nsx2q"]
+[ext_resource type="AudioStream" uid="uid://dbhfi60yee3g5" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight Cut 30.wav" id="4_apk2s"]
+[ext_resource type="AudioStream" uid="uid://bry4jb2j7x7r4" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight Cut 60.wav" id="5_7u3cc"]
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd" id="6_2txb5"]
+
+[resource]
+script = ExtResource("6_2txb5")
+Intensity1 = ExtResource("1_2tcud")
+Intensity2 = ExtResource("2_j6nng")
+Intensity3 = ExtResource("3_nsx2q")
+Loop30 = ExtResource("4_apk2s")
+Loop60 = ExtResource("5_7u3cc")
+ReverbTail = 3.08
+SongMode = 0
