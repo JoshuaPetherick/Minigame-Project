@@ -1,15 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0xgka505ooci"]
+[gd_scene load_steps=7 format=3 uid="uid://d0xgka505ooci"]
 
 [ext_resource type="PackedScene" uid="uid://b4oc8d6w1m1da" path="res://Scenes/Snake/snake.tscn" id="1_hia47"]
 [ext_resource type="Script" path="res://Scripts/Snake/SnakeGame.cs" id="1_xk2we"]
 [ext_resource type="PackedScene" uid="uid://bgugnvckv4jem" path="res://Scenes/Snake/apple.tscn" id="2_4ixxt"]
 [ext_resource type="Texture2D" uid="uid://b1pyg8tm7tear" path="res://Assets/apple_UI.png" id="3_1jsei"]
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="5_8f0i6"]
+[ext_resource type="Resource" uid="uid://vr0eku5j4gwl" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run.tres" id="6_hr2wi"]
 
-[node name="Snake Game" type="Node2D" node_paths=PackedStringArray("scoreLabel", "snake")]
+[node name="Snake Game" type="Node2D" node_paths=PackedStringArray("scoreLabel", "snake", "ovaniPlayer")]
 script = ExtResource("1_xk2we")
 appleScene = ExtResource("2_4ixxt")
 scoreLabel = NodePath("CanvasLayer/Control/HBoxContainer/Score")
 snake = NodePath("Snake")
+ovaniPlayer = NodePath("OvaniPlayer")
+
+[node name="OvaniPlayer" type="Node" parent="."]
+script = ExtResource("5_8f0i6")
+QueuedSongs = Array[Resource("res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd")]([ExtResource("6_hr2wi")])
+Volume = -20.0
+LoopQueue = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

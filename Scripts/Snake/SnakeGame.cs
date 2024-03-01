@@ -8,8 +8,11 @@ public partial class SnakeGame : Node2D
 	private Label scoreLabel;
 	[Export]
 	private Snake snake;
+    [Export]
+    private Node ovaniPlayer;
 
-	private int apples = 0;
+    private int apples = 0;
+	float musIntensity = 0f;
 	private RandomNumberGenerator rng = new RandomNumberGenerator();
 
     // Called when the node enters the scene tree for the first time.
@@ -50,7 +53,11 @@ public partial class SnakeGame : Node2D
 
 			// Spawn New Piece
 			snake.CallDeferred("AddBodyPiece");
-		}
+
+			//increment music intensity
+			musIntensity += 0.05f;
+			if(musIntensity <1f) ovaniPlayer.SetDeferred("Intensity", musIntensity);
+        }
 
         // Snake Body
         if (body is CharacterBody2D)
