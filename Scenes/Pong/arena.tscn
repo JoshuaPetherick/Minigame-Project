@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnjl7mxs1k87e"]
+
+[ext_resource type="PackedScene" uid="uid://b7vj7tmk05oem" path="res://Scenes/Pong/player.tscn" id="1_cp106"]
+[ext_resource type="PackedScene" uid="uid://dwfutylclqbrl" path="res://Scenes/Pong/wall.tscn" id="1_cupmh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2t2c"]
+size = Vector2(10, 510)
+
+[node name="Pong" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -2)
+
+[node name="Arena" type="Node2D" parent="."]
+
+[node name="Walls" type="Node2D" parent="Arena"]
+
+[node name="Wall" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+position = Vector2(0, -250)
+scale = Vector2(925, 10)
+
+[node name="Wall2" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+position = Vector2(0, 250)
+scale = Vector2(925, 10)
+
+[node name="Wall3" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+position = Vector2(-467.5, 205)
+scale = Vector2(10, 100)
+
+[node name="Wall4" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+position = Vector2(467.5, 205)
+scale = Vector2(10, 100)
+
+[node name="Wall5" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+position = Vector2(467.5, -205)
+scale = Vector2(10, 100)
+
+[node name="Wall6" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+position = Vector2(-467.5, -205)
+scale = Vector2(10, 100)
+
+[node name="Goals" type="Node2D" parent="Arena"]
+
+[node name="Goal_1" type="Area2D" parent="Arena/Goals"]
+position = Vector2(-480, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Goals/Goal_1"]
+shape = SubResource("RectangleShape2D_g2t2c")
+
+[node name="Goal_2" type="Area2D" parent="Arena/Goals"]
+position = Vector2(480, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Goals/Goal_2"]
+shape = SubResource("RectangleShape2D_g2t2c")
+
+[node name="Players" type="Node2D" parent="Arena"]
+
+[node name="Player1" parent="Arena/Players" instance=ExtResource("1_cp106")]
+position = Vector2(-465, 0)
+
+[node name="Player2" parent="Arena/Players" instance=ExtResource("1_cp106")]
+position = Vector2(465, 0)
