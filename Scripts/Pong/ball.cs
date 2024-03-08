@@ -3,15 +3,17 @@ using System;
 
 public partial class ball : Area2D
 {
-	public const float Speed = 100.0f;
+	public const float START_SPEED = 100.0f;
+    public const float SPEED_INCREASE = 25.0f;
 
     // Movement Vars
 	private bool _up = false;
 	private bool _left = false;
-    private float _currentSpeed = Speed;
+    private float _currentSpeed = START_SPEED;
 
     public override void _Ready()
     {
+        AreaEntered += Ball_AreaEntered;
         BodyEntered += Ball_BodyEntered;
     }
 
@@ -36,11 +38,41 @@ public partial class ball : Area2D
         Position = new Vector2(Position.X + movementX, Position.Y + movementY);
     }
 
+    #region Events
+
+    private void Ball_AreaEntered(Area2D area)
+    {
+        // Check - Change Vertical/Horizontal
+        if (area is player_wall)
+            _left = !_left;
+        else
+            _up = !_up;
+    }
+
     private void Ball_BodyEntered(Node2D body)
     {
-        _up = !_up;
+        // Change Horizontal
         _left = !_left;
 
-        GD.Print("Collision!");
+        // Increase Speed
+        if (body is player)
+            _currentSpeed += SPEED_INCREASE;
     }
+
+    #endregion
+
+    #region Public Functions
+
+    public void Reset()
+    {
+        // Reset Position
+        Position = Vector2.Zero;
+
+        // Reset Movement Vars
+        _up = !_up;
+        _left = !_left;
+        _currentSpeed = START_SPEED;
+    }
+
+    #endregion
 }

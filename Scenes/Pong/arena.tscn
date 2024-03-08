@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dnjl7mxs1k87e"]
+[gd_scene load_steps=11 format=3 uid="uid://dnjl7mxs1k87e"]
 
 [ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="1_6eudc"]
 [ext_resource type="PackedScene" uid="uid://b7vj7tmk05oem" path="res://Scenes/Pong/player.tscn" id="1_cp106"]
+[ext_resource type="Script" path="res://Scripts/Pong/arena.cs" id="1_oiwuw"]
 [ext_resource type="Script" path="res://Scripts/Pong/player_wall.cs" id="2_rk6gy"]
 [ext_resource type="PackedScene" uid="uid://b5stnv5x3rpfy" path="res://Scenes/Pong/ball.tscn" id="4_vomq5"]
 [ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="5_sw08c"]
@@ -21,13 +22,18 @@ size = Vector2(10, 510)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -2)
 
-[node name="Arena" type="Node2D" parent="."]
+[node name="Arena" type="Node2D" parent="." node_paths=PackedStringArray("goal1", "goal2", "_ovaniSoundPlayer")]
+script = ExtResource("1_oiwuw")
+goal1 = NodePath("Goals/Goal_1")
+goal2 = NodePath("Goals/Goal_2")
+_ovaniSoundPlayer = NodePath("../OvaniPlayer")
 
 [node name="Walls" type="Node2D" parent="Arena"]
 
 [node name="Wall_1" type="Area2D" parent="Arena/Walls"]
 position = Vector2(0, -250)
 scale = Vector2(925, 10)
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_1"]
 shape = SubResource("RectangleShape2D_2fd5e")
@@ -47,7 +53,7 @@ shape = SubResource("RectangleShape2D_2fd5e")
 texture = ExtResource("1_6eudc")
 
 [node name="Wall_3" type="Area2D" parent="Arena/Walls"]
-position = Vector2(-467.5, 205)
+position = Vector2(-467.5, 206)
 scale = Vector2(10, 100)
 script = ExtResource("2_rk6gy")
 
@@ -65,7 +71,7 @@ scale = Vector2(0.1, 0.01)
 shape = SubResource("RectangleShape2D_0iu41")
 
 [node name="Wall_4" type="Area2D" parent="Arena/Walls"]
-position = Vector2(467.5, 205)
+position = Vector2(467.5, 206)
 scale = Vector2(10, 100)
 script = ExtResource("2_rk6gy")
 
@@ -100,14 +106,14 @@ texture = ExtResource("1_6eudc")
 [node name="Goals" type="Node2D" parent="Arena"]
 
 [node name="Goal_1" type="Area2D" parent="Arena/Goals"]
-position = Vector2(-480, 0)
+position = Vector2(-482.5, 0)
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Goals/Goal_1"]
 shape = SubResource("RectangleShape2D_g2t2c")
 
 [node name="Goal_2" type="Area2D" parent="Arena/Goals"]
-position = Vector2(480, 0)
+position = Vector2(482.5, 0)
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Goals/Goal_2"]
@@ -116,13 +122,12 @@ shape = SubResource("RectangleShape2D_g2t2c")
 [node name="Players" type="Node2D" parent="Arena"]
 
 [node name="Player1" parent="Arena/Players" instance=ExtResource("1_cp106")]
-position = Vector2(-465, 0)
+position = Vector2(-467.5, 0)
 
 [node name="Player2" parent="Arena/Players" instance=ExtResource("1_cp106")]
-position = Vector2(465, 0)
+position = Vector2(467.5, 0)
 
 [node name="Ball" parent="Arena" instance=ExtResource("4_vomq5")]
-position = Vector2(384, -69)
 monitorable = true
 priority = 1
 
