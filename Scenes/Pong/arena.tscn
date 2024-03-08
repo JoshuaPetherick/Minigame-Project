@@ -1,7 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnjl7mxs1k87e"]
+[gd_scene load_steps=10 format=3 uid="uid://dnjl7mxs1k87e"]
 
+[ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="1_6eudc"]
 [ext_resource type="PackedScene" uid="uid://b7vj7tmk05oem" path="res://Scenes/Pong/player.tscn" id="1_cp106"]
-[ext_resource type="PackedScene" uid="uid://dwfutylclqbrl" path="res://Scenes/Pong/wall.tscn" id="1_cupmh"]
+[ext_resource type="Script" path="res://Scripts/Pong/player_wall.cs" id="2_rk6gy"]
+[ext_resource type="PackedScene" uid="uid://b5stnv5x3rpfy" path="res://Scenes/Pong/ball.tscn" id="4_vomq5"]
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="5_sw08c"]
+[ext_resource type="Resource" uid="uid://txgtjfiydg33" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight.tres" id="6_rcwuk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fd5e"]
+size = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0iu41"]
+size = Vector2(10, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2t2c"]
 size = Vector2(10, 510)
@@ -15,29 +25,77 @@ position = Vector2(0, -2)
 
 [node name="Walls" type="Node2D" parent="Arena"]
 
-[node name="Wall" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+[node name="Wall_1" type="Area2D" parent="Arena/Walls"]
 position = Vector2(0, -250)
 scale = Vector2(925, 10)
 
-[node name="Wall2" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
-position = Vector2(0, 250)
-scale = Vector2(925, 10)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_1"]
+shape = SubResource("RectangleShape2D_2fd5e")
 
-[node name="Wall3" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_1/CollisionShape2D"]
+texture = ExtResource("1_6eudc")
+
+[node name="Wall_2" type="Area2D" parent="Arena/Walls"]
+position = Vector2(0, 251)
+scale = Vector2(925, 10)
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_2"]
+shape = SubResource("RectangleShape2D_2fd5e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_2/CollisionShape2D"]
+texture = ExtResource("1_6eudc")
+
+[node name="Wall_3" type="Area2D" parent="Arena/Walls"]
 position = Vector2(-467.5, 205)
 scale = Vector2(10, 100)
+script = ExtResource("2_rk6gy")
 
-[node name="Wall4" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_3"]
+shape = SubResource("RectangleShape2D_2fd5e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_3/CollisionShape2D"]
+texture = ExtResource("1_6eudc")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Arena/Walls/Wall_3"]
+position = Vector2(0, -0.45)
+scale = Vector2(0.1, 0.01)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_3/StaticBody2D"]
+shape = SubResource("RectangleShape2D_0iu41")
+
+[node name="Wall_4" type="Area2D" parent="Arena/Walls"]
 position = Vector2(467.5, 205)
 scale = Vector2(10, 100)
+script = ExtResource("2_rk6gy")
 
-[node name="Wall5" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_4"]
+shape = SubResource("RectangleShape2D_2fd5e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_4/CollisionShape2D"]
+texture = ExtResource("1_6eudc")
+
+[node name="Wall_5" type="Area2D" parent="Arena/Walls"]
 position = Vector2(467.5, -205)
 scale = Vector2(10, 100)
+script = ExtResource("2_rk6gy")
 
-[node name="Wall6" parent="Arena/Walls" instance=ExtResource("1_cupmh")]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_5"]
+shape = SubResource("RectangleShape2D_2fd5e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_5/CollisionShape2D"]
+texture = ExtResource("1_6eudc")
+
+[node name="Wall_6" type="Area2D" parent="Arena/Walls"]
 position = Vector2(-467.5, -205)
 scale = Vector2(10, 100)
+script = ExtResource("2_rk6gy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_6"]
+shape = SubResource("RectangleShape2D_2fd5e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_6/CollisionShape2D"]
+texture = ExtResource("1_6eudc")
 
 [node name="Goals" type="Node2D" parent="Arena"]
 
@@ -62,3 +120,14 @@ position = Vector2(-465, 0)
 
 [node name="Player2" parent="Arena/Players" instance=ExtResource("1_cp106")]
 position = Vector2(465, 0)
+
+[node name="Ball" parent="Arena" instance=ExtResource("4_vomq5")]
+position = Vector2(384, -69)
+monitorable = true
+priority = 1
+
+[node name="OvaniPlayer" type="Node" parent="."]
+script = ExtResource("5_sw08c")
+QueuedSongs = Array[Resource("res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd")]([ExtResource("6_rcwuk")])
+Volume = -25.0
+LoopQueue = true
