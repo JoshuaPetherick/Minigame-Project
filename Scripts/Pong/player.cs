@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class player : CharacterBody2D
 {
@@ -17,8 +16,27 @@ public partial class player : CharacterBody2D
 	{
 		// Setup
 		float movement = 0.0f;
-		bool up = Input.IsActionPressed("ui_up");
-		bool down = Input.IsActionPressed("ui_down");
+		bool up = false; 
+		bool down = false; 
+
+		// Get Inputs based on Name
+		switch (Name)
+		{
+			case "Player 1":
+				up = Input.IsActionPressed("up_player_1");
+                down = Input.IsActionPressed("down_player_1");
+                break;
+
+			case "Player 2":
+                up = Input.IsActionPressed("up_player_2");
+                down = Input.IsActionPressed("down_player_2");
+                break;
+
+			default:
+                up = Input.IsActionPressed("up");
+                down = Input.IsActionPressed("down");
+                break;
+		}
 
 		// Checks
 		if (!up & !down)

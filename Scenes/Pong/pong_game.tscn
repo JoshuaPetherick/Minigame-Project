@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dnjl7mxs1k87e"]
+[gd_scene load_steps=12 format=3 uid="uid://dnjl7mxs1k87e"]
 
+[ext_resource type="Script" path="res://Scripts/Pong/pong_game.cs" id="1_1f53n"]
 [ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="1_6eudc"]
-[ext_resource type="PackedScene" uid="uid://b7vj7tmk05oem" path="res://Scenes/Pong/player.tscn" id="1_cp106"]
 [ext_resource type="Script" path="res://Scripts/Pong/arena.cs" id="1_oiwuw"]
 [ext_resource type="Script" path="res://Scripts/Pong/player_wall.cs" id="2_rk6gy"]
+[ext_resource type="PackedScene" uid="uid://b7vj7tmk05oem" path="res://Scenes/Pong/singleplayer_player.tscn" id="2_vhd2k"]
 [ext_resource type="PackedScene" uid="uid://b5stnv5x3rpfy" path="res://Scenes/Pong/ball.tscn" id="4_vomq5"]
 [ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="5_sw08c"]
 [ext_resource type="Resource" uid="uid://txgtjfiydg33" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight.tres" id="6_rcwuk"]
@@ -17,16 +18,33 @@ size = Vector2(10, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2t2c"]
 size = Vector2(10, 510)
 
-[node name="Pong" type="Node2D"]
+[node name="Pong" type="Node2D" node_paths=PackedStringArray("_arena", "_player1Spawn", "_player2Spawn", "_goal1", "_goal2", "_ovaniSoundPlayer", "_player1Label", "_player2Label")]
+script = ExtResource("1_1f53n")
+_singleplayerScene = ExtResource("2_vhd2k")
+_arena = NodePath("Arena")
+_player1Spawn = NodePath("Arena/Player1_Spawn")
+_player2Spawn = NodePath("Arena/Player2_Spawn")
+_goal1 = NodePath("Arena/Goals/Goal_1")
+_goal2 = NodePath("Arena/Goals/Goal_2")
+_ovaniSoundPlayer = NodePath("OvaniPlayer")
+_player1Label = NodePath("CanvasLayer/MarginContainer/Player 1 Score")
+_player2Label = NodePath("CanvasLayer/MarginContainer/Player 2 Score")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -2)
 
-[node name="Arena" type="Node2D" parent="." node_paths=PackedStringArray("goal1", "goal2", "_ovaniSoundPlayer")]
+[node name="Arena" type="Node2D" parent="."]
 script = ExtResource("1_oiwuw")
-goal1 = NodePath("Goals/Goal_1")
-goal2 = NodePath("Goals/Goal_2")
-_ovaniSoundPlayer = NodePath("../OvaniPlayer")
+
+[node name="Ball" parent="Arena" instance=ExtResource("4_vomq5")]
+monitorable = true
+priority = 1
+
+[node name="Player1_Spawn" type="Marker2D" parent="Arena"]
+position = Vector2(-467.5, 0)
+
+[node name="Player2_Spawn" type="Marker2D" parent="Arena"]
+position = Vector2(467.5, 0)
 
 [node name="Walls" type="Node2D" parent="Arena"]
 
@@ -119,17 +137,33 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Goals/Goal_2"]
 shape = SubResource("RectangleShape2D_g2t2c")
 
-[node name="Players" type="Node2D" parent="Arena"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Player1" parent="Arena/Players" instance=ExtResource("1_cp106")]
-position = Vector2(-467.5, 0)
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="Player2" parent="Arena/Players" instance=ExtResource("1_cp106")]
-position = Vector2(467.5, 0)
+[node name="Player 1 Score" type="Label" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Score: X"
 
-[node name="Ball" parent="Arena" instance=ExtResource("4_vomq5")]
-monitorable = true
-priority = 1
+[node name="Player 2 Score" type="Label" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Score: X"
+horizontal_alignment = 2
 
 [node name="OvaniPlayer" type="Node" parent="."]
 script = ExtResource("5_sw08c")
