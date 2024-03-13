@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/Pong/arena.cs" id="1_oiwuw"]
 [ext_resource type="Script" path="res://Scripts/Pong/player_wall.cs" id="2_rk6gy"]
 [ext_resource type="PackedScene" uid="uid://b7vj7tmk05oem" path="res://Scenes/Pong/singleplayer_player.tscn" id="2_vhd2k"]
+[ext_resource type="PackedScene" uid="uid://capnpo0onuwn0" path="res://Scenes/Pong/ai.tscn" id="3_k8a4i"]
 [ext_resource type="PackedScene" uid="uid://b5stnv5x3rpfy" path="res://Scenes/Pong/ball.tscn" id="4_vomq5"]
 [ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="5_sw08c"]
 [ext_resource type="Resource" uid="uid://txgtjfiydg33" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight.tres" id="6_rcwuk"]
@@ -12,15 +13,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2fd5e"]
 size = Vector2(1, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0iu41"]
-size = Vector2(10, 10)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2t2c"]
 size = Vector2(10, 510)
 
 [node name="Pong" type="Node2D" node_paths=PackedStringArray("_arena", "_player1Spawn", "_player2Spawn", "_goal1", "_goal2", "_ovaniSoundPlayer", "_player1Label", "_player2Label")]
 script = ExtResource("1_1f53n")
 _singleplayerScene = ExtResource("2_vhd2k")
+_aiScene = ExtResource("3_k8a4i")
 _arena = NodePath("Arena")
 _player1Spawn = NodePath("Arena/Player1_Spawn")
 _player2Spawn = NodePath("Arena/Player2_Spawn")
@@ -80,13 +79,6 @@ shape = SubResource("RectangleShape2D_2fd5e")
 
 [node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_3/CollisionShape2D"]
 texture = ExtResource("1_6eudc")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Arena/Walls/Wall_3"]
-position = Vector2(0, -0.45)
-scale = Vector2(0.1, 0.01)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_3/StaticBody2D"]
-shape = SubResource("RectangleShape2D_0iu41")
 
 [node name="Wall_4" type="Area2D" parent="Arena/Walls"]
 position = Vector2(467.5, 206)

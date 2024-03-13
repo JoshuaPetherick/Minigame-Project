@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class pong_game : Node2D
 {
@@ -47,7 +46,7 @@ public partial class pong_game : Node2D
     /// Used for Testing!
     /// </summary>
     public override void _Ready()
-        => Setup(GameModes.VERSUS);
+        => Setup(GameModes.SINGLEPLAYER);
 
     // Should be called when the node enters the scene tree for the first time.
     public void Setup(GameModes gameMode)
@@ -59,7 +58,8 @@ public partial class pong_game : Node2D
         switch (gameMode)
         {
             case GameModes.SINGLEPLAYER:
-                // TODO
+                SpawnPlayer("Player", _player1Spawn);
+                SpawnAI(_player2Spawn);
                 break;
 
             case GameModes.VERSUS:
@@ -87,18 +87,6 @@ public partial class pong_game : Node2D
     private void Goal1_AreaEntered(Area2D area)
     {
         // Increment Scroe
-        _player1Score++;
-
-        // Update UI
-        _player1Label.Text = $"Score: {_player1Score}";
-
-        // Handle Event
-        HandleAreaEntered(area);
-    }
-
-    private void Goal2_AreaEntered(Area2D area)
-    {
-        // Increment Scroe
         _player2Score++;
 
         // Update UI
@@ -108,7 +96,51 @@ public partial class pong_game : Node2D
         HandleAreaEntered(area);
     }
 
+    private void Goal2_AreaEntered(Area2D area)
+    {
+        // Increment Scroe
+        _player1Score++;
+
+        // Update UI
+        _player1Label.Text = $"Score: {_player1Score}";
+
+        // Handle Event
+        HandleAreaEntered(area);
+    }
+
     #region Functions
+
+    private void HandleAreaEntered(Area2D area)
+    {
+        if (area is ball ball)
+        {
+            // Reset Ball
+            ball.Reset();
+
+            // Increase Intensity
+            _musicIntensity += _musicIntensity < 1 ? 0.1f : 0.0f;
+            _ovaniSoundPlayer.SetDeferred("Intensity", _musicIntensity);
+        }
+    }
+
+    private void SpawnAI(Marker2D spawnPoint)
+    {
+        // Setup
+        pong_ai ai = (pong_ai)_aiScene.Instantiate();
+
+        // Setup Methods
+        ai.Setup(_arena.GetChild<ball>(0));
+
+        // Assign Properties
+        ai.Name = "AI";
+        ai.Transform = spawnPoint.Transform;
+
+        // Add to Tree
+        _arena.AddChild(ai);
+
+        // Remove Marker
+        spawnPoint.QueueFree();
+    }
 
     private void SpawnPlayer(string name, Marker2D spawnPoint)
     {
@@ -124,19 +156,6 @@ public partial class pong_game : Node2D
 
         // Remove Marker
         spawnPoint.QueueFree();
-    }
-
-    private void HandleAreaEntered(Area2D area)
-    {
-        if (area is ball ball)
-        {
-            // Reset Ball
-            ball.Reset();
-
-            // Increase Intensity
-            _musicIntensity += _musicIntensity < 1 ? 0.1f : 0.0f;
-            _ovaniSoundPlayer.SetDeferred("Intensity", _musicIntensity);
-        }
     }
 
     #endregion

@@ -1,14 +1,14 @@
 using Godot;
-using System;
 
 public partial class ball : Area2D
 {
-	public const float START_SPEED = 100.0f;
+	public const float START_SPEED = 200.0f;
     public const float SPEED_INCREASE = 25.0f;
 
     // Movement Vars
 	private bool _up = false;
 	private bool _left = false;
+    private Node _recollisionCheck = null;
     private float _currentSpeed = START_SPEED;
 
     public override void _Ready()
@@ -42,21 +42,38 @@ public partial class ball : Area2D
 
     private void Ball_AreaEntered(Area2D area)
     {
+        // Recollision Check
+        if (area == _recollisionCheck)
+            return;
+
         // Check - Change Vertical/Horizontal
         if (area is player_wall)
             _left = !_left;
         else
             _up = !_up;
+
+        // Set Recollision Check
+        _recollisionCheck = area;
     }
 
     private void Ball_BodyEntered(Node2D body)
     {
+        // Recollision Check
+        if (body == _recollisionCheck)
+            return;
+
         // Change Horizontal
         _left = !_left;
 
         // Increase Speed
         if (body is player)
             _currentSpeed += SPEED_INCREASE;
+
+        if (body is pong_ai)
+            _currentSpeed += SPEED_INCREASE;
+
+        // Set Recollision Check
+        _recollisionCheck = body;
     }
 
     #endregion
@@ -71,6 +88,7 @@ public partial class ball : Area2D
         // Reset Movement Vars
         _up = !_up;
         _left = !_left;
+        _recollisionCheck = null;
         _currentSpeed = START_SPEED;
     }
 
