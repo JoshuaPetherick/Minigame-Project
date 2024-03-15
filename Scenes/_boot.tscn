@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfy5jxgx641sj"]
+
+[ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_y24we"]
+[ext_resource type="PackedScene" uid="uid://m8ntu0omkkon" path="res://Scenes/menu.tscn" id="2_i5bvy"]
+[ext_resource type="PackedScene" uid="uid://dnjl7mxs1k87e" path="res://Scenes/Pong/pong_game.tscn" id="3_i7cqy"]
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="3_otlvw"]
+
+[node name="_boot" type="Node"]
+
+[node name="Game" type="Node" parent="." node_paths=PackedStringArray("_musicPlayer")]
+script = ExtResource("1_y24we")
+_musicPlayer = NodePath("../OvaniPlayer")
+_mainMenu = ExtResource("2_i5bvy")
+_pongGame = ExtResource("3_i7cqy")
+
+[node name="OvaniPlayer" type="Node" parent="."]
+script = ExtResource("3_otlvw")

@@ -1,0 +1,203 @@
+[gd_scene load_steps=7 format=3 uid="uid://m8ntu0omkkon"]
+
+[ext_resource type="Script" path="res://Scripts/MainMenu/MainScreen.cs" id="1_3wk37"]
+[ext_resource type="Script" path="res://Scripts/MainMenu/SingleplayerScreen.cs" id="2_ain2k"]
+[ext_resource type="Script" path="res://Scripts/MainMenu/VersusScreen.cs" id="3_8tpf1"]
+[ext_resource type="Script" path="res://Scripts/MainMenu/ConnectionScreen.cs" id="4_hrfff"]
+[ext_resource type="Script" path="res://Scripts/MainMenu/MultiplayerScreen.cs" id="4_wboit"]
+[ext_resource type="Script" path="res://Scripts/MainMenu/SettingsScreen.cs" id="5_7apof"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Screens" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="CenterContainer" type="CenterContainer" parent="Screens"]
+layout_mode = 2
+
+[node name="MainScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_singlePlayerScreen", "_versusPlayerScreen", "_multiPlayerScreen", "_settingsScreen", "_singlePlayerButton", "_versusButton", "_multiPlayerButton", "_settingsButton", "_exitButton")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
+script = ExtResource("1_3wk37")
+_singlePlayerScreen = NodePath("../SingleplayerScreen")
+_versusPlayerScreen = NodePath("../VersusScreen")
+_multiPlayerScreen = NodePath("../ConnectionScreen")
+_settingsScreen = NodePath("../SettingsScreen")
+_singlePlayerButton = NodePath("Singleplayer")
+_versusButton = NodePath("Versus")
+_multiPlayerButton = NodePath("Multiplayer")
+_settingsButton = NodePath("Settings")
+_exitButton = NodePath("Exit")
+
+[node name="Singleplayer" type="Button" parent="Screens/CenterContainer/MainScreen"]
+layout_mode = 2
+text = "Singleplayer"
+
+[node name="Versus" type="Button" parent="Screens/CenterContainer/MainScreen"]
+layout_mode = 2
+text = "Versus"
+
+[node name="Multiplayer" type="Button" parent="Screens/CenterContainer/MainScreen"]
+layout_mode = 2
+text = "Multiplayer"
+
+[node name="Settings" type="Button" parent="Screens/CenterContainer/MainScreen"]
+layout_mode = 2
+disabled = true
+text = "Settings"
+
+[node name="Exit" type="Button" parent="Screens/CenterContainer/MainScreen"]
+layout_mode = 2
+text = "Exit"
+
+[node name="SingleplayerScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_snakeButton", "_breakoutButton", "_pongButton", "_platformerButton", "_backButton")]
+visible = false
+custom_minimum_size = Vector2(150, 175)
+layout_mode = 2
+script = ExtResource("2_ain2k")
+_backScreen = NodePath("../MainScreen")
+_snakeButton = NodePath("Snake")
+_breakoutButton = NodePath("Breakout")
+_pongButton = NodePath("Pong")
+_platformerButton = NodePath("Platformer")
+_backButton = NodePath("Back")
+
+[node name="Snake" type="Button" parent="Screens/CenterContainer/SingleplayerScreen"]
+layout_mode = 2
+text = "Snake"
+
+[node name="Breakout" type="Button" parent="Screens/CenterContainer/SingleplayerScreen"]
+layout_mode = 2
+disabled = true
+text = "Breakout"
+
+[node name="Pong" type="Button" parent="Screens/CenterContainer/SingleplayerScreen"]
+layout_mode = 2
+text = "Pong"
+
+[node name="Platformer" type="Button" parent="Screens/CenterContainer/SingleplayerScreen"]
+layout_mode = 2
+disabled = true
+text = "Platformer"
+
+[node name="Back" type="Button" parent="Screens/CenterContainer/SingleplayerScreen"]
+layout_mode = 2
+text = "Back"
+
+[node name="VersusScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_pongButton", "_backButton")]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 1
+script = ExtResource("3_8tpf1")
+_backScreen = NodePath("../MainScreen")
+_pongButton = NodePath("Pong")
+_backButton = NodePath("Back")
+
+[node name="Pong" type="Button" parent="Screens/CenterContainer/VersusScreen"]
+layout_mode = 2
+text = "Pong"
+
+[node name="Back" type="Button" parent="Screens/CenterContainer/VersusScreen"]
+layout_mode = 2
+text = "Back"
+
+[node name="ConnectionScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_hostButton", "_ipAddress", "_connectButton", "_backButton")]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 1
+script = ExtResource("4_hrfff")
+_backScreen = NodePath("../MainScreen")
+_hostButton = NodePath("Host")
+_ipAddress = NodePath("IP Address")
+_connectButton = NodePath("Connect")
+_backButton = NodePath("Back")
+
+[node name="Host" type="Button" parent="Screens/CenterContainer/ConnectionScreen"]
+layout_mode = 2
+text = "Host"
+
+[node name="Buffer_1" type="Label" parent="Screens/CenterContainer/ConnectionScreen"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="IP Address" type="LineEdit" parent="Screens/CenterContainer/ConnectionScreen"]
+layout_mode = 2
+placeholder_text = "127.0.0.1"
+alignment = 1
+
+[node name="Connect" type="Button" parent="Screens/CenterContainer/ConnectionScreen"]
+layout_mode = 2
+text = "Connect"
+
+[node name="Status" type="Label" parent="Screens/CenterContainer/ConnectionScreen"]
+layout_mode = 2
+text = "..."
+horizontal_alignment = 1
+
+[node name="Buffer_2" type="Label" parent="Screens/CenterContainer/ConnectionScreen"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="Screens/CenterContainer/ConnectionScreen"]
+layout_mode = 2
+text = "Back"
+
+[node name="MultiplayerScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_pongButton", "_tronButton", "_backButton")]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 1
+script = ExtResource("4_wboit")
+_backScreen = NodePath("../MainScreen")
+_pongButton = NodePath("Pong")
+_tronButton = NodePath("Tron")
+_backButton = NodePath("Back")
+
+[node name="Pong" type="Button" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+text = "Pong"
+
+[node name="Tron" type="Button" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+text = "Tron"
+
+[node name="Back" type="Button" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+text = "Back"
+
+[node name="SettingsScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_backButton")]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 1
+script = ExtResource("5_7apof")
+_backScreen = NodePath("..")
+_backButton = NodePath("Back")
+
+[node name="Label" type="Label" parent="Screens/CenterContainer/SettingsScreen"]
+layout_mode = 2
+text = "TODO"
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="Screens/CenterContainer/SettingsScreen"]
+layout_mode = 2
+text = "Back"

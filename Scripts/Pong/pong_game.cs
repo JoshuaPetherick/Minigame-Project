@@ -12,6 +12,8 @@ public partial class pong_game : Node2D
 
     [ExportCategory("Nodes")]
     [Export]
+    private Timer _gameStartTimer;
+    [Export]
     private arena _arena;
     [Export]
     private Marker2D _player1Spawn;
@@ -24,55 +26,53 @@ public partial class pong_game : Node2D
     [Export]
     private Node _ovaniSoundPlayer;
     [Export]
+    private Label _gameStatus;
+    [Export]
     private Label _player1Label;
     [Export]
     private Label _player2Label;
 
     // Gameplay Types
-    public enum GameModes
-    {
-        SINGLEPLAYER = 1,
-        VERSUS = 2,
-        MULTIPLAYER = 3
-    }
-    private GameModes _gameMode = GameModes.SINGLEPLAYER;
+    private static int _GAME_START_COUNTDOWN = 5; // Seconds
+    private static int _HIDE_STATUS_COUNTDOWN = 10; // Seconds
+    
+    private GameManager.GameModes _gameMode = GameManager.GameModes.SINGLEPLAYER;
 
+    private int _currentGameCountdown = 0;
     private int _player1Score = 0;
     private int _player2Score = 0;
 
     private float _musicIntensity = 0f;
 
-    /// <summary>
-    /// Used for Testing!
-    /// </summary>
-    public override void _Ready()
-        => Setup(GameModes.SINGLEPLAYER);
-
     // Should be called when the node enters the scene tree for the first time.
-    public void Setup(GameModes gameMode)
+    public void Setup(GameManager.GameModes gameMode)
     {
         // Initalise
         _gameMode = gameMode;
 
+        // Pause Arena
+        _arena.ProcessMode = ProcessModeEnum.Disabled;
+
         // Setup Players
         switch (gameMode)
         {
-            case GameModes.SINGLEPLAYER:
+            case GameManager.GameModes.SINGLEPLAYER:
                 SpawnPlayer("Player", _player1Spawn);
                 SpawnAI(_player2Spawn);
                 break;
 
-            case GameModes.VERSUS:
+            case GameManager.GameModes.VERSUS:
                 SpawnPlayer("Player 1", _player1Spawn);
                 SpawnPlayer("Player 2", _player2Spawn);
                 break;
 
-            case GameModes.MULTIPLAYER:
+            case GameManager.GameModes.MULTIPLAYER:
                 // TODO
                 break;
         }
 
         // Setup Events
+        _gameStartTimer.Timeout += GameStartTimer_Timeout;
         _goal1.AreaEntered += Goal1_AreaEntered;
         _goal2.AreaEntered += Goal2_AreaEntered;
 
@@ -80,8 +80,41 @@ public partial class pong_game : Node2D
         _ovaniSoundPlayer.SetDeferred("Intensity", _musicIntensity);
 
         // Setup UI
+        UpdateCountdownLabel();
         _player1Label.Text = $"Score: {_player1Score}";
         _player2Label.Text = $"Score: {_player2Score}";
+
+        // Start Timer
+        _gameStartTimer.Start();
+    }
+
+    private void GameStartTimer_Timeout()
+    {
+        // Increment
+        _currentGameCountdown++;
+
+        // Check
+        if (_currentGameCountdown < _GAME_START_COUNTDOWN)
+        {
+            // Update UI
+            UpdateCountdownLabel();
+        }
+        else if (_currentGameCountdown >= _HIDE_STATUS_COUNTDOWN)
+        {
+            // Update UI
+            _gameStatus.Text = "";
+
+            // Stop Timer
+            _gameStartTimer.Stop();
+        }
+        else
+        {
+            // Start Game
+            _arena.ProcessMode = ProcessModeEnum.Inherit;
+
+            // Update UI
+            _gameStatus.Text = "Game Started!";
+        }
     }
 
     private void Goal1_AreaEntered(Area2D area)
@@ -157,6 +190,9 @@ public partial class pong_game : Node2D
         // Remove Marker
         spawnPoint.QueueFree();
     }
+
+    private void UpdateCountdownLabel()
+        => _gameStatus.Text = $"Starting in {_GAME_START_COUNTDOWN - _currentGameCountdown}";
 
     #endregion
 }
