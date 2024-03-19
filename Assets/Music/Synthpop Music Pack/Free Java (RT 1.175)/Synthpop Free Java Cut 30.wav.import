@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://l8u4wtuyot1k"
+path="res://.godot/imported/Synthpop Free Java Cut 30.wav-3c21bad8368e1fe5b3da2c36325287a8.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Synthpop Music Pack/Free Java (RT 1.175)/Synthpop Free Java Cut 30.wav"
+dest_files=["res://.godot/imported/Synthpop Free Java Cut 30.wav-3c21bad8368e1fe5b3da2c36325287a8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

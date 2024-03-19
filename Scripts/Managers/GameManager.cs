@@ -2,10 +2,6 @@ using Godot;
 
 public partial class GameManager : Node
 {
-	[ExportCategory("Nodes")]
-	[Export]
-	private Node _musicPlayer;
-
 	[ExportCategory("Scenes")]
 	[Export]
 	private PackedScene _mainMenu;
@@ -56,6 +52,9 @@ public partial class GameManager : Node
                 ((pong_game)gameNode).Setup(gameMode);
                 break;
         }
+
+        // Start Game Music
+        MusicManager.instance.StartGameSong(game);
     }
 
     #region Functions

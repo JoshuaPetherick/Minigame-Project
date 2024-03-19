@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="OvaniSong" load_steps=7 format=3 uid="uid://i6hs4tbwjiah"]
+
+[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd" id="1_otrg2"]
+[ext_resource type="AudioStream" uid="uid://dtomyigh6hgus" path="res://Assets/Music/Synthpop Music Pack/Free Java (RT 1.175)/Synthpop Free Java Intensity 1.wav" id="1_wduoy"]
+[ext_resource type="AudioStream" uid="uid://cdek1jasbor5t" path="res://Assets/Music/Synthpop Music Pack/Free Java (RT 1.175)/Synthpop Free Java Intensity 2.wav" id="2_jhwns"]
+[ext_resource type="AudioStream" uid="uid://calmipf35slti" path="res://Assets/Music/Synthpop Music Pack/Free Java (RT 1.175)/Synthpop Free Java Main.wav" id="3_qpjbf"]
+[ext_resource type="AudioStream" uid="uid://l8u4wtuyot1k" path="res://Assets/Music/Synthpop Music Pack/Free Java (RT 1.175)/Synthpop Free Java Cut 30.wav" id="4_74byb"]
+[ext_resource type="AudioStream" uid="uid://bfrh0ynuumj54" path="res://Assets/Music/Synthpop Music Pack/Free Java (RT 1.175)/Synthpop Free Java Cut 60.wav" id="5_0r5nk"]
+
+[resource]
+script = ExtResource("1_otrg2")
+Intensity1 = ExtResource("1_wduoy")
+Intensity2 = ExtResource("2_jhwns")
+Intensity3 = ExtResource("3_qpjbf")
+Loop30 = ExtResource("4_74byb")
+Loop60 = ExtResource("5_0r5nk")
+ReverbTail = 1.175
+SongMode = 2
