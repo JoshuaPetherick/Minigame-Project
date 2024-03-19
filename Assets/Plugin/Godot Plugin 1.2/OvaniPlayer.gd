@@ -151,7 +151,7 @@ var _timeIntFadeStarted : float = 0;
 var _timeIntFadeEnded : float = 1;
 ## Use this to transition the current Intensity over time. [br]
 ## It's a simple alternative to setting the Intensity manually yourself each frame.
-func FadeIntensity(intensity : float, transitionTime : float):
+func FadeIntensity(intensity : float, transitionTime : float = 1.0):
 	_timeIntFadeStarted = _curTime
 	_timeIntFadeEnded  = _curTime + transitionTime;
 	_startIntFadeVal = Intensity;
@@ -163,7 +163,7 @@ var _timeVolFadeStarted : float = 0;
 var _timeVolFadeEnded : float = 1;
 ## Use this to transition the current Decibel Volume over time. [br]
 ## It's a simple alternative to setting the Volume manually yourself each frame.
-func FadeVolume(volume : float, transitionTime : float):
+func FadeVolume(volume : float, transitionTime : float = 0):
 	_timeVolFadeStarted = _curTime
 	_timeVolFadeEnded  = _curTime + transitionTime;
 	_startVolFadeVal = Volume;
@@ -186,6 +186,12 @@ func _process(delta):
 	# Volume Fade Logic
 	if (_timeVolFadeStarted < _curTime && _timeVolFadeEnded > _curTime):
 		Volume = lerp(_startVolFadeVal, _endVolFadeVal, (_curTime - _timeVolFadeStarted)/(_timeVolFadeEnded - _timeVolFadeStarted))
+
+	# Josh: Fix Multi-Song Issue
+	if (len(QueuedSongs) > 1):
+		LoopQueue = false
+	else:
+		LoopQueue = true
 
 	# Play queued songs logic
 	if (len(QueuedSongs) > 0):

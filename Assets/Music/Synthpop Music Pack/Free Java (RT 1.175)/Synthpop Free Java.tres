@@ -15,4 +15,4 @@ Intensity3 = ExtResource("3_qpjbf")
 Loop30 = ExtResource("4_74byb")
 Loop60 = ExtResource("5_0r5nk")
 ReverbTail = 1.175
-SongMode = 2
+SongMode = 0

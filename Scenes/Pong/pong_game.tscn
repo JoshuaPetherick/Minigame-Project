@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dnjl7mxs1k87e"]
+[gd_scene load_steps=10 format=3 uid="uid://dnjl7mxs1k87e"]
 
 [ext_resource type="Script" path="res://Scripts/Pong/pong_game.cs" id="1_1f53n"]
 [ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="1_6eudc"]
@@ -7,8 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://b7vj7tmk05oem" path="res://Scenes/Pong/singleplayer_player.tscn" id="2_vhd2k"]
 [ext_resource type="PackedScene" uid="uid://capnpo0onuwn0" path="res://Scenes/Pong/ai.tscn" id="3_k8a4i"]
 [ext_resource type="PackedScene" uid="uid://b5stnv5x3rpfy" path="res://Scenes/Pong/ball.tscn" id="4_vomq5"]
-[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="5_sw08c"]
-[ext_resource type="Resource" uid="uid://txgtjfiydg33" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight.tres" id="6_rcwuk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2fd5e"]
 size = Vector2(1, 1)
@@ -16,7 +14,7 @@ size = Vector2(1, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2t2c"]
 size = Vector2(10, 510)
 
-[node name="Pong" type="Node2D" node_paths=PackedStringArray("_gameStartTimer", "_arena", "_player1Spawn", "_player2Spawn", "_goal1", "_goal2", "_ovaniSoundPlayer", "_gameStatus", "_player1Label", "_player2Label")]
+[node name="Pong" type="Node2D" node_paths=PackedStringArray("_gameStartTimer", "_arena", "_player1Spawn", "_player2Spawn", "_goal1", "_goal2", "_gameStatus", "_player1Label", "_player2Label")]
 script = ExtResource("1_1f53n")
 _singleplayerScene = ExtResource("2_vhd2k")
 _aiScene = ExtResource("3_k8a4i")
@@ -26,7 +24,6 @@ _player1Spawn = NodePath("Arena/Player1_Spawn")
 _player2Spawn = NodePath("Arena/Player2_Spawn")
 _goal1 = NodePath("Arena/Goals/Goal_1")
 _goal2 = NodePath("Arena/Goals/Goal_2")
-_ovaniSoundPlayer = NodePath("OvaniPlayer")
 _gameStatus = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Game Status")
 _player1Label = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Player 1 Score")
 _player2Label = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Player 2 Score")
@@ -167,11 +164,5 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Score: X"
 horizontal_alignment = 2
-
-[node name="OvaniPlayer" type="Node" parent="."]
-script = ExtResource("5_sw08c")
-QueuedSongs = Array[Resource("res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd")]([ExtResource("6_rcwuk")])
-Volume = -25.0
-LoopQueue = true
 
 [node name="Game Start Timer" type="Timer" parent="."]

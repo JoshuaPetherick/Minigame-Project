@@ -20,7 +20,7 @@ public partial class MusicManager : Node
     [Export]
     private Resource _platformerSong;
 
-    public const float DEFAULT_TRANSITION_TIME = 5.0f; // Seconds
+    private const float _DEFAULT_TRANSITION_TIME = 2.5f; // Seconds
 
     public static MusicManager instance;
 
@@ -30,9 +30,6 @@ public partial class MusicManager : Node
         // Initalise
         instance = this;
 
-        // Reset Params
-        SetIntensity(0, 0);
-
         // Load Menu Music
         StartMenuMusic();
     }
@@ -40,16 +37,28 @@ public partial class MusicManager : Node
     #region Public Functions
 
     public void StartMenuMusic()
-        => PlaySongName(_mainMenuSong, 0);
+    {
+        // Set Intensify
+        SetIntensity(0.5f);
+
+        // Queue Song
+        PlaySongName(_mainMenuSong, 0f);
+    }
 
     public void StartGameSong(GameManager.Games game)
-        => PlaySongName(GetSong(game), DEFAULT_TRANSITION_TIME);
+    {
+        // Set Intensify
+        SetIntensity(0f);
 
-    public void SetIntensity(float intensity, float transitionTime)
-    => _ovaniPlayer.CallDeferred("FadeIntensity", Mathf.Clamp(intensity, 0.0f, 1.0f), transitionTime);
+        // Queue Song
+        PlaySongName(GetSong(game), _DEFAULT_TRANSITION_TIME);
+    }
 
-    public void SetVolume(float volume, float transitionTime)
-        => _ovaniPlayer.CallDeferred("FadeVolume", volume, transitionTime);
+    public void SetIntensity(float intensity)
+    => _ovaniPlayer.CallDeferred("FadeIntensity", Mathf.Clamp(intensity, 0.0f, 1.0f));
+
+    public void SetVolume(float volume)
+        => _ovaniPlayer.CallDeferred("FadeVolume", volume);
 
     #endregion
 
@@ -73,10 +82,8 @@ public partial class MusicManager : Node
 
             case GameManager.Games.PLATFORMER:
                 return _platformerSong;
-
-            default:
-                return null;
         }
+        return null;
     }
 
     private void PlaySongName(Resource song, float transitionTime = -1)

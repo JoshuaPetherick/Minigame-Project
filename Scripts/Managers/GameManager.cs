@@ -69,14 +69,18 @@ public partial class GameManager : Node
 			case Games.SNAKE:
 				// TODO
 				break;
+
             case Games.BREAKOUT:
                 // TODO
                 break;
+
             case Games.PONG:
                 return _pongGame.Instantiate();
+
             case Games.TRON:
                 // TODO
                 break;
+
             case Games.PLATFORMER:
                 // TODO
                 break;

@@ -10,7 +10,7 @@ public partial class pong_game : Node2D
     [Export]
     private PackedScene _aiScene;
 
-    [ExportCategory("Nodes")]
+    [ExportCategory("Game Nodes")]
     [Export]
     private Timer _gameStartTimer;
     [Export]
@@ -23,8 +23,8 @@ public partial class pong_game : Node2D
     private Area2D _goal1;
     [Export]
     private Area2D _goal2;
-    [Export]
-    private Node _ovaniSoundPlayer;
+
+    [ExportCategory("UI Nodes")]
     [Export]
     private Label _gameStatus;
     [Export]
@@ -75,9 +75,6 @@ public partial class pong_game : Node2D
         _gameStartTimer.Timeout += GameStartTimer_Timeout;
         _goal1.AreaEntered += Goal1_AreaEntered;
         _goal2.AreaEntered += Goal2_AreaEntered;
-
-        // Setup Music
-        _ovaniSoundPlayer.SetDeferred("Intensity", _musicIntensity);
 
         // Setup UI
         UpdateCountdownLabel();
@@ -152,7 +149,7 @@ public partial class pong_game : Node2D
 
             // Increase Intensity
             _musicIntensity += _musicIntensity < 1 ? 0.1f : 0.0f;
-            _ovaniSoundPlayer.SetDeferred("Intensity", _musicIntensity);
+            MusicManager.instance.SetIntensity(_musicIntensity);
         }
     }
 
