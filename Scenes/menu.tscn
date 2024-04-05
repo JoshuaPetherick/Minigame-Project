@@ -119,17 +119,24 @@ text = "Pong"
 layout_mode = 2
 text = "Back"
 
-[node name="ConnectionScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_hostButton", "_ipAddress", "_connectButton", "_backButton")]
+[node name="ConnectionScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_lobbyScreen", "_playerName", "_hostButton", "_ipAddress", "_connectButton", "_backButton")]
 visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 alignment = 1
 script = ExtResource("4_hrfff")
 _backScreen = NodePath("../MainScreen")
+_lobbyScreen = NodePath("../MultiplayerScreen")
+_playerName = NodePath("Name")
 _hostButton = NodePath("Host")
 _ipAddress = NodePath("IP Address")
 _connectButton = NodePath("Connect")
 _backButton = NodePath("Back")
+
+[node name="Name" type="LineEdit" parent="Screens/CenterContainer/ConnectionScreen"]
+layout_mode = 2
+placeholder_text = "Enter Name Here"
+alignment = 1
 
 [node name="Host" type="Button" parent="Screens/CenterContainer/ConnectionScreen"]
 layout_mode = 2
@@ -147,11 +154,6 @@ alignment = 1
 [node name="Connect" type="Button" parent="Screens/CenterContainer/ConnectionScreen"]
 layout_mode = 2
 text = "Connect"
-
-[node name="Status" type="Label" parent="Screens/CenterContainer/ConnectionScreen"]
-layout_mode = 2
-text = "..."
-horizontal_alignment = 1
 
 [node name="Buffer_2" type="Label" parent="Screens/CenterContainer/ConnectionScreen"]
 layout_mode = 2

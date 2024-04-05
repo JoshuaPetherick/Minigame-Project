@@ -55,7 +55,7 @@ public partial class MusicManager : Node
     }
 
     public void SetIntensity(float intensity)
-    => _ovaniPlayer.CallDeferred("FadeIntensity", Mathf.Clamp(intensity, 0.0f, 1.0f));
+        => _ovaniPlayer.CallDeferred("FadeIntensity", Mathf.Clamp(intensity, 0.0f, 1.0f));
 
     public void SetVolume(float volume)
         => _ovaniPlayer.CallDeferred("FadeVolume", volume);

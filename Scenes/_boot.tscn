@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfy5jxgx641sj"]
+[gd_scene load_steps=11 format=3 uid="uid://bfy5jxgx641sj"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_y24we"]
 [ext_resource type="PackedScene" uid="uid://m8ntu0omkkon" path="res://Scenes/menu.tscn" id="2_i5bvy"]
@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://vr0eku5j4gwl" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run.tres" id="5_mk5yc"]
 [ext_resource type="Resource" uid="uid://txgtjfiydg33" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight.tres" id="6_bp8a8"]
 [ext_resource type="Resource" uid="uid://cqdqt5w56rbki" path="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted.tres" id="8_1v13u"]
+[ext_resource type="Script" path="res://Scripts/Managers/MultiplayerManager.cs" id="10_wrsij"]
 
 [node name="_boot" type="Node"]
 
@@ -29,3 +30,6 @@ _tronSong = ExtResource("8_1v13u")
 script = ExtResource("3_otlvw")
 Volume = -25.0
 LoopQueue = true
+
+[node name="Multiplayer" type="Node" parent="."]
+script = ExtResource("10_wrsij")
