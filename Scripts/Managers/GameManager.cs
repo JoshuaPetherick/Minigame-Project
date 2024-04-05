@@ -6,7 +6,9 @@ public partial class GameManager : Node
 	[Export]
 	private PackedScene _mainMenu;
 	[Export]
-	private PackedScene _pongGame; 
+	private PackedScene _pongGame;
+    [Export]
+    private PackedScene _snakeGame;
 
     public static GameManager instance;
 	public enum Games
@@ -51,6 +53,8 @@ public partial class GameManager : Node
             case Games.PONG:
                 ((pong_game)gameNode).Setup(gameMode);
                 break;
+            case Games.SNAKE:
+                break;
         }
 
         // Start Game Music
@@ -67,8 +71,7 @@ public partial class GameManager : Node
 		switch (game)
 		{
 			case Games.SNAKE:
-				// TODO
-				break;
+                return _snakeGame.Instantiate();
 
             case Games.BREAKOUT:
                 // TODO
