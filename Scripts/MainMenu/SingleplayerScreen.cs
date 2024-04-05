@@ -30,9 +30,8 @@ public partial class SingleplayerScreen : VBoxContainer
     }
 
     private void SnakeButton_Pressed()
-    {
-        // TODO
-    }
+        => GameManager.instance.LoadGame(GameManager.Games.SNAKE);
+    
 
     private void BreakoutButton_Pressed()
     {

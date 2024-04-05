@@ -8,11 +8,11 @@ public partial class SnakeGame : Node2D
 	private Label scoreLabel;
 	[Export]
 	private Snake snake;
-    [Export]
-    private Node ovaniPlayer;
 
-    private int apples = 0;
+    private int apples = 0;  
 	float musIntensity = 0f;
+	int mutation;
+	bool removedMutation = false;
 	private RandomNumberGenerator rng = new RandomNumberGenerator();
 
     // Called when the node enters the scene tree for the first time.
@@ -26,6 +26,7 @@ public partial class SnakeGame : Node2D
 
 		// Signal Setup
 		snake.GetSnakeHead().BodyEntered += SnakeHead_BodyEntered;
+
     }
 
     #region Signals
@@ -51,12 +52,51 @@ public partial class SnakeGame : Node2D
 			// Spawn New Apple
 			CallDeferred("SpawnApple");
 
-			// Spawn New Piece
-			snake.CallDeferred("AddBodyPiece");
-
 			//increment music intensity
 			musIntensity += 0.05f;
-			if(musIntensity <1f) ovaniPlayer.SetDeferred("Intensity", musIntensity);
+			if (musIntensity < 1f) MusicManager.instance.SetIntensity(musIntensity);
+				
+			//mutation
+			if(apples >= 15)
+			{
+                mutation = rng.RandiRange(1, 6);
+				switch(mutation)
+				{
+					//double growth
+					case 1:
+						snake.CallDeferred("AddBodyPiece");
+						snake._SNAKE_SPEED_MINIMUM = 0.150;
+                        break;
+					//Anti growth
+					case 2: 
+						//snake body pieces.remove(last)??
+						removedMutation = true;
+                        snake._SNAKE_SPEED_MINIMUM = 0.150;
+                        break;
+					//Slow speed
+					case 3:
+						snake._SNAKE_SPEED_MINIMUM = snake._SNAKE_SPEED_MINIMUM + snake._SNAKE_SPEED_MINIMUM; //does nothing if already at max speed
+						break;
+					//double speed
+					case 4:
+						snake._SNAKE_SPEED_MINIMUM = snake._SNAKE_SPEED_MINIMUM / 2;
+						break;
+					//inverse controls
+					case 5:
+                        snake._SNAKE_SPEED_MINIMUM = 0.3;
+						//if (Input.IsActionJustPressed("up")) snake._direction = snake
+						
+                        break;
+					//double apple (?)
+					case 6:
+                        snake._SNAKE_SPEED_MINIMUM = 0.150;
+                        CallDeferred("SpawnApple");
+						break;
+				}
+            }
+            // Spawn New Piece
+			if(!removedMutation) snake.CallDeferred("AddBodyPiece");
+			removedMutation = false;
         }
 
         // Snake Body

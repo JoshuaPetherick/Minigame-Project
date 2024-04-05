@@ -14,17 +14,17 @@ public partial class Snake : Node2D
 
     public const int SNAKE_SIZE = 60;
     private const int _STARTING_BODY_COUNT = 3;
-	private const double _SNAKE_SPEED_MINIMUM = 0.150;
+	public double _SNAKE_SPEED_MINIMUM = 0.150;
 	private const double _SNAKE_SPEED_MODIFIER = 0.025;
 
-	private enum DIRECTION
+	public enum DIRECTION
 	{
 		North = 0,
 		South = 1,
 		East = 2,
 		West = 3
 	};
-	private DIRECTION _direction = DIRECTION.East;
+	public DIRECTION _direction = DIRECTION.East;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

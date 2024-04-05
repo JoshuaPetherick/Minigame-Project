@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dnjl7mxs1k87e" path="res://Scenes/Pong/pong_game.tscn" id="3_i7cqy"]
 [ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="3_otlvw"]
 [ext_resource type="Script" path="res://Scripts/Managers/MusicManager.cs" id="4_kfdxe"]
+[ext_resource type="PackedScene" uid="uid://d0xgka505ooci" path="res://Scenes/SnakeGame.tscn" id="4_owr68"]
 [ext_resource type="Resource" uid="uid://i6hs4tbwjiah" path="res://Assets/Music/Synthpop Music Pack/Free Java (RT 1.175)/Synthpop Free Java.tres" id="5_1vjob"]
 [ext_resource type="Resource" uid="uid://vr0eku5j4gwl" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run.tres" id="5_mk5yc"]
 [ext_resource type="Resource" uid="uid://txgtjfiydg33" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight.tres" id="6_bp8a8"]
@@ -17,6 +18,7 @@
 script = ExtResource("1_y24we")
 _mainMenu = ExtResource("2_i5bvy")
 _pongGame = ExtResource("3_i7cqy")
+_snakeGame = ExtResource("4_owr68")
 
 [node name="Music" type="Node" parent="." node_paths=PackedStringArray("_ovaniPlayer")]
 script = ExtResource("4_kfdxe")
