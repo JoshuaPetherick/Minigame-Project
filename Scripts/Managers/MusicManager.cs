@@ -24,12 +24,12 @@ public partial class MusicManager : Node
 
     public static MusicManager instance;
 
+    public override void _EnterTree()
+        => instance = this;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        // Initalise
-        instance = this;
-
         // Load Menu Music
         StartMenuMusic();
     }

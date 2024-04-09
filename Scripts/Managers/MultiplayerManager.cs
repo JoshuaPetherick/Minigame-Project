@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public partial class MultiplayerManager : Node
 {
-	private const int _PORT = 7777;
+	private const int _PORT = 7676;
 	private const int _MAX_CONNECTIONS = 4;
 
     [Signal]
@@ -22,11 +22,11 @@ public partial class MultiplayerManager : Node
 
     public static MultiplayerManager instance;
 
+    public override void _EnterTree()
+        => instance = this;
+
     public override void _Ready()
     {
-        // Inialise
-        instance = this;
-
         // Setup Signals
         Multiplayer.PeerConnected += Multiplayer_PeerConnected;
         Multiplayer.PeerDisconnected += Multiplayer_PeerDisconnected;
@@ -37,7 +37,7 @@ public partial class MultiplayerManager : Node
 
     #region Public Functions
 
-    public void CreateGame(string name)
+    public Error CreateGame(string name)
     {
         // Setup
         ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
@@ -45,20 +45,21 @@ public partial class MultiplayerManager : Node
 
         // Check
         if (error != Error.Ok)
-        {
-            GD.Print(error);
-            return;
-        }
+            return error;
 
         // Setup Self
         Multiplayer.MultiplayerPeer = peer;
         Players.Add(1, name);
+        _name = name;
 
         // Notify
         EmitSignal(SignalName.PlayerConnected, 1, name);
+
+        // Result
+        return Error.Ok;
     }
 
-    public void JoinGame(string address, string name)
+    public Error JoinGame(string address, string name)
     {
         // Setup
         ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
@@ -66,14 +67,26 @@ public partial class MultiplayerManager : Node
 
         // Check
         if (error != Error.Ok)
-        {
-            GD.Print(error);
-            return;
-        }
-
+            return error;
+        
         // Setup Self
         Multiplayer.MultiplayerPeer = peer;
         _name = name;
+
+        // Result
+        return Error.Ok;
+    }
+
+    public void Disconnect()
+    {
+        // Close Connection 
+        Multiplayer.MultiplayerPeer.Close();
+
+        // Clear Data
+        Players.Clear();
+
+        // Set Null
+        Multiplayer.MultiplayerPeer = null;
     }
 
     #endregion

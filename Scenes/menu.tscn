@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://m8ntu0omkkon"]
+[gd_scene load_steps=8 format=3 uid="uid://m8ntu0omkkon"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu/MainScreen.cs" id="1_3wk37"]
 [ext_resource type="Script" path="res://Scripts/MainMenu/SingleplayerScreen.cs" id="2_ain2k"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/MainMenu/ConnectionScreen.cs" id="4_hrfff"]
 [ext_resource type="Script" path="res://Scripts/MainMenu/MultiplayerScreen.cs" id="4_wboit"]
 [ext_resource type="Script" path="res://Scripts/MainMenu/SettingsScreen.cs" id="5_7apof"]
+[ext_resource type="Script" path="res://Scripts/UI/MultiplayerLabel.cs" id="6_qoj0e"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -148,6 +149,7 @@ horizontal_alignment = 1
 
 [node name="IP Address" type="LineEdit" parent="Screens/CenterContainer/ConnectionScreen"]
 layout_mode = 2
+text = "127.0.0.1"
 placeholder_text = "127.0.0.1"
 alignment = 1
 
@@ -163,24 +165,70 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Back"
 
-[node name="MultiplayerScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_pongButton", "_tronButton", "_backButton")]
+[node name="MultiplayerScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_player1", "_player2", "_player3", "_player4", "_pongButton", "_tronButton", "_backButton")]
 visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 alignment = 1
 script = ExtResource("4_wboit")
 _backScreen = NodePath("../MainScreen")
+_player1 = NodePath("Player_1")
+_player2 = NodePath("Player_2")
+_player3 = NodePath("Player_3")
+_player4 = NodePath("Player_4")
 _pongButton = NodePath("Pong")
 _tronButton = NodePath("Tron")
 _backButton = NodePath("Back")
 
+[node name="Label" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Players
+"
+horizontal_alignment = 1
+
+[node name="Player_1" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0156863, 0.85098, 1, 1)
+text = "..."
+horizontal_alignment = 1
+script = ExtResource("6_qoj0e")
+
+[node name="Player_2" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+text = "..."
+horizontal_alignment = 1
+script = ExtResource("6_qoj0e")
+
+[node name="Player_3" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+text = "..."
+horizontal_alignment = 1
+script = ExtResource("6_qoj0e")
+
+[node name="Player_4" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+text = "..."
+horizontal_alignment = 1
+script = ExtResource("6_qoj0e")
+
+[node name="Buffer_1" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+horizontal_alignment = 1
+
 [node name="Pong" type="Button" parent="Screens/CenterContainer/MultiplayerScreen"]
 layout_mode = 2
+disabled = true
 text = "Pong"
 
 [node name="Tron" type="Button" parent="Screens/CenterContainer/MultiplayerScreen"]
 layout_mode = 2
+disabled = true
 text = "Tron"
+
+[node name="Buffer_2" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+horizontal_alignment = 1
 
 [node name="Back" type="Button" parent="Screens/CenterContainer/MultiplayerScreen"]
 layout_mode = 2

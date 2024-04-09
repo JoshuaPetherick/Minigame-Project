@@ -36,10 +36,10 @@ public partial class ConnectionScreen : VBoxContainer
             return;
 
         // Create Game
-        MultiplayerManager.instance.CreateGame(_playerName.Text);
+        Error error = MultiplayerManager.instance.CreateGame(_playerName.Text);
 
         // Check
-        if (Multiplayer.MultiplayerPeer is null)
+        if (error != Error.Ok)
             return;
 
         // Next Screen
@@ -57,10 +57,10 @@ public partial class ConnectionScreen : VBoxContainer
             return;
 
         // Join Game
-        MultiplayerManager.instance.JoinGame(_ipAddress.Text, _playerName.Text);
+        Error error = MultiplayerManager.instance.JoinGame(_ipAddress.Text, _playerName.Text);
 
         // Check
-        if (Multiplayer.MultiplayerPeer is null)
+        if (error != Error.Ok)
             return;
 
         // Next Screen
