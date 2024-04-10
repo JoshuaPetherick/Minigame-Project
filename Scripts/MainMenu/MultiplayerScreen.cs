@@ -27,6 +27,10 @@ public partial class MultiplayerScreen : VBoxContainer
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        // Disable Buttons
+        _pongButton.Disabled = true;
+        _tronButton.Disabled = true;
+
         // Assign Signals
         _pongButton.Pressed += PongButton_Pressed;
         _tronButton.Pressed += TronButton_Pressed;
@@ -47,7 +51,13 @@ public partial class MultiplayerScreen : VBoxContainer
         if (MultiplayerManager.instance is null)
             return;
 
-        // Enable/Disable Button(s)
+        if (Multiplayer.MultiplayerPeer is null)
+            return;
+
+        if (!Multiplayer.IsServer())
+            return;
+
+        // Enable/Disable Buttons
         _pongButton.Disabled = !(MultiplayerManager.instance.Players.Count == 2);
         _tronButton.Disabled = !(MultiplayerManager.instance.Players.Count >= 2);
     }
