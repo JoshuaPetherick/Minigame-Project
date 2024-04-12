@@ -65,7 +65,14 @@ public partial class MultiplayerScreen : VBoxContainer
     #region Events
 
     private void PongButton_Pressed()
-        => GameManager.instance.LoadGame(GameManager.Games.PONG, GameManager.GameModes.MULTIPLAYER);
+    {
+        // Check
+        if (!Multiplayer.IsServer())
+            return;
+
+        // Start Game
+        MultiplayerManager.instance.StartGameSession((int)GameManager.Games.PONG);
+    }
 
     private void TronButton_Pressed()
     {
@@ -90,31 +97,33 @@ public partial class MultiplayerScreen : VBoxContainer
 
     private void Instance_PlayerConnected(long id, string name)
     {
-        if (_player1.PlayerId is null)
+        if (id == 1)
         {
             _player1.PlayerId = id;
             _player1.Text = name;
             return;
         }
-
-        if (_player2.PlayerId is null)
+        else
         {
-            _player2.PlayerId = id;
-            _player2.Text = name;
-            return;
-        }
+            if (_player2.PlayerId is null)
+            {
+                _player2.PlayerId = id;
+                _player2.Text = name;
+                return;
+            }
 
-        if (_player3.PlayerId is null)
-        {
-            _player3.PlayerId = id;
-            _player3.Text = name;
-            return;
-        }
+            if (_player3.PlayerId is null)
+            {
+                _player3.PlayerId = id;
+                _player3.Text = name;
+                return;
+            }
 
-        if (_player4.PlayerId is null)
-        {
-            _player4.PlayerId = id;
-            _player4.Text = name;
+            if (_player4.PlayerId is null)
+            {
+                _player4.PlayerId = id;
+                _player4.Text = name;
+            }
         }
     }
 

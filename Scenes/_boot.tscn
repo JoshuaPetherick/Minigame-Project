@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bfy5jxgx641sj"]
+[gd_scene load_steps=13 format=3 uid="uid://bfy5jxgx641sj"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_y24we"]
 [ext_resource type="PackedScene" uid="uid://m8ntu0omkkon" path="res://Scenes/menu.tscn" id="2_i5bvy"]
@@ -11,6 +11,14 @@
 [ext_resource type="Resource" uid="uid://txgtjfiydg33" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight.tres" id="6_bp8a8"]
 [ext_resource type="Resource" uid="uid://cqdqt5w56rbki" path="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted.tres" id="8_1v13u"]
 [ext_resource type="Script" path="res://Scripts/Managers/MultiplayerManager.cs" id="10_wrsij"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_66g45"]
+properties/0/path = NodePath("Music/OvaniPlayer:Intensity")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("Music/OvaniPlayer:Volume")
+properties/1/spawn = true
+properties/1/replication_mode = 2
 
 [node name="_boot" type="Node"]
 
@@ -35,3 +43,6 @@ LoopQueue = true
 
 [node name="Multiplayer" type="Node" parent="."]
 script = ExtResource("10_wrsij")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_66g45")

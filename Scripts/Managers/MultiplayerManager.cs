@@ -17,7 +17,7 @@ public partial class MultiplayerManager : Node
     [Signal]
     public delegate void ServerDisconnectedEventHandler();
 
-    public Dictionary<long, string> Players = new Dictionary<long, string>();
+    public List<PlayerInfo> Players = new List<PlayerInfo>();
     private string _name;
 
     public static MultiplayerManager instance;
@@ -49,7 +49,7 @@ public partial class MultiplayerManager : Node
 
         // Setup Self
         Multiplayer.MultiplayerPeer = peer;
-        Players.Add(1, name);
+        Players.Add(new PlayerInfo(1, name));
         _name = name;
 
         // Notify
@@ -77,6 +77,9 @@ public partial class MultiplayerManager : Node
         return Error.Ok;
     }
 
+    public void StartGameSession(int game)
+        => Rpc("StartGame", game);
+
     public void Disconnect()
     {
         // Close Connection 
@@ -89,6 +92,26 @@ public partial class MultiplayerManager : Node
         Multiplayer.MultiplayerPeer = null;
     }
 
+    public PlayerInfo GetHost()
+    {
+        foreach (PlayerInfo player in Players)
+        {
+            if (player.Id == 1)
+                return player;
+        }
+        return null;
+    }
+
+    public PlayerInfo GetOtherPlayer()
+    {
+        foreach (PlayerInfo player in Players)
+        {
+            if (player.Id != 1)
+                return player;
+        }
+        return null;
+    }
+
     #endregion
 
     #region Events
@@ -98,14 +121,14 @@ public partial class MultiplayerManager : Node
 
     private void Multiplayer_PeerDisconnected(long id)
     {
-        Players.Remove(id);
+        Players.Remove(GetPlayerById(id));
         EmitSignal(SignalName.PlayerDisconnected, id);
     }
 
     private void Multiplayer_ConnectedToServer()
     {
         int id = Multiplayer.GetUniqueId();
-        Players.Add(id, _name);
+        Players.Add(new PlayerInfo(id, _name));
         EmitSignal(SignalName.PlayerConnected, id, _name);
     }
 
@@ -121,14 +144,32 @@ public partial class MultiplayerManager : Node
 
     #endregion
 
-    #region Functions
+    #region RPC 
 
     [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     private void RegisterPlayer(string newPlayerName)
     {
         int id = Multiplayer.GetRemoteSenderId();
-        Players.Add(id, newPlayerName);
+        Players.Add(new PlayerInfo(id, newPlayerName));
         EmitSignal(SignalName.PlayerConnected, id, newPlayerName);
+    }
+
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void StartGame(int game)
+        => GameManager.instance.LoadGame((GameManager.Games)game, GameManager.GameModes.MULTIPLAYER);
+
+    #endregion
+
+    #region Functions
+
+    private PlayerInfo GetPlayerById(long id)
+    {
+        foreach (PlayerInfo player in Players)
+        {
+            if (player.Id == id) 
+                return player;
+        }
+        return null;
     }
 
     #endregion

@@ -13,38 +13,50 @@ public partial class ball : Area2D
 
     public override void _Ready()
     {
+        // Multiplayer Check
+        if (Multiplayer.MultiplayerPeer != null)
+        {
+            // Checks
+            if (!Multiplayer.IsServer())
+                return;
+        }
+
+        // Setup Collision Events
         AreaEntered += Ball_AreaEntered;
         BodyEntered += Ball_BodyEntered;
     }
 
     public override void _PhysicsProcess(double delta)
 	{
-		// Setup
-		float movementX = 0.0f;
-        float movementY = 0.0f;
+        // Multiplayer Check
+        if (Multiplayer.MultiplayerPeer != null)
+        {
+            // Checks
+            if (!Multiplayer.IsServer())
+                return;
 
-        // Apply Movement
-        if (_left)
-            movementX -= _currentSpeed * (float)delta;
+            // Move Ball
+            CalculateMovement((float)delta);
+        }
         else
-            movementX += _currentSpeed * (float)delta;
-
-        if (_up)
-            movementY -= _currentSpeed * (float)delta;
-        else
-            movementY += _currentSpeed * (float)delta;
-
-        // Move to New Position
-        Position = new Vector2(Position.X + movementX, Position.Y + movementY);
+            CalculateMovement((float)delta);
     }
 
     #region Events
 
     private void Ball_AreaEntered(Area2D area)
     {
+        // Multiplayer Check
+        if (Multiplayer.MultiplayerPeer != null)
+        {
+            // Checks
+            if (!Multiplayer.IsServer())
+                return;
+        }
+
         // Recollision Check
         if (area == _recollisionCheck)
-            return;
+        return;
 
         // Check - Change Vertical/Horizontal
         if (area is player_wall)
@@ -58,6 +70,14 @@ public partial class ball : Area2D
 
     private void Ball_BodyEntered(Node2D body)
     {
+        // Multiplayer Check
+        if (Multiplayer.MultiplayerPeer != null)
+        {
+            // Checks
+            if (!Multiplayer.IsServer())
+                return;
+        }
+
         // Recollision Check
         if (body == _recollisionCheck)
             return;
@@ -90,6 +110,31 @@ public partial class ball : Area2D
         _left = !_left;
         _recollisionCheck = null;
         _currentSpeed = START_SPEED;
+    }
+
+    #endregion
+
+    #region Functions
+
+    private void CalculateMovement(float delta)
+    {
+        // Setup
+        float movementX = 0.0f;
+        float movementY = 0.0f;
+
+        // Apply Movement
+        if (_left)
+            movementX -= _currentSpeed * (float)delta;
+        else
+            movementX += _currentSpeed * (float)delta;
+
+        if (_up)
+            movementY -= _currentSpeed * (float)delta;
+        else
+            movementY += _currentSpeed * (float)delta;
+
+        // Move to New Position
+        Position = new Vector2(Position.X + movementX, Position.Y + movementY);
     }
 
     #endregion

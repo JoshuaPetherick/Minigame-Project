@@ -1,10 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5stnv5x3rpfy"]
+[gd_scene load_steps=5 format=3 uid="uid://b5stnv5x3rpfy"]
 
 [ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="1_5r3vj"]
 [ext_resource type="Script" path="res://Scripts/Pong/ball.cs" id="1_g276n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ngl1x"]
 size = Vector2(10, 10)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_po3fu"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="Ball" type="Area2D"]
 monitorable = false
@@ -16,3 +21,6 @@ shape = SubResource("RectangleShape2D_ngl1x")
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
 scale = Vector2(10, 10)
 texture = ExtResource("1_5r3vj")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_po3fu")

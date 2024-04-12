@@ -4,9 +4,7 @@ public partial class pong_game : Node2D
 {
     [ExportCategory("Scenes")]
     [Export]
-    private PackedScene _singleplayerScene;
-    [Export]
-    private PackedScene _multiplayerScene;
+    private PackedScene _playerScene;
     [Export]
     private PackedScene _aiScene;
 
@@ -50,9 +48,6 @@ public partial class pong_game : Node2D
         // Initalise
         _gameMode = gameMode;
 
-        // Pause Arena
-        _arena.ProcessMode = ProcessModeEnum.Disabled;
-
         // Setup Players
         switch (gameMode)
         {
@@ -67,9 +62,17 @@ public partial class pong_game : Node2D
                 break;
 
             case GameManager.GameModes.MULTIPLAYER:
-                // TODO
+                SpawnMultiplayerPlayer((int)MultiplayerManager.instance.GetHost().Id, MultiplayerManager.instance.GetHost().Id.ToString(), _player1Spawn);
+                SpawnMultiplayerPlayer((int)MultiplayerManager.instance.GetOtherPlayer().Id, MultiplayerManager.instance.GetOtherPlayer().Id.ToString(), _player2Spawn);
+
+                // Check
+                if (!Multiplayer.IsServer())
+                    return;
                 break;
         }
+
+        // Pause Arena
+        _arena.ProcessMode = ProcessModeEnum.Disabled;
 
         // Setup Events
         _gameStartTimer.Timeout += GameStartTimer_Timeout;
@@ -175,11 +178,28 @@ public partial class pong_game : Node2D
     private void SpawnPlayer(string name, Marker2D spawnPoint)
     {
         // Setup
-        player player = (player)_singleplayerScene.Instantiate();
+        player player = (player)_playerScene.Instantiate();
 
         // Assign Properties
         player.Name = name;
         player.Transform = spawnPoint.Transform;
+
+        // Add to Tree
+        _arena.AddChild(player);
+
+        // Remove Marker
+        spawnPoint.QueueFree();
+    }
+
+    private void SpawnMultiplayerPlayer(int id, string name, Marker2D spawnPoint)
+    {
+        // Setup
+        player player = (player)_playerScene.Instantiate();
+
+        // Assign Properties
+        player.Name = name;
+        player.Transform = spawnPoint.Transform;
+        player.SetMultiplayerAuthority(id, true);
 
         // Add to Tree
         _arena.AddChild(player);
