@@ -15,29 +15,31 @@ size = Vector2(1, 1)
 size = Vector2(10, 510)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lqi8o"]
-properties/0/path = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Player 1 Score:text")
+properties/0/path = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Player 1 Score:text")
 properties/0/spawn = true
 properties/0/replication_mode = 2
-properties/1/path = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Player 2 Score:text")
+properties/1/path = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Player 2 Score:text")
 properties/1/spawn = true
 properties/1/replication_mode = 2
-properties/2/path = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Game Status:text")
+properties/2/path = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Game Status:text")
 properties/2/spawn = true
 properties/2/replication_mode = 2
 
-[node name="Pong" type="Node2D" node_paths=PackedStringArray("_gameStartTimer", "_arena", "_player1Spawn", "_player2Spawn", "_goal1", "_goal2", "_gameStatus", "_player1Label", "_player2Label")]
+[node name="Pong" type="Node2D" node_paths=PackedStringArray("_gameStartTimer", "_arena", "_ball", "_player1Spawn", "_player2Spawn", "_goal1", "_goal2", "_gameStatus", "_gameInstructions", "_player1Label", "_player2Label")]
 script = ExtResource("1_1f53n")
 _playerScene = ExtResource("2_vhd2k")
 _aiScene = ExtResource("3_k8a4i")
 _gameStartTimer = NodePath("Game Start Timer")
 _arena = NodePath("Arena")
+_ball = NodePath("Arena/Ball")
 _player1Spawn = NodePath("Arena/Players/Player1_Spawn")
 _player2Spawn = NodePath("Arena/Players/Player2_Spawn")
 _goal1 = NodePath("Arena/Goals/Goal_1")
 _goal2 = NodePath("Arena/Goals/Goal_2")
-_gameStatus = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Game Status")
-_player1Label = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Player 1 Score")
-_player2Label = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Player 2 Score")
+_gameStatus = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Game Status")
+_gameInstructions = NodePath("CanvasLayer/MarginContainer/VBoxContainer/Game Replay")
+_player1Label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Player 1 Score")
+_player2Label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Player 2 Score")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -2)
@@ -155,28 +157,45 @@ theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
 
-[node name="Player 1 Score" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Player 1 Score" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Score: X"
 
-[node name="Game Status" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+[node name="Game Status" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 
-[node name="Player 2 Score" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+[node name="Player 2 Score" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Score: X"
 horizontal_alignment = 2
+
+[node name="Game Replay" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 28
+text = "Press [R] to restart the Game. Press [Esc] to return to the Main Menu."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Buffer" type="Control" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Game Start Timer" type="Timer" parent="."]
 
