@@ -43,6 +43,15 @@ public partial class MultiplayerScreen : VBoxContainer
             MultiplayerManager.instance.PlayerDisconnected += Instance_PlayerDisconnected;
             MultiplayerManager.instance.ServerDisconnected += Instance_ServerDisconnected;
         }
+
+        // Check
+        if (MultiplayerManager.instance.Players.Count > 0)
+        {
+            foreach (PlayerInfo player in MultiplayerManager.instance.Players)
+            {
+                Instance_PlayerConnected(player.Id, player.Name);
+            }
+        }
     }
 
     public override void _Process(double delta)

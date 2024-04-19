@@ -148,7 +148,10 @@ public partial class pong_game : Node2D
 
         if (Input.IsActionJustPressed("game_exit"))
         {
-            // TODO - Load Lobby Screen
+            if (_gameMode == GameManager.GameModes.MULTIPLAYER)
+                MultiplayerManager.instance.LoadLobbyScreen();
+            else
+                GameManager.instance.LoadMainMenu();
         }
     }
 

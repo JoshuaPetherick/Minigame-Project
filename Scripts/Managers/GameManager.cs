@@ -61,6 +61,36 @@ public partial class GameManager : Node
         MusicManager.instance.StartGameSong(game);
     }
 
+    public void LoadMainMenu()
+    {
+        // Removes Current Node
+        RemoveCurrentNode();
+
+        // Load Menu
+        AddChild(_mainMenu.Instantiate());
+
+        // Start Menu Music
+        MusicManager.instance.StartMenuMusic();
+    }
+
+    public void LoadMultiplayerLobby()
+    {
+        // Removes Current Node
+        RemoveCurrentNode();
+
+        // Create Object
+        MainMenu node = (MainMenu)_mainMenu.Instantiate();
+
+        // Load Menu
+        AddChild(node);
+
+        // Load Lobby
+        node.LoadLobbyScreen();
+
+        // Start Menu Music
+        MusicManager.instance.StartMenuMusic();
+    }
+
     #region Functions
 
 	private void RemoveCurrentNode()

@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://m8ntu0omkkon"]
+[gd_scene load_steps=9 format=3 uid="uid://m8ntu0omkkon"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu/MainScreen.cs" id="1_3wk37"]
+[ext_resource type="Script" path="res://Scripts/MainMenu/MainMenu.cs" id="1_37egj"]
 [ext_resource type="Script" path="res://Scripts/MainMenu/SingleplayerScreen.cs" id="2_ain2k"]
 [ext_resource type="Script" path="res://Scripts/MainMenu/VersusScreen.cs" id="3_8tpf1"]
 [ext_resource type="Script" path="res://Scripts/MainMenu/ConnectionScreen.cs" id="4_hrfff"]
@@ -8,13 +9,16 @@
 [ext_resource type="Script" path="res://Scripts/MainMenu/SettingsScreen.cs" id="5_7apof"]
 [ext_resource type="Script" path="res://Scripts/UI/MultiplayerLabel.cs" id="6_qoj0e"]
 
-[node name="Menu" type="Control"]
+[node name="Menu" type="Control" node_paths=PackedStringArray("_mainScreen", "_lobbyScreen")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_37egj")
+_mainScreen = NodePath("Screens/CenterContainer/MainScreen")
+_lobbyScreen = NodePath("Screens/CenterContainer/MultiplayerScreen")
 
 [node name="Screens" type="MarginContainer" parent="."]
 layout_mode = 1

@@ -80,6 +80,9 @@ public partial class MultiplayerManager : Node
     public void StartGameSession(int game)
         => Rpc("StartGame", game);
 
+    public void LoadLobbyScreen()
+        => Rpc("LoadLobby");
+
     public void Disconnect()
     {
         // Close Connection 
@@ -157,6 +160,10 @@ public partial class MultiplayerManager : Node
     [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public void StartGame(int game)
         => GameManager.instance.LoadGame((GameManager.Games)game, GameManager.GameModes.MULTIPLAYER);
+
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void LoadLobby()
+        => GameManager.instance.LoadMultiplayerLobby();
 
     #endregion
 

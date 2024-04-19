@@ -34,12 +34,10 @@ public partial class ball : Area2D
             // Checks
             if (!Multiplayer.IsServer())
                 return;
-
-            // Move Ball
-            CalculateMovement((float)delta);
         }
-        else
-            CalculateMovement((float)delta);
+
+        // Move Ball
+        CalculateMovement((float)delta);
     }
 
     #region Events
@@ -56,7 +54,7 @@ public partial class ball : Area2D
 
         // Recollision Check
         if (area == _recollisionCheck)
-        return;
+            return;
 
         // Check - Change Vertical/Horizontal
         if (area is player_wall)

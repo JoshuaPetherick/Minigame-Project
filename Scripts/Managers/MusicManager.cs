@@ -42,7 +42,7 @@ public partial class MusicManager : Node
         SetIntensity(0.5f);
 
         // Queue Song
-        PlaySongName(_mainMenuSong, 0f);
+        PlaySongName(_mainMenuSong, _DEFAULT_TRANSITION_TIME);
     }
 
     public void StartGameSong(GameManager.Games game)
