@@ -128,6 +128,9 @@ public partial class pong_game : Node2D
             _player1Score = 0;
             _player2Score = 0;
 
+            // Reset Arena
+            _arena.Reset();
+
             // Reset Game Countdown
             _currentGameCountdown = 0;
 
@@ -228,6 +231,9 @@ public partial class pong_game : Node2D
 
     private void HandleAreaEntered()
     {
+        // Apply Mutation
+        _arena.ApplyMutation();
+
         // Reset Ball
         _ball.Reset();
 
