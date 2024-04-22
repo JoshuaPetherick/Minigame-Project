@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/Pong/arena.cs" id="1_oiwuw"]
 [ext_resource type="Script" path="res://Scripts/Pong/player_wall.cs" id="2_rk6gy"]
 [ext_resource type="PackedScene" uid="uid://b7vj7tmk05oem" path="res://Scenes/Pong/pong_player.tscn" id="2_vhd2k"]
-[ext_resource type="PackedScene" uid="uid://capnpo0onuwn0" path="res://Scenes/Pong/ai.tscn" id="3_k8a4i"]
+[ext_resource type="PackedScene" uid="uid://capnpo0onuwn0" path="res://Scenes/Pong/pong_ai.tscn" id="3_h0fde"]
 [ext_resource type="PackedScene" uid="uid://b5stnv5x3rpfy" path="res://Scenes/Pong/ball.tscn" id="4_vomq5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2fd5e"]
@@ -24,11 +24,14 @@ properties/1/replication_mode = 2
 properties/2/path = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Game Status:text")
 properties/2/spawn = true
 properties/2/replication_mode = 2
+properties/3/path = NodePath("Arena:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
-[node name="Pong" type="Node2D" node_paths=PackedStringArray("_gameStartTimer", "_arena", "_ball", "_player1Spawn", "_player2Spawn", "_goal1", "_goal2", "_gameStatus", "_gameInstructions", "_player1Label", "_player2Label")]
+[node name="Pong" type="Node2D" node_paths=PackedStringArray("_gameStartTimer", "_arena", "_ball", "_player1Spawn", "_player2Spawn", "_goal1", "_goal2", "_labelCountdownTimer", "_gameStatus", "_gameInstructions", "_player1Label", "_player2Label")]
 script = ExtResource("1_1f53n")
 _playerScene = ExtResource("2_vhd2k")
-_aiScene = ExtResource("3_k8a4i")
+_aiScene = ExtResource("3_h0fde")
 _gameStartTimer = NodePath("Game Start Timer")
 _arena = NodePath("Arena")
 _ball = NodePath("Arena/Ball")
@@ -36,6 +39,7 @@ _player1Spawn = NodePath("Arena/Players/Player1_Spawn")
 _player2Spawn = NodePath("Arena/Players/Player2_Spawn")
 _goal1 = NodePath("Arena/Goals/Goal_1")
 _goal2 = NodePath("Arena/Goals/Goal_2")
+_labelCountdownTimer = NodePath("Label Countdown Timer")
 _gameStatus = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Game Status")
 _gameInstructions = NodePath("CanvasLayer/MarginContainer/VBoxContainer/Game Replay")
 _player1Label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Player 1 Score")
@@ -44,8 +48,13 @@ _player2Label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContaine
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -2)
 
-[node name="Arena" type="Node2D" parent="."]
+[node name="Arena" type="Node2D" parent="." node_paths=PackedStringArray("_playerParentNode", "_goalsParentNode", "_leftWalls", "_centerWalls", "_rightWalls")]
 script = ExtResource("1_oiwuw")
+_playerParentNode = NodePath("Players")
+_goalsParentNode = NodePath("Goals")
+_leftWalls = NodePath("Walls/Left Walls")
+_centerWalls = NodePath("Walls/Center Walls")
+_rightWalls = NodePath("Walls/Right Walls")
 
 [node name="Ball" parent="Arena" instance=ExtResource("4_vomq5")]
 monitorable = true
@@ -54,90 +63,99 @@ priority = 1
 [node name="Players" type="Node2D" parent="Arena"]
 
 [node name="Player1_Spawn" type="Marker2D" parent="Arena/Players"]
-position = Vector2(-467.5, 0)
+position = Vector2(-455, 0)
 
 [node name="Player2_Spawn" type="Marker2D" parent="Arena/Players"]
-position = Vector2(467.5, 0)
+position = Vector2(455, 0)
 
 [node name="Walls" type="Node2D" parent="Arena"]
 
-[node name="Wall_1" type="Area2D" parent="Arena/Walls"]
+[node name="Left Walls" type="Node2D" parent="Arena/Walls"]
+position = Vector2(-455, 0)
+
+[node name="Wall_1" type="Area2D" parent="Arena/Walls/Left Walls"]
+position = Vector2(0, 230)
+scale = Vector2(10, 50)
+script = ExtResource("2_rk6gy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Left Walls/Wall_1"]
+shape = SubResource("RectangleShape2D_2fd5e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Left Walls/Wall_1/CollisionShape2D"]
+texture = ExtResource("1_6eudc")
+
+[node name="Wall_2" type="Area2D" parent="Arena/Walls/Left Walls"]
+position = Vector2(0, -230)
+scale = Vector2(10, 50)
+script = ExtResource("2_rk6gy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Left Walls/Wall_2"]
+shape = SubResource("RectangleShape2D_2fd5e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Left Walls/Wall_2/CollisionShape2D"]
+texture = ExtResource("1_6eudc")
+
+[node name="Center Walls" type="Node2D" parent="Arena/Walls"]
+scale = Vector2(900, 1)
+
+[node name="Wall_1" type="Area2D" parent="Arena/Walls/Center Walls"]
 position = Vector2(0, -250)
-scale = Vector2(925, 10)
+scale = Vector2(1, 10)
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Center Walls/Wall_1"]
 shape = SubResource("RectangleShape2D_2fd5e")
 
-[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_1/CollisionShape2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Center Walls/Wall_1/CollisionShape2D"]
 texture = ExtResource("1_6eudc")
 
-[node name="Wall_2" type="Area2D" parent="Arena/Walls"]
-position = Vector2(0, 251)
-scale = Vector2(925, 10)
+[node name="Wall_2" type="Area2D" parent="Arena/Walls/Center Walls"]
+position = Vector2(0, 250)
+scale = Vector2(1, 10)
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Center Walls/Wall_2"]
 shape = SubResource("RectangleShape2D_2fd5e")
 
-[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_2/CollisionShape2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Center Walls/Wall_2/CollisionShape2D"]
 texture = ExtResource("1_6eudc")
 
-[node name="Wall_3" type="Area2D" parent="Arena/Walls"]
-position = Vector2(-467.5, 206)
-scale = Vector2(10, 100)
+[node name="Right Walls" type="Node2D" parent="Arena/Walls"]
+position = Vector2(455, 0)
+
+[node name="Wall_1" type="Area2D" parent="Arena/Walls/Right Walls"]
+position = Vector2(0, -230)
+scale = Vector2(10, 50)
 script = ExtResource("2_rk6gy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Right Walls/Wall_1"]
 shape = SubResource("RectangleShape2D_2fd5e")
 
-[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_3/CollisionShape2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Right Walls/Wall_1/CollisionShape2D"]
 texture = ExtResource("1_6eudc")
 
-[node name="Wall_4" type="Area2D" parent="Arena/Walls"]
-position = Vector2(467.5, 206)
-scale = Vector2(10, 100)
+[node name="Wall_2" type="Area2D" parent="Arena/Walls/Right Walls"]
+position = Vector2(0, 230)
+scale = Vector2(10, 50)
 script = ExtResource("2_rk6gy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Right Walls/Wall_2"]
 shape = SubResource("RectangleShape2D_2fd5e")
 
-[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_4/CollisionShape2D"]
-texture = ExtResource("1_6eudc")
-
-[node name="Wall_5" type="Area2D" parent="Arena/Walls"]
-position = Vector2(467.5, -205)
-scale = Vector2(10, 100)
-script = ExtResource("2_rk6gy")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_5"]
-shape = SubResource("RectangleShape2D_2fd5e")
-
-[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_5/CollisionShape2D"]
-texture = ExtResource("1_6eudc")
-
-[node name="Wall_6" type="Area2D" parent="Arena/Walls"]
-position = Vector2(-467.5, -205)
-scale = Vector2(10, 100)
-script = ExtResource("2_rk6gy")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Wall_6"]
-shape = SubResource("RectangleShape2D_2fd5e")
-
-[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Wall_6/CollisionShape2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Right Walls/Wall_2/CollisionShape2D"]
 texture = ExtResource("1_6eudc")
 
 [node name="Goals" type="Node2D" parent="Arena"]
 
 [node name="Goal_1" type="Area2D" parent="Arena/Goals"]
-position = Vector2(-482.5, 0)
+position = Vector2(-470, 0)
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Goals/Goal_1"]
 shape = SubResource("RectangleShape2D_g2t2c")
 
 [node name="Goal_2" type="Area2D" parent="Arena/Goals"]
-position = Vector2(482.5, 0)
+position = Vector2(470, 0)
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Goals/Goal_2"]
@@ -198,6 +216,9 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Game Start Timer" type="Timer" parent="."]
+
+[node name="Label Countdown Timer" type="Timer" parent="."]
+wait_time = 5.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_lqi8o")

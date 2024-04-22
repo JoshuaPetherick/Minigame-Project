@@ -84,7 +84,7 @@ public partial class ball : Area2D
         _left = !_left;
 
         // Increase Speed
-        if (body is player)
+        if (body is pong_player)
             _currentSpeed += SPEED_INCREASE;
 
         if (body is pong_ai)

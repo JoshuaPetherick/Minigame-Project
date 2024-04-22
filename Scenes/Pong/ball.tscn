@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/Pong/ball.cs" id="1_g276n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ngl1x"]
-size = Vector2(10, 10)
+size = Vector2(1, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_po3fu"]
 properties/0/path = NodePath(".:position")
@@ -12,6 +12,7 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [node name="Ball" type="Area2D"]
+scale = Vector2(10, 10)
 monitorable = false
 script = ExtResource("1_g276n")
 
@@ -19,7 +20,6 @@ script = ExtResource("1_g276n")
 shape = SubResource("RectangleShape2D_ngl1x")
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
-scale = Vector2(10, 10)
 texture = ExtResource("1_5r3vj")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

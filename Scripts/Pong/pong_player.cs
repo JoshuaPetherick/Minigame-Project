@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class player : CharacterBody2D
+public partial class pong_player : CharacterBody2D
 {
 	public const float Speed = 200.0f;
 

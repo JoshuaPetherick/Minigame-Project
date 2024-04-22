@@ -1,17 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://capnpo0onuwn0"]
 
-[ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="1_3pgi3"]
-[ext_resource type="Script" path="res://Scripts/Pong/pong_ai.cs" id="1_ha2bs"]
+[ext_resource type="Script" path="res://Scripts/Pong/pong_ai.cs" id="1_dmhc4"]
+[ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="2_4c75t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1u4kv"]
-size = Vector2(10, 75)
+size = Vector2(1, 1)
 
 [node name="AI" type="CharacterBody2D"]
-script = ExtResource("1_ha2bs")
+scale = Vector2(10, 75)
+script = ExtResource("1_dmhc4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_1u4kv")
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
-scale = Vector2(10, 75)
-texture = ExtResource("1_3pgi3")
+texture = ExtResource("2_4c75t")

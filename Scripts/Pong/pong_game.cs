@@ -26,6 +26,8 @@ public partial class pong_game : Node2D
 
     [ExportCategory("UI Nodes")]
     [Export]
+    private Timer _labelCountdownTimer;
+    [Export]
     private Label _gameStatus;
     [Export]
     private Label _gameInstructions;
@@ -97,6 +99,7 @@ public partial class pong_game : Node2D
 
         // Setup Events
         _gameStartTimer.Timeout += GameStartTimer_Timeout;
+        _labelCountdownTimer.Timeout += LabelCountdownTimer_Timeout;
         _goal1.AreaEntered += Goal1_AreaEntered;
         _goal2.AreaEntered += Goal2_AreaEntered;
 
@@ -189,6 +192,9 @@ public partial class pong_game : Node2D
         }
     }
 
+    private void LabelCountdownTimer_Timeout()
+        => _gameStatus.Text = "";
+
     private void Goal1_AreaEntered(Area2D area)
     {
         if (area == _ball)
@@ -232,7 +238,7 @@ public partial class pong_game : Node2D
     private void HandleAreaEntered()
     {
         // Apply Mutation
-        _arena.ApplyMutation();
+        string mutationText = _arena.ApplyMutation();
 
         // Reset Ball
         _ball.Reset();
@@ -240,6 +246,13 @@ public partial class pong_game : Node2D
         // Increase Intensity
         _musicIntensity += _musicIntensity < 1.0f ? 0.1f : 0.0f;
         MusicManager.instance.SetIntensity(_musicIntensity);
+
+        // Update UI
+        _gameStatus.Text = mutationText;
+
+        // UI Countdown
+        _gameStartTimer.Stop();
+        _labelCountdownTimer.Start();
     }
 
     private void HandleGameOver(string playerName)
@@ -255,6 +268,9 @@ public partial class pong_game : Node2D
 
         // Show Label
         _gameInstructions.Visible = true;
+
+        // Stop Countdown
+        _labelCountdownTimer.Stop();
     }
 
     private void SpawnAI(Marker2D spawnPoint)
@@ -267,10 +283,10 @@ public partial class pong_game : Node2D
 
         // Assign Properties
         ai.Name = "AI";
-        ai.Transform = spawnPoint.Transform;
+        ai.Position = spawnPoint.Position;
 
         // Add to Tree
-        _arena.AddChild(ai);
+        spawnPoint.GetParent().AddChild(ai);
 
         // Remove Marker
         spawnPoint.QueueFree();
@@ -279,14 +295,14 @@ public partial class pong_game : Node2D
     private void SpawnPlayer(string name, Marker2D spawnPoint)
     {
         // Setup
-        player player = (player)_playerScene.Instantiate();
+        pong_player player = (pong_player)_playerScene.Instantiate();
 
         // Assign Properties
         player.Name = name;
-        player.Transform = spawnPoint.Transform;
+        player.Position = spawnPoint.Position;
 
         // Add to Tree
-        _arena.AddChild(player);
+        spawnPoint.GetParent().AddChild(player);
 
         // Remove Marker
         spawnPoint.QueueFree();
@@ -295,15 +311,15 @@ public partial class pong_game : Node2D
     private void SpawnMultiplayerPlayer(int id, string name, Marker2D spawnPoint)
     {
         // Setup
-        player player = (player)_playerScene.Instantiate();
+        pong_player player = (pong_player)_playerScene.Instantiate();
 
         // Assign Properties
         player.Name = name;
-        player.Transform = spawnPoint.Transform;
+        player.Position = spawnPoint.Position;
         player.SetMultiplayerAuthority(id, true);
 
         // Add to Tree
-        _arena.AddChild(player);
+        spawnPoint.GetParent().AddChild(player);
 
         // Remove Marker
         spawnPoint.QueueFree();

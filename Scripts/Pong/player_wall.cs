@@ -11,7 +11,7 @@ public partial class player_wall : Area2D
 
     private void Player_wall_BodyEntered(Node2D body)
     {
-        if (body is player player)
+        if (body is pong_player player)
         {
             player.CollidedWithWall();
         }
