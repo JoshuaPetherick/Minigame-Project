@@ -8,6 +8,8 @@ public partial class MultiplayerScreen : VBoxContainer
 
     [ExportCategory("Labels")]
     [Export]
+    private MultiplayerLabel _roomCode;
+    [Export]
     private MultiplayerLabel _player1;
     [Export]
     private MultiplayerLabel _player2;
@@ -60,6 +62,10 @@ public partial class MultiplayerScreen : VBoxContainer
         if (MultiplayerManager.instance is null)
             return;
 
+        // Set Label
+        _roomCode.Text = MultiplayerManager.instance.RoomCode;
+
+        // Multiplayer Checks
         if (Multiplayer.MultiplayerPeer is null)
             return;
 

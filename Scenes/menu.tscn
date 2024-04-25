@@ -36,6 +36,7 @@ theme_override_constants/margin_bottom = 25
 layout_mode = 2
 
 [node name="MainScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_singlePlayerScreen", "_versusPlayerScreen", "_multiPlayerScreen", "_settingsScreen", "_singlePlayerButton", "_versusButton", "_multiPlayerButton", "_settingsButton", "_exitButton")]
+visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_constants/separation = 5
@@ -153,8 +154,7 @@ horizontal_alignment = 1
 
 [node name="IP Address" type="LineEdit" parent="Screens/CenterContainer/ConnectionScreen"]
 layout_mode = 2
-text = "127.0.0.1"
-placeholder_text = "127.0.0.1"
+placeholder_text = "Enter Room Code"
 alignment = 1
 
 [node name="Connect" type="Button" parent="Screens/CenterContainer/ConnectionScreen"]
@@ -169,13 +169,14 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Back"
 
-[node name="MultiplayerScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_player1", "_player2", "_player3", "_player4", "_pongButton", "_tronButton", "_backButton")]
+[node name="MultiplayerScreen" type="VBoxContainer" parent="Screens/CenterContainer" node_paths=PackedStringArray("_backScreen", "_roomCode", "_player1", "_player2", "_player3", "_player4", "_pongButton", "_tronButton", "_backButton")]
 visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 alignment = 1
 script = ExtResource("4_wboit")
 _backScreen = NodePath("../MainScreen")
+_roomCode = NodePath("Room Code")
 _player1 = NodePath("Player_1")
 _player2 = NodePath("Player_2")
 _player3 = NodePath("Player_3")
@@ -185,6 +186,26 @@ _tronButton = NodePath("Tron")
 _backButton = NodePath("Back")
 
 [node name="Label" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Room Code"
+horizontal_alignment = 1
+
+[node name="Room Code" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.886275, 0.760784, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "A1B2C3D4"
+horizontal_alignment = 1
+script = ExtResource("6_qoj0e")
+
+[node name="Buffer" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.886275, 0.760784, 0, 1)
+horizontal_alignment = 1
+script = ExtResource("6_qoj0e")
+
+[node name="Label2" type="Label" parent="Screens/CenterContainer/MultiplayerScreen"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Players

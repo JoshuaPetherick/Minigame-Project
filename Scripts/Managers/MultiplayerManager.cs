@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Based off: https://docs.godotengine.org/en/stable/tutorials/networking/high_level_multiplayer.html#example-lobby-implementation
@@ -18,6 +19,8 @@ public partial class MultiplayerManager : Node
     public delegate void ServerDisconnectedEventHandler();
 
     public List<PlayerInfo> Players = new List<PlayerInfo>();
+    public string RoomCode { get; private set; }
+
     private string _name;
 
     public static MultiplayerManager instance;
@@ -41,8 +44,11 @@ public partial class MultiplayerManager : Node
     {
         // Setup
         ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
-        Error error = peer.CreateServer(_PORT, _MAX_CONNECTIONS);
+        string address = IP.GetLocalAddresses()[(IP.GetLocalAddresses().Length - 1)];
 
+        // Setup Server
+        Error error = peer.CreateServer(_PORT, _MAX_CONNECTIONS);
+        
         // Check
         if (error != Error.Ok)
             return error;
@@ -50,8 +56,10 @@ public partial class MultiplayerManager : Node
         // Setup Self
         Multiplayer.MultiplayerPeer = peer;
         Players.Add(new PlayerInfo(1, name));
-        _name = name;
 
+        _name = name;
+        RoomCode = GetRoomCode(address);
+        
         // Notify
         EmitSignal(SignalName.PlayerConnected, 1, name);
 
@@ -59,9 +67,10 @@ public partial class MultiplayerManager : Node
         return Error.Ok;
     }
 
-    public Error JoinGame(string address, string name)
+    public Error JoinGame(string roomCode, string name)
     {
         // Setup
+        string address = GetAddress(roomCode);
         ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
         Error error = peer.CreateClient(address, _PORT);
 
@@ -72,6 +81,7 @@ public partial class MultiplayerManager : Node
         // Setup Self
         Multiplayer.MultiplayerPeer = peer;
         _name = name;
+        RoomCode = roomCode;
 
         // Result
         return Error.Ok;
@@ -177,6 +187,38 @@ public partial class MultiplayerManager : Node
                 return player;
         }
         return null;
+    }
+
+    private string GetRoomCode(string ipAddress)
+    {
+        string result = "";
+        foreach (string address in ipAddress.Split('.'))
+        {
+            int val = int.Parse(address);
+            string hex = val.ToString("X2");
+
+            result += hex;
+        }
+        return Reverse(result);
+    }
+
+    private string GetAddress(string roomCode)
+    {
+        string result = "";
+        string actualRoomCode = Reverse(roomCode); 
+        for (int i = 0; i < actualRoomCode.Length; i += 2)
+        {
+            int value = Convert.ToInt32($"0x{actualRoomCode[i]}{actualRoomCode[(i + 1)]}", 16);
+            result += string.IsNullOrWhiteSpace(result) ? "" : "." + value.ToString();
+        }
+        return result;
+    }
+
+    private string Reverse(string s)
+    {
+        char[] charArray = s.ToCharArray();
+        Array.Reverse(charArray);
+        return new string(charArray);
     }
 
     #endregion

@@ -37,8 +37,8 @@ _arena = NodePath("Arena")
 _ball = NodePath("Arena/Ball")
 _player1Spawn = NodePath("Arena/Players/Player1_Spawn")
 _player2Spawn = NodePath("Arena/Players/Player2_Spawn")
-_goal1 = NodePath("Arena/Goals/Goal_1")
-_goal2 = NodePath("Arena/Goals/Goal_2")
+_goal1 = NodePath("Arena/Walls/Left Walls/Goal_1")
+_goal2 = NodePath("Arena/Walls/Right Walls/Goal_2")
 _labelCountdownTimer = NodePath("Label Countdown Timer")
 _gameStatus = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer/Game Status")
 _gameInstructions = NodePath("CanvasLayer/MarginContainer/VBoxContainer/Game Replay")
@@ -48,10 +48,9 @@ _player2Label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContaine
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -2)
 
-[node name="Arena" type="Node2D" parent="." node_paths=PackedStringArray("_playerParentNode", "_goalsParentNode", "_leftWalls", "_centerWalls", "_rightWalls")]
+[node name="Arena" type="Node2D" parent="." node_paths=PackedStringArray("_playerParentNode", "_leftWalls", "_centerWalls", "_rightWalls")]
 script = ExtResource("1_oiwuw")
 _playerParentNode = NodePath("Players")
-_goalsParentNode = NodePath("Goals")
 _leftWalls = NodePath("Walls/Left Walls")
 _centerWalls = NodePath("Walls/Center Walls")
 _rightWalls = NodePath("Walls/Right Walls")
@@ -94,6 +93,13 @@ shape = SubResource("RectangleShape2D_2fd5e")
 
 [node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Left Walls/Wall_2/CollisionShape2D"]
 texture = ExtResource("1_6eudc")
+
+[node name="Goal_1" type="Area2D" parent="Arena/Walls/Left Walls"]
+position = Vector2(-15, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Left Walls/Goal_1"]
+shape = SubResource("RectangleShape2D_g2t2c")
 
 [node name="Center Walls" type="Node2D" parent="Arena/Walls"]
 scale = Vector2(900, 1)
@@ -145,20 +151,11 @@ shape = SubResource("RectangleShape2D_2fd5e")
 [node name="Sprite2D" type="Sprite2D" parent="Arena/Walls/Right Walls/Wall_2/CollisionShape2D"]
 texture = ExtResource("1_6eudc")
 
-[node name="Goals" type="Node2D" parent="Arena"]
-
-[node name="Goal_1" type="Area2D" parent="Arena/Goals"]
-position = Vector2(-470, 0)
+[node name="Goal_2" type="Area2D" parent="Arena/Walls/Right Walls"]
+position = Vector2(15, 0)
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Goals/Goal_1"]
-shape = SubResource("RectangleShape2D_g2t2c")
-
-[node name="Goal_2" type="Area2D" parent="Arena/Goals"]
-position = Vector2(470, 0)
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Goals/Goal_2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Right Walls/Goal_2"]
 shape = SubResource("RectangleShape2D_g2t2c")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
