@@ -56,11 +56,42 @@ public partial class ball : Area2D
         if (area == _recollisionCheck)
             return;
 
-        // Check - Change Vertical/Horizontal
-        if (area is player_wall)
-            _left = !_left;
-        else
-            _up = !_up;
+        // Obstacle Check
+        if (area.GetParent().Name.ToString().Contains("Obstacle"))
+        {
+            // Setup
+            bool skip = false;
+
+            // Checks
+            if (_recollisionCheck != null)
+                if (_recollisionCheck.GetParent() == area.GetParent())
+                    skip = true;
+
+            // Deflect Ball
+            if (!skip)
+            {
+                switch (area.Name)
+                {
+                    case "Top":
+                    case "Bottom":
+                        _up = !_up;
+                        break;
+                    case "Edge":
+                        _left = !_left;
+                        break;
+                }
+                GD.Print(area.Name);
+            }
+        }
+
+        // Wall Check - Change Vertical/Horizontal
+        if (area.Name.ToString().Contains("Wall"))
+        {
+            if (area is player_wall)
+                _left = !_left;
+            else
+                _up = !_up;
+        }
 
         // Set Recollision Check
         _recollisionCheck = area;

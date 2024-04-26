@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtcufr31ps6wj"]
+
+[ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="1_w6hph"]
+[ext_resource type="Script" path="res://Scripts/Pong/player_wall.cs" id="2_go6ja"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0ehf"]
+size = Vector2(7, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l0e84"]
+size = Vector2(1.5, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3md0q"]
+size = Vector2(7, 30)
+
+[node name="Obstacle" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(10, 50)
+texture = ExtResource("1_w6hph")
+
+[node name="Top" type="Area2D" parent="."]
+position = Vector2(0, -20)
+script = ExtResource("2_go6ja")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
+shape = SubResource("RectangleShape2D_r0ehf")
+
+[node name="Edge" type="Area2D" parent="."]
+script = ExtResource("2_go6ja")
+
+[node name="Left" type="CollisionShape2D" parent="Edge"]
+position = Vector2(-4.25, 0)
+shape = SubResource("RectangleShape2D_l0e84")
+
+[node name="Center" type="CollisionShape2D" parent="Edge"]
+shape = SubResource("RectangleShape2D_3md0q")
+
+[node name="Right" type="CollisionShape2D" parent="Edge"]
+position = Vector2(4.25, 0)
+shape = SubResource("RectangleShape2D_l0e84")
+
+[node name="Bottom" type="Area2D" parent="."]
+position = Vector2(0, 20)
+script = ExtResource("2_go6ja")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
+shape = SubResource("RectangleShape2D_r0ehf")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dnjl7mxs1k87e"]
+[gd_scene load_steps=12 format=3 uid="uid://dnjl7mxs1k87e"]
 
 [ext_resource type="Script" path="res://Scripts/Pong/pong_game.cs" id="1_1f53n"]
 [ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="1_6eudc"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b7vj7tmk05oem" path="res://Scenes/Pong/pong_player.tscn" id="2_vhd2k"]
 [ext_resource type="PackedScene" uid="uid://capnpo0onuwn0" path="res://Scenes/Pong/pong_ai.tscn" id="3_h0fde"]
 [ext_resource type="PackedScene" uid="uid://b5stnv5x3rpfy" path="res://Scenes/Pong/ball.tscn" id="4_vomq5"]
+[ext_resource type="PackedScene" uid="uid://dtcufr31ps6wj" path="res://Scenes/Pong/pong_obstacle.tscn" id="8_dnrqf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2fd5e"]
 size = Vector2(1, 1)
@@ -48,9 +49,10 @@ _player2Label = NodePath("CanvasLayer/MarginContainer/VBoxContainer/HBoxContaine
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -2)
 
-[node name="Arena" type="Node2D" parent="." node_paths=PackedStringArray("_playerParentNode", "_leftWalls", "_centerWalls", "_rightWalls")]
+[node name="Arena" type="Node2D" parent="." node_paths=PackedStringArray("_playerParentNode", "_obstaclesParentNode", "_leftWalls", "_centerWalls", "_rightWalls")]
 script = ExtResource("1_oiwuw")
 _playerParentNode = NodePath("Players")
+_obstaclesParentNode = NodePath("Obstacles")
 _leftWalls = NodePath("Walls/Left Walls")
 _centerWalls = NodePath("Walls/Center Walls")
 _rightWalls = NodePath("Walls/Right Walls")
@@ -157,6 +159,18 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Walls/Right Walls/Goal_2"]
 shape = SubResource("RectangleShape2D_g2t2c")
+
+[node name="Obstacles" type="Node2D" parent="Arena"]
+process_mode = 4
+visible = false
+
+[node name="Obstacle_1" parent="Arena/Obstacles" instance=ExtResource("8_dnrqf")]
+position = Vector2(-100, 0)
+scale = Vector2(1, 4)
+
+[node name="Obstacle_2" parent="Arena/Obstacles" instance=ExtResource("8_dnrqf")]
+position = Vector2(100, 0)
+scale = Vector2(1, 4)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

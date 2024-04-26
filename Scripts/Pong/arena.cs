@@ -7,6 +7,8 @@ public partial class arena : Node2D
     [Export]
     private Node2D _playerParentNode;
     [Export]
+    private Node2D _obstaclesParentNode;
+    [Export]
     private Node2D _leftWalls;
     [Export]
     private Node2D _centerWalls;
@@ -37,7 +39,7 @@ public partial class arena : Node2D
         SHINK_BALL,
         SHRINK_PLAYERS,
         ADD_OBSTACLES,
-        ADD_MOVING_OBSTACLE,
+        //ADD_MOVING_OBSTACLE,
         FLIP_ARENA_90,
         FLIP_ARENA_180
     }
@@ -257,12 +259,14 @@ public partial class arena : Node2D
                 break;
 
             case Mutations.ADD_OBSTACLES:
+                _obstaclesParentNode.Visible = true;
+                _obstaclesParentNode.ProcessMode = ProcessModeEnum.Inherit;
                 result = "Obstacles added!";
                 break;
 
-            case Mutations.ADD_MOVING_OBSTACLE:
-                result = "Moving Obstacle added!";
-                break;
+            //case Mutations.ADD_MOVING_OBSTACLE:
+            //    result = "Moving Obstacle added!";
+            //    break;
 
             case Mutations.FLIP_ARENA_90:
                 _isRotating90 = true;
@@ -299,6 +303,10 @@ public partial class arena : Node2D
 
         // Reset Ball
         GetChild<ball>(0).Scale = new Vector2(_MAX_BALL_SIZE, _MAX_BALL_SIZE);
+
+        // Reset Obstacles
+        _obstaclesParentNode.Visible = false;
+        _obstaclesParentNode.ProcessMode = ProcessModeEnum.Disabled;
 
         // Reset Players
         _playerParentNode.GetChild<Node2D>(0).Position = new Vector2(-_MAX_WALL_POSITION, _playerParentNode.GetChild<Node2D>(0).Position.Y);
