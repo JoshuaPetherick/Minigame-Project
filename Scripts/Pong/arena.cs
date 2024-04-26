@@ -109,7 +109,7 @@ public partial class arena : Node2D
             if (ball.Scale.Y <= _MIN_BALL_SIZE)
             {
                 // Clamp Size
-                ball.Scale = new Vector2(ball.Scale.X, _MIN_BALL_SIZE);
+                ball.Scale = new Vector2(_MIN_BALL_SIZE, _MIN_BALL_SIZE);
 
                 // Update Mutations
                 _isShrinkingBall = false;
@@ -200,7 +200,7 @@ public partial class arena : Node2D
         {
             RotationDegrees += _ROTATION_SPEED * (float)delta;
             if (RotationDegrees >= 360.0f)
-                RotationDegrees = 0.0f;
+                RotationDegrees -= 360.0f;
         }
     }
 

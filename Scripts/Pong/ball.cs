@@ -80,7 +80,6 @@ public partial class ball : Area2D
                         _left = !_left;
                         break;
                 }
-                GD.Print(area.Name);
             }
         }
 
