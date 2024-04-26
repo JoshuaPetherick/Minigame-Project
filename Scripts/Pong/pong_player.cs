@@ -2,15 +2,12 @@ using Godot;
 
 public partial class pong_player : CharacterBody2D
 {
-	public const float Speed = 200.0f;
-
-	// Movement Vars
-	private bool _goingUp = false;
+	public const float SPEED = 200.0f;
+    public const int MAX_POSITION_CAP = 204;
+    
+    // Movement Vars
+    private bool _goingUp = false;
 	private Vector2 _previousPosition;
-
-	// Restriction Vars
-	private bool _restrictUp = false;
-	private bool _restrictDown = false; 
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -33,9 +30,10 @@ public partial class pong_player : CharacterBody2D
 	private void CalculateMovement(float delta)
 	{
         // Setup
-        float movement = 0.0f;
         bool up = false;
         bool down = false;
+        float movement = 0.0f;
+        float sizeY = Scale.Y / 2;
 
         // Get Inputs based on Name
         switch (Name)
@@ -62,24 +60,10 @@ public partial class pong_player : CharacterBody2D
 
         // Apply Movement
         if (up)
-            movement -= Speed * delta;
+            movement -= SPEED * delta;
 
         if (down)
-            movement += Speed * delta;
-
-        // Restriction Checks
-        if (_restrictUp && up)
-            return;
-
-        if (_restrictDown && down)
-            return;
-
-        // Release Restriction
-        if (_restrictUp && !up)
-            _restrictUp = false;
-
-        if (_restrictDown && !down)
-            _restrictDown = false;
+            movement += SPEED * delta;
 
         // Store Previous Position
         _goingUp = up && !down ? true : false;
@@ -87,16 +71,18 @@ public partial class pong_player : CharacterBody2D
 
         // Move to New Position
         Position = new Vector2(Position.X, Position.Y + movement);
+
+        // Position Restrictions 
+        if ((Position.Y - sizeY) <= -MAX_POSITION_CAP)
+            Position = new Vector2(Position.X, -MAX_POSITION_CAP - -sizeY);
+        else if ((Position.Y + sizeY) >= MAX_POSITION_CAP)
+            Position = new Vector2(Position.X, MAX_POSITION_CAP - sizeY);
     }
 
     public void CollidedWithWall()
 	{
 		// Reset Position
 		Position = _previousPosition;
-
-		// Restrict Further Movement
-		_restrictUp = _goingUp;
-		_restrictDown = !_goingUp;
     }
 
     #endregion

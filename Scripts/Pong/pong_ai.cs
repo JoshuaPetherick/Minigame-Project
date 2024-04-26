@@ -1,9 +1,9 @@
 using Godot;
-using System;
 
 public partial class pong_ai : CharacterBody2D
 {
-    public const float Speed = 200.0f;
+    public const float SPEED = 200.0f;
+    public const int MAX_POSITION_CAP = 204;
 
     // Movement Vars
     private Node2D target;
@@ -15,6 +15,7 @@ public partial class pong_ai : CharacterBody2D
     {
         // Setup
         float movement = 0.0f;
+        float sizeY = Scale.Y / 2;
         bool up = target.Position.Y < Position.Y;
         bool down = target.Position.Y > Position.Y;
 
@@ -24,18 +25,18 @@ public partial class pong_ai : CharacterBody2D
 
         // Apply Movement
         if (up)
-            movement -= Speed * (float)delta;
+            movement -= SPEED * (float)delta;
 
         if (down)
-            movement += Speed * (float)delta;
+            movement += SPEED * (float)delta;
 
         // Move to New Position
         Position = new Vector2(Position.X, Position.Y + movement);
 
-        // Hardcoded Restrictions (Fix later)
-        if (Position.Y <= -117.5f)
-            Position = new Vector2(Position.X, -117.5f);
-        else if (Position.Y >= 118.5f)
-            Position = new Vector2(Position.X, 118.5f);
+        // Position Restrictions 
+        if ((Position.Y - sizeY) <= -MAX_POSITION_CAP)
+            Position = new Vector2(Position.X, -MAX_POSITION_CAP - -sizeY);
+        else if ((Position.Y + sizeY) >= MAX_POSITION_CAP)
+            Position = new Vector2(Position.X, MAX_POSITION_CAP - sizeY);
     }
 }

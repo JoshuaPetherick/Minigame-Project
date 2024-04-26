@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtcufr31ps6wj"]
+[gd_scene load_steps=7 format=3 uid="uid://dtcufr31ps6wj"]
 
 [ext_resource type="Texture2D" uid="uid://ck7nlm07y8qip" path="res://Assets/1x1 White.png" id="1_w6hph"]
 [ext_resource type="Script" path="res://Scripts/Pong/player_wall.cs" id="2_go6ja"]
@@ -11,6 +11,14 @@ size = Vector2(1.5, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3md0q"]
 size = Vector2(7, 30)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8b1a0"]
+properties/0/path = NodePath(".:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:process_mode")
+properties/1/spawn = true
+properties/1/replication_mode = 2
 
 [node name="Obstacle" type="Node2D"]
 
@@ -45,3 +53,6 @@ script = ExtResource("2_go6ja")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
 shape = SubResource("RectangleShape2D_r0ehf")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8b1a0")
