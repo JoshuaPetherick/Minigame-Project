@@ -1,4 +1,7 @@
 using Godot;
+using System;
+using System.Diagnostics;
+
 
 public partial class SnakeGame : Node2D
 {
@@ -8,46 +11,73 @@ public partial class SnakeGame : Node2D
 	private Label scoreLabel;
 	[Export]
 	private Snake snake;
+	[Export]
+	private Control dead;
 
-    private int apples = 0;  
+	public int apples = 0;
 	float musIntensity = 0f;
 	int mutation;
 	bool removedMutation = false;
 	private RandomNumberGenerator rng = new RandomNumberGenerator();
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
 	{
+
+		dead.Visible = false;
 		// Spawn Apple
 		SpawnApple();
 
-        // Update Label
-        SetScore();
+		// Update Label
+		SetScore();
 
 		// Signal Setup
 		snake.GetSnakeHead().BodyEntered += SnakeHead_BodyEntered;
 
-    }
+	}
 
-    #region Signals
+	#region Signals
 
-    private void SnakeHead_BodyEntered(Node2D body)
-    {
+	private void SnakeHead_BodyEntered(Node2D body)
+	{
 		// Debug Logs
 		GD.Print(body);
-        GD.Print(body.Name);
+		GD.Print(body.Name);
 
-        // Apple
-        if (body is StaticBody2D)
+		// Collision
+		if (body is StaticBody2D)
 		{
+			//Wall
+			if (body.Name.ToString().Contains("Wall"))
+			{
+				//Screen size = 1920 x 1080
+
+				Vector2 oldPosition = snake.GetSnakeHead().Position;
+
+				Node2D wall = body.GetParent<Node2D>();
+				if (wall.Name.ToString().Contains("Left"))
+					snake.GetSnakeHead().Position = new Vector2(oldPosition.X + 1920, oldPosition.Y);
+				if (wall.Name.ToString().Contains("Right"))
+					snake.GetSnakeHead().Position = new Vector2(oldPosition.X - 1920, oldPosition.Y);
+				if (wall.Name.ToString().Contains("Top"))
+					snake.GetSnakeHead().Position = new Vector2(oldPosition.X, oldPosition.Y + 1080);
+				if (wall.Name.ToString().Contains("Bottom"))
+					snake.GetSnakeHead().Position = new Vector2(oldPosition.X, oldPosition.Y - 1080);
+
+				return;
+			}
+
+			//Other (apple)
+			Debug.WriteLine("apple");
+
 			// Add to Score
 			apples++;
 
 			// Update Label
 			SetScore();
 
-            // Remove Apple
-            body.GetParent().QueueFree();
+			// Remove Apple
+			body.GetParent().QueueFree();
 
 			// Spawn New Apple
 			CallDeferred("SpawnApple");
@@ -55,84 +85,105 @@ public partial class SnakeGame : Node2D
 			//increment music intensity
 			musIntensity += 0.05f;
 			if (musIntensity < 1f) MusicManager.instance.SetIntensity(musIntensity);
-				
+
+			//reset controls & settings
+			snake.inverseControls = false;
+			removedMutation = false;
+
 			//mutation
-			if(apples >= 15)
+
+			if (apples >= 15)
 			{
-                mutation = rng.RandiRange(1, 6);
-				switch(mutation)
+				snake.timer.WaitTime = snake.SNAKE_SPEED_MINIMUM;
+				mutation = rng.RandiRange(1, 6);
+				switch (mutation)
 				{
 					//double growth
 					case 1:
 						snake.CallDeferred("AddBodyPiece");
-						snake._SNAKE_SPEED_MINIMUM = 0.150;
-                        break;
+						break;
 					//Anti growth
-					case 2: 
-						//snake body pieces.remove(last)??
+					case 2:
+						snake.CallDeferred("RemoveBodyPiece");
 						removedMutation = true;
-                        snake._SNAKE_SPEED_MINIMUM = 0.150;
-                        break;
+						break;
 					//Slow speed
 					case 3:
-						snake._SNAKE_SPEED_MINIMUM = snake._SNAKE_SPEED_MINIMUM + snake._SNAKE_SPEED_MINIMUM; //does nothing if already at max speed
+						snake.timer.WaitTime = snake.timer.WaitTime + snake.timer.WaitTime;
 						break;
 					//double speed
 					case 4:
-						snake._SNAKE_SPEED_MINIMUM = snake._SNAKE_SPEED_MINIMUM / 2;
+						snake.timer.WaitTime = snake.timer.WaitTime / 2;
 						break;
 					//inverse controls
 					case 5:
-                        snake._SNAKE_SPEED_MINIMUM = 0.3;
-						//if (Input.IsActionJustPressed("up")) snake._direction = snake
-						
-                        break;
-					//double apple (?)
+						snake.timer.WaitTime += 0.035;
+						snake.inverseControls = true;
+						break;
+					//double apple
 					case 6:
-                        snake._SNAKE_SPEED_MINIMUM = 0.150;
-                        CallDeferred("SpawnApple");
+						CallDeferred("SpawnApple");
 						break;
 				}
-            }
-            // Spawn New Piece
-			if(!removedMutation) snake.CallDeferred("AddBodyPiece");
+			}
+			// Spawn New Piece
+			if (!removedMutation) 
+				snake.CallDeferred("AddBodyPiece");
+			
 			removedMutation = false;
-        }
+			SetScore();
+		}
 
-        // Snake Body
-        if (body is CharacterBody2D)
+		// Snake Body
+		if (body is CharacterBody2D)
 		{
-            // Game Over
-            apples = 0;
+			ResetGame();
+		}
+	}
 
-            GetTree().ChangeSceneToFile("res://Scenes/game_over_screen.tscn");
-            //GetTree().Quit();
+	#endregion
 
-            // Update Label
-            SetScore();
+	#region Functions
 
-        }
-    }
+	private void ResetGame()
+	{
+		//Stop processes
+		ProcessMode = ProcessModeEnum.Disabled;
 
-    #endregion
+		// Reset Values
+		apples = 0;
+		snake.inverseControls = false;
+        snake.timer.WaitTime = 0.5;
+		mutation = 0;
 
-    #region Functions
+        // Update Score Label
+        SetScore();
 
-    private void SpawnApple()
+		//Turn off music (?)
+		MusicManager.instance.SetIntensity(0f);
+
+		//Restart snake
+		snake.CallDeferred("Restart");
+
+		//Show game over screen
+		dead.Visible = true;
+	}
+
+	private void SpawnApple()
 	{
 		// Setup
 		string name = $"Apple {apples}";
 		Vector2 newApplePosition = Vector2.Zero;
 
-        // Spawn Apple Piece
-        Node2D apple = (Node2D)appleScene.Instantiate();
+		// Spawn Apple Piece
+		Node2D apple = (Node2D)appleScene.Instantiate();
 
-        // Find Position
-        while (true)
+		// Find Position
+		while (true)
 		{
 			// Get Position
 			int x = (rng.RandiRange(1, 31) * Snake.SNAKE_SIZE); // 32 = 1920 / SNAKE_SIZE
-            int y = (rng.RandiRange(1, 17) * Snake.SNAKE_SIZE); // 18 = 1080 / SNAKE_SIZE
+			int y = (rng.RandiRange(1, 17) * Snake.SNAKE_SIZE); // 18 = 1080 / SNAKE_SIZE
 
 			// Offset by Apple Size
 			x += 15;
@@ -144,18 +195,41 @@ public partial class SnakeGame : Node2D
 			// Check if can Spawn
 			if (!snake.AreYouHere(newApplePosition))
 				break;
-        }
+		}
 
 		// Set Properties
 		apple.Name = name;
-        apple.Position = newApplePosition;
+		apple.Position = newApplePosition;
 
-        // Add to Tree
-        AddChild(apple);
-    }
+		// Add to Tree
+		AddChild(apple);
+	}
+
+	//For debugging (could stay?)
+	private string GetMutationName(int mutation)
+	{
+		switch (mutation)
+		{
+			case 0:
+				return "";
+			case 1:
+				return "double growth";
+            case 2:
+				return "anti growth";
+            case 3:
+				return "slow";
+            case 4:
+				return "double speed";
+            case 5:
+				return "inverse";
+            case 6:
+				return "apple";
+        }
+		return "";
+	}
 
 	private void SetScore()
-		=> scoreLabel.Text = $"{apples}";
+		=> scoreLabel.Text = $"{apples}" + " " + $"{GetMutationName(mutation)}";
 
     #endregion
 }

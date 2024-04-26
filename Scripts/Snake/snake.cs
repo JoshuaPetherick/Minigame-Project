@@ -1,4 +1,5 @@
 using Godot;
+using System.IO;
 using System.Linq;
 
 public partial class Snake : Node2D
@@ -6,7 +7,7 @@ public partial class Snake : Node2D
 	[Export]
 	private string name;
 	[Export]
-	private Timer timer;
+	public Timer timer;
 	[Export]
 	private PackedScene bodyPiece;
 	[Export]
@@ -14,8 +15,9 @@ public partial class Snake : Node2D
 
     public const int SNAKE_SIZE = 60;
     private const int _STARTING_BODY_COUNT = 3;
-	public double _SNAKE_SPEED_MINIMUM = 0.150;
+	public double SNAKE_SPEED_MINIMUM = 0.150;
 	private const double _SNAKE_SPEED_MODIFIER = 0.025;
+	public bool inverseControls = false;
 
 	public enum DIRECTION
 	{
@@ -43,6 +45,19 @@ public partial class Snake : Node2D
     public override void _Process(double delta)
 	{
 		// Get Player Inputs
+
+		if (inverseControls) 
+		{
+            if (Input.IsActionJustPressed("up") && _direction != DIRECTION.North)
+                _direction = DIRECTION.South;
+            else if (Input.IsActionJustPressed("down") && _direction != DIRECTION.South)
+                _direction = DIRECTION.North;
+            else if (Input.IsActionJustPressed("right") && _direction != DIRECTION.East)
+                _direction = DIRECTION.West;
+            else if (Input.IsActionJustPressed("left") && _direction != DIRECTION.West)
+                _direction = DIRECTION.East;
+        }
+
 		if (Input.IsActionJustPressed("up") && _direction != DIRECTION.South)
 			_direction = DIRECTION.North;
 		else if (Input.IsActionJustPressed("down") && _direction != DIRECTION.North)
@@ -76,7 +91,7 @@ public partial class Snake : Node2D
                 newPos = new Vector2(currentPos.X, currentPos.Y - SNAKE_SIZE);
                 break;
             case DIRECTION.South:
-                newPos = new Vector2(currentPos.X, currentPos.Y + SNAKE_SIZE);
+                newPos = new Vector2(currentPos.X, currentPos.Y + SNAKE_SIZE);;
                 break;
             case DIRECTION.East:
                 newPos = new Vector2(currentPos.X + SNAKE_SIZE, currentPos.Y);
@@ -92,11 +107,23 @@ public partial class Snake : Node2D
         // Loop 
         for (int i = (snakeBodyPieces.Length - 1); i > 0 ; i--)
 		{
-			// Check if the head
+            // Check if the 1st body piece
 			if (i == 1)
                 ((Node2D)snakeBodyPieces[i]).Position = currentPos;
             else
-				((Node2D)snakeBodyPieces[i]).Position = ((Node2D)snakeBodyPieces[(i - 1)]).Position;
+            {
+                ((Node2D)snakeBodyPieces[i]).Position = ((Node2D)snakeBodyPieces[(i - 1)]).Position;
+            }
+
+            //Change body rptation
+            if(_direction == DIRECTION.North || _direction == DIRECTION.South)
+            {
+                ((Node2D)snakeBodyPieces[i]).GlobalRotationDegrees = 90;
+            }
+            else
+            {
+                ((Node2D)snakeBodyPieces[i]).GlobalRotationDegrees = 0;
+            }		
         }
     }
 
@@ -134,7 +161,7 @@ public partial class Snake : Node2D
 		AddBodyPiece(position);
 
 		// Amend Timer
-		if (timer.WaitTime >= _SNAKE_SPEED_MINIMUM)
+		if (timer.WaitTime >= SNAKE_SPEED_MINIMUM)
 			timer.WaitTime -= _SNAKE_SPEED_MODIFIER;
     }
 
@@ -153,6 +180,33 @@ public partial class Snake : Node2D
 		// Add to Tree
 		snakeBody.AddChild(piece);
 	}
+
+    private void RemoveAllBodyPieces()
+    {
+        //Remove all but head
+        for(int i = 1; i < snakeBody.GetChildCount(); i++)
+        {
+            snakeBody.GetChild(i).QueueFree();
+        }
+    }
+
+    private void RemoveBodyPiece()
+    {
+        snakeBody.GetChild(snakeBody.GetChildCount() - 1).QueueFree();
+    }
+
+    private void Restart()
+    {
+        RemoveAllBodyPieces();
+        GetSnakeHead().Position = Vector2.Zero;
+        _direction = DIRECTION.East;
+
+        // Spawn Body Pieces
+        for (int i = 1; i <= _STARTING_BODY_COUNT; i++)
+        {
+            AddBodyPiece(new Vector2((-SNAKE_SIZE * i), 0));
+        }
+    }
 
 	public Area2D GetSnakeHead()
 		=> (Area2D)snakeBody.GetChildren()[0];

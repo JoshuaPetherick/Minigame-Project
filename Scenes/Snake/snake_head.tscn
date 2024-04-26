@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://co25qivtk2cu7"]
 
-[ext_resource type="Texture2D" uid="uid://dd5sgjmb3qxfr" path="res://Assets/Snake_Body.png" id="1_ikyup"]
+[ext_resource type="Texture2D" uid="uid://bkxbtt6228req" path="res://Assets/snakeHeadGreen.jpg" id="1_g5rsi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tas22"]
 size = Vector2(59, 59)
@@ -9,6 +9,7 @@ size = Vector2(59, 59)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_tas22")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
-texture = ExtResource("1_ikyup")
+texture = ExtResource("1_g5rsi")
