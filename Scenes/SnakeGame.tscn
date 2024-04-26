@@ -4,21 +4,16 @@
 [ext_resource type="Script" path="res://Scripts/Snake/SnakeGame.cs" id="1_xk2we"]
 [ext_resource type="PackedScene" uid="uid://bgugnvckv4jem" path="res://Scenes/Snake/apple.tscn" id="2_4ixxt"]
 [ext_resource type="Texture2D" uid="uid://b1pyg8tm7tear" path="res://Assets/apple_UI.png" id="3_1jsei"]
-[ext_resource type="Script" path="res://Assets/Plugin/Godot Plugin 1.2/OvaniPlayer.gd" id="5_8f0i6"]
-[ext_resource type="Resource" uid="uid://vr0eku5j4gwl" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run.tres" id="6_hr2wi"]
+[ext_resource type="PackedScene" uid="uid://bdhpb167ygbof" path="res://Scenes/game_over_screen.tscn" id="4_ct3ok"]
+[ext_resource type="PackedScene" uid="uid://drt1tubgunqjb" path="res://Scenes/Snake/wall.tscn" id="5_u7ecd"]
 
-[node name="Snake Game" type="Node2D" node_paths=PackedStringArray("scoreLabel", "snake", "ovaniPlayer")]
+[node name="Snake Game" type="Node2D" node_paths=PackedStringArray("scoreLabel", "snake", "dead")]
+process_mode = 3
 script = ExtResource("1_xk2we")
 appleScene = ExtResource("2_4ixxt")
 scoreLabel = NodePath("CanvasLayer/Control/HBoxContainer/Score")
 snake = NodePath("Snake")
-ovaniPlayer = NodePath("OvaniPlayer")
-
-[node name="OvaniPlayer" type="Node" parent="."]
-script = ExtResource("5_8f0i6")
-QueuedSongs = Array[Resource("res://Assets/Plugin/Godot Plugin 1.2/OvaniSong.gd")]([ExtResource("6_hr2wi")])
-Volume = -20.0
-LoopQueue = true
+dead = NodePath("CanvasLayer/GameOver")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -53,8 +48,27 @@ text = "X"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="GameOver" parent="CanvasLayer" node_paths=PackedStringArray("snakeGame") instance=ExtResource("4_ct3ok")]
+process_mode = 3
+visible = false
+snakeGame = NodePath("../..")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 
 [node name="Snake" parent="." instance=ExtResource("1_hia47")]
 position = Vector2(960, 540)
+
+[node name="Wall Left" parent="." instance=ExtResource("5_u7ecd")]
+position = Vector2(-2.5, 540)
+
+[node name="Wall Right" parent="." instance=ExtResource("5_u7ecd")]
+position = Vector2(1922.5, 540)
+
+[node name="Wall Top" parent="." instance=ExtResource("5_u7ecd")]
+position = Vector2(960, -2.5)
+rotation = 1.5708
+
+[node name="Wall Bottom" parent="." instance=ExtResource("5_u7ecd")]
+position = Vector2(960, 1082.5)
+rotation = 1.5708

@@ -3,14 +3,17 @@ using System;
 
 public partial class game_over_screen : Control
 {
+	[Export]
+	private Node2D snakeGame;
 	public void _on_quit_pressed()
 	{
-		GetTree().Quit();
-	}
+        GameManager.instance.LoadMainMenu();
+    }
 
 	public void _on_retry_pressed()
 	{
-        GetTree().ChangeSceneToFile("res://Scenes/SnakeGame.tscn");
+		Visible = false;
+		snakeGame.ProcessMode = ProcessModeEnum.Always;
     }
 	
 	
