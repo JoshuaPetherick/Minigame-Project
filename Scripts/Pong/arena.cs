@@ -16,19 +16,19 @@ public partial class arena : Node2D
     private const float _ROTATION_SPEED = 1.0f;
     private const float _FAST_ROTATION_SPEED = 45.0f;
 
-    private const float _MIN_BALL_SIZE = 5.0f;
+    private const float _MIN_BALL_SIZE = 6.0f;
     private const float _MAX_BALL_SIZE = 10.0f;
-    private const float _BALL_SHRINK_SPEED = 2.5f;
+    private const float _BALL_SHRINK_SPEED = 2f;
 
     private const float _MIN_PLAYER_SIZE = 50.0f;
     private const float _MAX_PLAYER_SIZE = 75.0f;
     private const float _PLAYER_SHRINK_SPEED = 12.5f;
 
-    private const float _MIN_WALL_POSITION = 230.0f;
+    private const float _MIN_WALL_POSITION = 305.0f;
     private const float _MAX_WALL_POSITION = 455.0f;
-    private const float _MIN_WALL_SIZE = 450.0f;
+    private const float _MIN_WALL_SIZE = 600.0f;
     private const float _MAX_WALL_SIZE = 900.0f;
-    private const float _WALL_SHRINK_SPEED = 125.0f;
+    private const float _WALL_SHRINK_SPEED = 150.0f;
 
     private enum Mutations
 	{
@@ -165,12 +165,8 @@ public partial class arena : Node2D
             _rightWalls.Position = new Vector2(_rightWalls.Position.X - positionChange, _rightWalls.Position.Y);
 
             // Move Players
-            _playerParentNode.GetChild<pong_player>(0).Position = new Vector2(_playerParentNode.GetChild<pong_player>(0).Position.X + positionChange, _playerParentNode.GetChild<pong_player>(0).Position.Y);
-
-            if (_playerParentNode.GetChild<pong_ai>(0) != null)
-                _playerParentNode.GetChild<pong_ai>(0).Position = new Vector2(_playerParentNode.GetChild<pong_ai>(0).Position.X - positionChange, _playerParentNode.GetChild<pong_ai>(0).Position.Y);
-            else
-                _playerParentNode.GetChild<pong_player>(1).Position = new Vector2(_playerParentNode.GetChild<pong_player>(1).Position.X - positionChange, _playerParentNode.GetChild<pong_player>(1).Position.Y);
+            _playerParentNode.GetChild<Node2D>(0).Position = new Vector2(_playerParentNode.GetChild<Node2D>(0).Position.X + positionChange, _playerParentNode.GetChild<Node2D>(0).Position.Y);
+            _playerParentNode.GetChild<Node2D>(1).Position = new Vector2(_playerParentNode.GetChild<Node2D>(1).Position.X - positionChange, _playerParentNode.GetChild<Node2D>(1).Position.Y);
 
             // Check
             if (_centerWalls.Scale.X <= _MIN_WALL_SIZE)
@@ -183,12 +179,8 @@ public partial class arena : Node2D
                 _rightWalls.Position = new Vector2(_MIN_WALL_POSITION, _rightWalls.Position.Y);
 
                 // Clamp Players Position
-                _playerParentNode.GetChild<pong_player>(0).Position = new Vector2(-_MIN_WALL_POSITION, _playerParentNode.GetChild<pong_player>(0).Position.Y);
-
-                if (_playerParentNode.GetChild<pong_ai>(0) != null)
-                    _playerParentNode.GetChild<pong_ai>(0).Position = new Vector2(_MIN_WALL_POSITION, _playerParentNode.GetChild<pong_ai>(0).Position.Y);
-                else
-                    _playerParentNode.GetChild<pong_player>(1).Position = new Vector2(_MIN_WALL_POSITION, _playerParentNode.GetChild<pong_player>(1).Position.Y);
+                _playerParentNode.GetChild<Node2D>(0).Position = new Vector2(-_MIN_WALL_POSITION, _playerParentNode.GetChild<Node2D>(0).Position.Y);
+                _playerParentNode.GetChild<Node2D>(1).Position = new Vector2(_MIN_WALL_POSITION, _playerParentNode.GetChild<Node2D>(1).Position.Y);
 
                 // Update Mutations
                 _isShrinkingArena = false;
@@ -309,20 +301,12 @@ public partial class arena : Node2D
         GetChild<ball>(0).Scale = new Vector2(_MAX_BALL_SIZE, _MAX_BALL_SIZE);
 
         // Reset Players
-        _playerParentNode.GetChild<pong_player>(0).Position = new Vector2(-_MAX_WALL_POSITION, _playerParentNode.GetChild<pong_player>(0).Position.Y);
-        _playerParentNode.GetChild<pong_player>(0).Scale = new Vector2(_playerParentNode.GetChild<pong_player>(0).Scale.X, _MAX_PLAYER_SIZE);
+        _playerParentNode.GetChild<Node2D>(0).Position = new Vector2(-_MAX_WALL_POSITION, _playerParentNode.GetChild<Node2D>(0).Position.Y);
+        _playerParentNode.GetChild<Node2D>(1).Position = new Vector2(_MAX_WALL_POSITION, _playerParentNode.GetChild<Node2D>(1).Position.Y);
 
-        if (_playerParentNode.GetChild<pong_ai>(0) != null)
-        {
-            _playerParentNode.GetChild<pong_ai>(0).Position = new Vector2(_MAX_WALL_POSITION, _playerParentNode.GetChild<pong_ai>(0).Position.Y);
-            _playerParentNode.GetChild<pong_ai>(0).Scale = new Vector2(_playerParentNode.GetChild<pong_ai>(0).Scale.X, _MAX_PLAYER_SIZE);
-        }
-        else
-        {    
-            _playerParentNode.GetChild<pong_player>(1).Position = new Vector2(_MAX_WALL_POSITION, _playerParentNode.GetChild<pong_player>(1).Position.Y);
-            _playerParentNode.GetChild<pong_player>(1).Scale = new Vector2(_playerParentNode.GetChild<pong_player>(1).Scale.X, _MAX_PLAYER_SIZE);
-        }
-
+        _playerParentNode.GetChild<Node2D>(0).Scale = new Vector2(_playerParentNode.GetChild<Node2D>(0).Scale.X, _MAX_PLAYER_SIZE);
+        _playerParentNode.GetChild<Node2D>(1).Scale = new Vector2(_playerParentNode.GetChild<Node2D>(1).Scale.X, _MAX_PLAYER_SIZE);
+        
         // Reset Properties
         _isRotating = false;
     }
