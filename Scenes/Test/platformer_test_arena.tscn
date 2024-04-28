@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8bfnnefr5lmj"]
+
+[ext_resource type="PackedScene" uid="uid://d2s8c7jnn4kc0" path="res://Scenes/Platformer/player.tscn" id="1_uan6v"]
+[ext_resource type="Texture2D" uid="uid://dd3d32kdu7ja" path="res://Assets/1x1 Light Green.png" id="2_lg64g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utjl2"]
+size = Vector2(1, 1)
+
+[node name="TestArena" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Arena" type="Node2D" parent="."]
+position = Vector2(960, 1040)
+
+[node name="Player" parent="Arena" instance=ExtResource("1_uan6v")]
+position = Vector2(0, -500)
+
+[node name="Floor" type="StaticBody2D" parent="Arena"]
+position = Vector2(0, -10)
+scale = Vector2(1250, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Floor"]
+shape = SubResource("RectangleShape2D_utjl2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Floor/CollisionShape2D"]
+texture = ExtResource("2_lg64g")
+
+[node name="Left Wall" type="StaticBody2D" parent="Arena"]
+position = Vector2(-625, -505)
+rotation = 1.5708
+scale = Vector2(1000, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Left Wall"]
+shape = SubResource("RectangleShape2D_utjl2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Left Wall/CollisionShape2D"]
+texture = ExtResource("2_lg64g")
+
+[node name="Right Wall" type="StaticBody2D" parent="Arena"]
+position = Vector2(630, -505)
+rotation = 1.5708
+scale = Vector2(1000, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Right Wall"]
+shape = SubResource("RectangleShape2D_utjl2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Right Wall/CollisionShape2D"]
+texture = ExtResource("2_lg64g")
+
+[node name="Ceiling" type="StaticBody2D" parent="Arena"]
+position = Vector2(0, -1000)
+scale = Vector2(1250, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Ceiling"]
+shape = SubResource("RectangleShape2D_utjl2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/Ceiling/CollisionShape2D"]
+texture = ExtResource("2_lg64g")
