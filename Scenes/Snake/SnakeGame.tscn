@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://Scripts/Snake/SnakeGame.cs" id="1_xk2we"]
 [ext_resource type="PackedScene" uid="uid://bgugnvckv4jem" path="res://Scenes/Snake/apple.tscn" id="2_4ixxt"]
 [ext_resource type="Texture2D" uid="uid://b1pyg8tm7tear" path="res://Assets/apple_UI.png" id="3_1jsei"]
-[ext_resource type="PackedScene" uid="uid://bdhpb167ygbof" path="res://Scenes/game_over_screen.tscn" id="4_ct3ok"]
-[ext_resource type="PackedScene" uid="uid://drt1tubgunqjb" path="res://Scenes/Snake/wall.tscn" id="5_u7ecd"]
+[ext_resource type="PackedScene" uid="uid://bdhpb167ygbof" path="res://Scenes/Menus/game_over_screen.tscn" id="4_ct3ok"]
+[ext_resource type="PackedScene" path="res://Scenes/Snake/wall.tscn" id="5_u7ecd"]
 
 [node name="Snake Game" type="Node2D" node_paths=PackedStringArray("scoreLabel", "snake", "dead")]
 process_mode = 3

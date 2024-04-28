@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using System.Diagnostics;
-
 
 public partial class SnakeGame : Node2D
 {
@@ -10,7 +7,7 @@ public partial class SnakeGame : Node2D
 	[Export]
 	private Label scoreLabel;
 	[Export]
-	private Snake snake;
+	private snake snake;
 	[Export]
 	private Control dead;
 
@@ -66,9 +63,6 @@ public partial class SnakeGame : Node2D
 
 				return;
 			}
-
-			//Other (apple)
-			Debug.WriteLine("apple");
 
 			// Add to Score
 			apples++;
@@ -148,7 +142,7 @@ public partial class SnakeGame : Node2D
 	private void ResetGame()
 	{
 		//Stop processes
-		ProcessMode = ProcessModeEnum.Disabled;
+		CallDeferred(Node2D.MethodName.SetProcessMode, (int)ProcessModeEnum.Disabled);
 
 		// Reset Values
 		apples = 0;
@@ -182,8 +176,8 @@ public partial class SnakeGame : Node2D
 		while (true)
 		{
 			// Get Position
-			int x = (rng.RandiRange(1, 31) * Snake.SNAKE_SIZE); // 32 = 1920 / SNAKE_SIZE
-			int y = (rng.RandiRange(1, 17) * Snake.SNAKE_SIZE); // 18 = 1080 / SNAKE_SIZE
+			int x = (rng.RandiRange(1, 31) * snake.SNAKE_SIZE); // 32 = 1920 / SNAKE_SIZE
+			int y = (rng.RandiRange(1, 17) * snake.SNAKE_SIZE); // 18 = 1080 / SNAKE_SIZE
 
 			// Offset by Apple Size
 			x += 15;

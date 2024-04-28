@@ -2,10 +2,8 @@ using Godot;
 using System.IO;
 using System.Linq;
 
-public partial class Snake : Node2D
+public partial class snake : Node2D
 {
-	[Export]
-	private string name;
 	[Export]
 	public Timer timer;
 	[Export]

@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdhpb167ygbof"]
+[gd_scene load_steps=4 format=3 uid="uid://bdhpb167ygbof"]
 
-[ext_resource type="Texture2D" uid="uid://ddhewy83f4bpg" path="res://Assets/red_canvas.jpg" id="1_cw6ew"]
-[ext_resource type="Script" path="res://Scripts/game_over_screen.cs" id="1_hxyxu"]
+[ext_resource type="Script" path="res://Scripts/Menus/game_over_screen.cs" id="1_hxyxu"]
 [ext_resource type="FontFile" uid="uid://b8s5ul3prpf4v" path="res://Assets/Fonts/SnakeBite.ttf" id="2_wpx2p"]
 [ext_resource type="FontFile" uid="uid://bfm7nqnf3cssx" path="res://Assets/Fonts/SnakeGameDemoRegular.ttf" id="3_cfthl"]
 
@@ -14,14 +13,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hxyxu")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_cw6ew")
+color = Color(0.745098, 0, 0, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
