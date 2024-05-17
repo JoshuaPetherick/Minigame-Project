@@ -1,10 +1,12 @@
 using Godot;
-using System;
 
 public partial class Player : CharacterBody2D
 {
-	public const float Speed = 300.0f;
-	public const float JumpVelocity = 400.0f;
+	public const float Speed = 125.0f;
+	public const float JumpVelocity = 300.0f;
+
+    [Export]
+    private AnimatedSprite2D _animatedSprite;
 
 	public enum Gravity
 	{
@@ -49,25 +51,25 @@ public partial class Player : CharacterBody2D
         {
             CurrentGravity = Gravity.East;
             UpDirection = new Vector2(1, 0);
-            RotationDegrees = 90;
+            //RotationDegrees = 90;
         }
         if (Input.IsActionJustPressed("up_player_2"))
         {
             CurrentGravity = Gravity.North;
             UpDirection = new Vector2(0, 1);
-            RotationDegrees = 180;
+            //RotationDegrees = 180;
         }
         if (Input.IsActionJustPressed("right_player_2"))
         {
             CurrentGravity = Gravity.West;
             UpDirection = new Vector2(-1, 0);
-            RotationDegrees = 270;
+            //RotationDegrees = 270;
         }
         if (Input.IsActionJustPressed("down_player_2"))
 		{
             CurrentGravity = Gravity.South;
             UpDirection = new Vector2(0, -1);
-            RotationDegrees = 0;
+            //RotationDegrees = 0;
         }
 
 		// Handle Gravity
@@ -130,8 +132,8 @@ public partial class Player : CharacterBody2D
 	private Vector2 HandleMovement(Vector2 velocity, float delta)
 	{
         // Checks
-        if (!IsOnFloor())
-            return velocity;
+        //if (!IsOnFloor())
+        //    return velocity;
 
         // Setup
         Vector2 result = velocity;
@@ -143,21 +145,21 @@ public partial class Player : CharacterBody2D
             case Gravity.North:
             case Gravity.South:
                 if (direction != Vector2.Zero)
+                {
                     result.X = direction.X * Speed;
+                    _animatedSprite.FlipH = direction.X < 0;
+                }
                 else
                     result.X = Mathf.MoveToward(Velocity.X, 0, Speed);
                 break;
 
             case Gravity.East:
-                if (direction != Vector2.Zero)
-                    result.Y = direction.X * Speed;
-                else
-                    result.Y = Mathf.MoveToward(Velocity.Y, 0, Speed);
-                break;
-
             case Gravity.West:
                 if (direction != Vector2.Zero)
-                    result.Y = -direction.X * Speed;
+                {
+                    result.Y = direction.Y * Speed;
+                    _animatedSprite.FlipH = direction.Y < 0;
+                }
                 else
                     result.Y = Mathf.MoveToward(Velocity.Y, 0, Speed);
                 break;
