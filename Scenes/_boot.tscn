@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bfy5jxgx641sj"]
+[gd_scene load_steps=16 format=3 uid="uid://bfy5jxgx641sj"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_y24we"]
 [ext_resource type="PackedScene" uid="uid://m8ntu0omkkon" path="res://Scenes/Menus/menu.tscn" id="2_i5bvy"]
@@ -11,7 +11,9 @@
 [ext_resource type="Resource" uid="uid://vr0eku5j4gwl" path="res://Assets/Music/Mixtape Vol. 1/Chiptune - The Run (RT 3.134)/Chiptune The Run.tres" id="5_mk5yc"]
 [ext_resource type="Resource" uid="uid://txgtjfiydg33" path="res://Assets/Music/Synthpop Music Pack/First Flight (RT 3.08)/Synthpop First Flight.tres" id="6_bp8a8"]
 [ext_resource type="Resource" uid="uid://cqdqt5w56rbki" path="res://Assets/Music/Synthpop Music Pack/Most Wanted (RT 3.03)/Synthpop Most Wanted.tres" id="8_1v13u"]
+[ext_resource type="Resource" uid="uid://bmwnriuh3ecvo" path="res://Assets/Music/Mixtape Vol. 1/Electronic - The Future Is Now (RT 1.3)/Electronic The Future Is Now.tres" id="9_pmb8f"]
 [ext_resource type="Script" path="res://Scripts/Managers/MultiplayerManager.cs" id="10_wrsij"]
+[ext_resource type="Resource" uid="uid://by1ex1qm0y6ei" path="res://Assets/Music/Synthpop Music Pack/Twinkle (RT 2.107)/Synthpop Twinkle.tres" id="12_mpjty"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_66g45"]
 properties/0/path = NodePath("Music/OvaniPlayer:Intensity")
@@ -35,8 +37,10 @@ script = ExtResource("4_kfdxe")
 _ovaniPlayer = NodePath("OvaniPlayer")
 _mainMenuSong = ExtResource("5_1vjob")
 _snakeSong = ExtResource("5_mk5yc")
+_breakoutSong = ExtResource("9_pmb8f")
 _pongSong = ExtResource("6_bp8a8")
 _tronSong = ExtResource("8_1v13u")
+_platformerSong = ExtResource("12_mpjty")
 
 [node name="OvaniPlayer" type="Node" parent="Music"]
 script = ExtResource("3_otlvw")
