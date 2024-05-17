@@ -156,6 +156,13 @@ public partial class SnakeGame : Node2D
 		//Turn off music (?)
 		MusicManager.instance.SetIntensity(0f);
 
+		//kill apples
+		for(int i = 0; i < GetChildCount(); i++)
+		{
+			if (GetChild(i) is Node2D && GetChild(i).Name.ToString().Contains("Apple"))
+				GetChild(i).QueueFree();
+		}
+
 		//Restart snake
 		snake.CallDeferred("Restart");
 
@@ -199,7 +206,7 @@ public partial class SnakeGame : Node2D
 		AddChild(apple);
 	}
 
-	//For debugging (could stay?)
+	//For debugging
 	private string GetMutationName(int mutation)
 	{
 		switch (mutation)
