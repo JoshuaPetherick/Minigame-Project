@@ -20,6 +20,8 @@ public partial class Player : CharacterBody2D
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
+    private float _targetRotation = 0.0f;
+
 	public override void _PhysicsProcess(double delta)
 	{
 		// Setup
@@ -31,11 +33,14 @@ public partial class Player : CharacterBody2D
         // Handle Jump.
 		velocity = HandleJumping(velocity);
 
-		// Get the input direction and handle the movement/deceleration.
-		velocity = HandleMovement(velocity, (float)delta);
+        // Get the input direction and handle the movement/deceleration.
+        velocity = HandleMovement(velocity, (float)delta);
 
-		// Apply Velocity Changes
-		Velocity = velocity;
+        // Handle Rotation
+        HandleRotation();
+
+        // Apply Velocity Changes
+        Velocity = velocity;
 		MoveAndSlide();
 	}
 
@@ -51,25 +56,25 @@ public partial class Player : CharacterBody2D
         {
             CurrentGravity = Gravity.East;
             UpDirection = new Vector2(1, 0);
-            //RotationDegrees = 90;
+            _targetRotation = 90.0f;
         }
         if (Input.IsActionJustPressed("up_player_2"))
         {
             CurrentGravity = Gravity.North;
             UpDirection = new Vector2(0, 1);
-            //RotationDegrees = 180;
+            _targetRotation = 180.0f;
         }
         if (Input.IsActionJustPressed("right_player_2"))
         {
             CurrentGravity = Gravity.West;
             UpDirection = new Vector2(-1, 0);
-            //RotationDegrees = 270;
+            _targetRotation = 270.0f;
         }
         if (Input.IsActionJustPressed("down_player_2"))
 		{
             CurrentGravity = Gravity.South;
             UpDirection = new Vector2(0, -1);
-            //RotationDegrees = 0;
+            _targetRotation = 0.0f;
         }
 
 		// Handle Gravity
@@ -147,7 +152,7 @@ public partial class Player : CharacterBody2D
                 if (direction != Vector2.Zero)
                 {
                     result.X = direction.X * Speed;
-                    _animatedSprite.FlipH = direction.X < 0;
+                    _animatedSprite.FlipH = CurrentGravity == Gravity.North ? direction.X > 0 : direction.X < 0;
                 }
                 else
                     result.X = Mathf.MoveToward(Velocity.X, 0, Speed);
@@ -158,7 +163,7 @@ public partial class Player : CharacterBody2D
                 if (direction != Vector2.Zero)
                 {
                     result.Y = direction.Y * Speed;
-                    _animatedSprite.FlipH = direction.Y < 0;
+                    _animatedSprite.FlipH = CurrentGravity == Gravity.West ? direction.Y > 0 : direction.Y < 0;
                 }
                 else
                     result.Y = Mathf.MoveToward(Velocity.Y, 0, Speed);
@@ -167,6 +172,20 @@ public partial class Player : CharacterBody2D
 
         // Result
         return result;
+    }
+
+    private void HandleRotation()
+    {
+        // Negative Handle
+        if (RotationDegrees < 0)
+            RotationDegrees += 360.0f;
+
+        // Check
+        if (RotationDegrees == _targetRotation)
+            return;
+
+        // Apply Rotation
+        RotationDegrees = Mathf.Abs(Mathf.MoveToward(RotationDegrees, _targetRotation, 7.5f));
     }
 
     #endregion

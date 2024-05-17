@@ -9,6 +9,8 @@ public partial class GameManager : Node
 	private PackedScene _pongGame;
     [Export]
     private PackedScene _snakeGame;
+    [Export]
+    private PackedScene _platformerGame;
 
     public static GameManager instance;
 	public enum Games
@@ -115,8 +117,7 @@ public partial class GameManager : Node
                 break;
 
             case Games.PLATFORMER:
-                // TODO
-                break;
+                return _platformerGame.Instantiate();
         }
 		return null;
 	}

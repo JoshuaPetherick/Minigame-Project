@@ -99,7 +99,6 @@ text = "Pong"
 
 [node name="Platformer" type="Button" parent="Screens/CenterContainer/SingleplayerScreen"]
 layout_mode = 2
-disabled = true
 text = "Platformer"
 
 [node name="Back" type="Button" parent="Screens/CenterContainer/SingleplayerScreen"]

@@ -42,9 +42,7 @@ public partial class SingleplayerScreen : VBoxContainer
         => GameManager.instance.LoadGame(GameManager.Games.PONG, GameManager.GameModes.SINGLEPLAYER);
 
     private void PlatformerButton_Pressed()
-    {
-        // TODO
-    }
+        => GameManager.instance.LoadGame(GameManager.Games.PLATFORMER, GameManager.GameModes.SINGLEPLAYER);
 
     private void BackButton_Pressed()
     {
