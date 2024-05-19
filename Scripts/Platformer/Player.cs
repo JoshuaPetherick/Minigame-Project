@@ -69,12 +69,14 @@ public partial class Player : CharacterBody2D
             CurrentGravity = Gravity.West;
             UpDirection = new Vector2(-1, 0);
             _targetRotation = 270.0f;
+            RotationDegrees = _targetRotation - RotationDegrees > 180 ? 360 : RotationDegrees;
         }
         if (Input.IsActionJustPressed("down_player_2"))
 		{
             CurrentGravity = Gravity.South;
             UpDirection = new Vector2(0, -1);
-            _targetRotation = 0.0f;
+            RotationDegrees = (RotationDegrees < 0 ? RotationDegrees + 360.0f : RotationDegrees);
+            _targetRotation = RotationDegrees > 180 ? 360.0f : 0.0f;
         }
 
 		// Handle Gravity
@@ -186,6 +188,13 @@ public partial class Player : CharacterBody2D
 
         // Apply Rotation
         RotationDegrees = Mathf.Abs(Mathf.MoveToward(RotationDegrees, _targetRotation, 7.5f));
+
+        // 360 Degree Check
+        if (RotationDegrees == 360.0f && _targetRotation == 360.0f)
+        {
+            RotationDegrees = 0;
+            _targetRotation = 0;
+        }
     }
 
     #endregion
