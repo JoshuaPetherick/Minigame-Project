@@ -1,16 +1,88 @@
-[gd_scene load_steps=4 format=3 uid="uid://885fifejgbbv"]
+[gd_scene load_steps=7 format=3 uid="uid://885fifejgbbv"]
 
 [ext_resource type="Script" path="res://Scripts/Platformer/LevelManager.cs" id="1_ac8r6"]
 [ext_resource type="PackedScene" uid="uid://c2wagof1ox3n4" path="res://Scenes/Platformer/level_one.tscn" id="2_m8wfv"]
 [ext_resource type="PackedScene" uid="uid://d2s8c7jnn4kc0" path="res://Scenes/Platformer/player.tscn" id="2_va46s"]
+[ext_resource type="Script" path="res://Scripts/Platformer/LevelUI.cs" id="4_eognl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bapfk"]
+bg_color = Color(0, 0, 0, 0.607843)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t15su"]
+bg_color = Color(0, 0, 0, 0.882353)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 25.0
+expand_margin_top = 25.0
+expand_margin_right = 25.0
+expand_margin_bottom = 25.0
 
 [node name="LevelManager" type="Node2D"]
 script = ExtResource("1_ac8r6")
-_levels = Array[PackedScene]([ExtResource("2_m8wfv")])
+_levels = Array[PackedScene]([ExtResource("2_m8wfv"), ExtResource("2_m8wfv")])
 
 [node name="Level" type="Node2D" parent="."]
+
+[node name="TileMap" parent="Level" instance=ExtResource("2_m8wfv")]
 
 [node name="Player" parent="." instance=ExtResource("2_va46s")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(4, 4)
+
+[node name="LevelUI" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="LevelUI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bapfk")
+
+[node name="CenterContainer" type="CenterContainer" parent="LevelUI/PanelContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="LevelUI/PanelContainer/CenterContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t15su")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Level Completed!"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("4_eognl")
+
+[node name="Next" type="Button" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Next Level"
+
+[node name="Replay" type="Button" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Replay Level"
+
+[node name="Exit" type="Button" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = " Return to Main Menu "
