@@ -38,14 +38,17 @@ public partial class LevelManager : Node2D
     #region Public Functions
 
     public void ShowUI()
-        => _levelUI.Visible = true;
-
-    public void LoadNextLevel()
-	{
+    {
         // Checks 
         if (_player.GlobalPosition == Vector2.Zero)
             return;
 
+        // Show UI
+        _levelUI.Visible = true;
+    }
+
+    public void LoadNextLevel()
+	{
         // Move to Next Level
         if (!OnFinalLevel)
             _level++;
@@ -56,10 +59,6 @@ public partial class LevelManager : Node2D
 
     public void ReplayLevel()
     {
-        // Checks 
-        if (_player.GlobalPosition == Vector2.Zero)
-            return;
-
         // Reload Level
         LoadLevel();
     }

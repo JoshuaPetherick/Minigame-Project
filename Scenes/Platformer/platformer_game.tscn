@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://885fifejgbbv"]
+[gd_scene load_steps=8 format=3 uid="uid://885fifejgbbv"]
 
 [ext_resource type="Script" path="res://Scripts/Platformer/LevelManager.cs" id="1_ac8r6"]
-[ext_resource type="PackedScene" uid="uid://c2wagof1ox3n4" path="res://Scenes/Platformer/level_one.tscn" id="2_m8wfv"]
+[ext_resource type="PackedScene" uid="uid://c2wagof1ox3n4" path="res://Scenes/Platformer/Levels/level_one.tscn" id="2_iygdd"]
 [ext_resource type="PackedScene" uid="uid://d2s8c7jnn4kc0" path="res://Scenes/Platformer/player.tscn" id="2_va46s"]
+[ext_resource type="PackedScene" uid="uid://c1akss6o2eq6g" path="res://Scenes/Platformer/Levels/level_two.tscn" id="3_3liut"]
 [ext_resource type="Script" path="res://Scripts/Platformer/LevelUI.cs" id="4_eognl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bapfk"]
@@ -26,11 +27,9 @@ expand_margin_bottom = 25.0
 
 [node name="LevelManager" type="Node2D"]
 script = ExtResource("1_ac8r6")
-_levels = Array[PackedScene]([ExtResource("2_m8wfv"), ExtResource("2_m8wfv")])
+_levels = Array[PackedScene]([ExtResource("2_iygdd"), ExtResource("3_3liut")])
 
 [node name="Level" type="Node2D" parent="."]
-
-[node name="TileMap" parent="Level" instance=ExtResource("2_m8wfv")]
 
 [node name="Player" parent="." instance=ExtResource("2_va46s")]
 

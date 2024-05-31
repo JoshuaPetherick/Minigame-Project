@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2wagof1ox3n4"]
+[gd_scene load_steps=6 format=3 uid="uid://c1akss6o2eq6g"]
 
-[ext_resource type="Texture2D" uid="uid://dgbyb5hrc4kby" path="res://Assets/sprites/world_tileset.png" id="2_a1oa8"]
-[ext_resource type="PackedScene" uid="uid://df6wf40l1h68n" path="res://Scenes/Platformer/signpost.tscn" id="3_6wp0w"]
+[ext_resource type="Texture2D" uid="uid://dgbyb5hrc4kby" path="res://Assets/sprites/world_tileset.png" id="1_nbyhd"]
+[ext_resource type="PackedScene" uid="uid://df6wf40l1h68n" path="res://Scenes/Platformer/signpost.tscn" id="2_1sf8u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7vrcc"]
-texture = ExtResource("2_a1oa8")
+texture = ExtResource("1_nbyhd")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -407,7 +407,7 @@ texture = ExtResource("2_a1oa8")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_louqc"]
 resource_name = "world_scenes"
-scenes/2/scene = ExtResource("3_6wp0w")
+scenes/2/scene = ExtResource("2_1sf8u")
 
 [sub_resource type="TileSet" id="TileSet_atddc"]
 physics_layer_0/collision_layer = 1
