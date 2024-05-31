@@ -44,9 +44,28 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
+    #region Public Functions
+
+    public void Reset()
+    {
+        // Reset Position
+        Position = Vector2.Zero;
+        Velocity = Vector2.Zero;
+
+        // Reset Rotation
+        RotationDegrees = 0;
+        _targetRotation = 0;
+
+        // Reset Game Properties
+        CurrentGravity = Gravity.South;
+        UpDirection = new Vector2(0, -1);
+    }
+
+    #endregion
+
     #region Functions
 
-	private Vector2 HandleGravity(Vector2 velocity, float delta)
+    private Vector2 HandleGravity(Vector2 velocity, float delta)
 	{
         // Setup
         Vector2 result = velocity;

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://df6wf40l1h68n"]
+
+[ext_resource type="Texture2D" uid="uid://dgbyb5hrc4kby" path="res://Assets/sprites/world_tileset.png" id="1_5hogp"]
+[ext_resource type="Script" path="res://Scripts/Platformer/Signpost.cs" id="1_pk1y3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_usm8s"]
+size = Vector2(14, 16)
+
+[node name="Signpost" type="Area2D"]
+script = ExtResource("1_pk1y3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_usm8s")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("1_5hogp")
+region_enabled = true
+region_rect = Rect2(128, 48, 16, 16)

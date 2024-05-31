@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://885fifejgbbv"]
+
+[ext_resource type="Script" path="res://Scripts/Platformer/LevelManager.cs" id="1_ac8r6"]
+[ext_resource type="PackedScene" uid="uid://c2wagof1ox3n4" path="res://Scenes/Platformer/level_one.tscn" id="2_m8wfv"]
+[ext_resource type="PackedScene" uid="uid://d2s8c7jnn4kc0" path="res://Scenes/Platformer/player.tscn" id="2_va46s"]
+
+[node name="LevelManager" type="Node2D"]
+script = ExtResource("1_ac8r6")
+_levels = Array[PackedScene]([ExtResource("2_m8wfv")])
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_va46s")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(4, 4)
