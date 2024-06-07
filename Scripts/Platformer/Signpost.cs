@@ -9,6 +9,6 @@ public partial class Signpost : Area2D
     private void Signpost_BodyEntered(Node2D body)
     {
         if (body is Player)
-            LevelManager.instance.ShowUI();
+            LevelManager.instance.LevelCompleted();
     }
 }

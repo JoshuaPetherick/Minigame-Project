@@ -19,9 +19,9 @@ public partial class LevelManager : Node2D
         get => GetNode<Player>("Player");
     }
 
-    private CanvasLayer _levelUI
+    private UI_Level _levelUI
     {
-        get => GetNode<CanvasLayer>("LevelUI");
+        get => GetNode<UI_Level>("UI_Level");
     }
 
     public bool OnFinalLevel
@@ -37,14 +37,28 @@ public partial class LevelManager : Node2D
 
     #region Public Functions
 
-    public void ShowUI()
+    public void LevelCompleted()
     {
         // Checks 
         if (_player.GlobalPosition == Vector2.Zero)
             return;
 
-        // Show UI
-        _levelUI.Visible = true;
+        // Show/Hide UI
+        _levelUI.UILevelCompleted.Visible = true;
+        _levelUI.UIPlayerDied.Visible = false;
+        _levelUI.ScreenShader.Visible = true;
+    }
+
+    public void PlayerDied()
+    {
+        // Checks 
+        if (_player.GlobalPosition == Vector2.Zero)
+            return;
+
+        // Show/Hide UI
+        _levelUI.UILevelCompleted.Visible = false;
+        _levelUI.UIPlayerDied.Visible = true;
+        _levelUI.ScreenShader.Visible = true;
     }
 
     public void LoadNextLevel()
@@ -55,12 +69,22 @@ public partial class LevelManager : Node2D
 
         // Load Level
         LoadLevel();
+
+        // Show/Hide UI
+        _levelUI.UILevelCompleted.Visible = false;
+        _levelUI.UIPlayerDied.Visible = false;
+        _levelUI.ScreenShader.Visible = false;
     }
 
     public void ReplayLevel()
     {
         // Reload Level
         LoadLevel();
+
+        // Show/Hide UI
+        _levelUI.UILevelCompleted.Visible = false;
+        _levelUI.UIPlayerDied.Visible = false;
+        _levelUI.ScreenShader.Visible = false;
     }
 
     #endregion
@@ -81,9 +105,6 @@ public partial class LevelManager : Node2D
 
         // Reset Player
         _player.Reset();
-
-        // Reset UI
-        _levelUI.Visible = false;
     }
 
     #endregion

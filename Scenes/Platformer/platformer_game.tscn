@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://885fifejgbbv"]
+[gd_scene load_steps=9 format=3 uid="uid://885fifejgbbv"]
 
 [ext_resource type="Script" path="res://Scripts/Platformer/LevelManager.cs" id="1_ac8r6"]
 [ext_resource type="PackedScene" uid="uid://c2wagof1ox3n4" path="res://Scenes/Platformer/Levels/level_one.tscn" id="2_iygdd"]
 [ext_resource type="PackedScene" uid="uid://d2s8c7jnn4kc0" path="res://Scenes/Platformer/player.tscn" id="2_va46s"]
 [ext_resource type="PackedScene" uid="uid://c1akss6o2eq6g" path="res://Scenes/Platformer/Levels/level_two.tscn" id="3_3liut"]
 [ext_resource type="Script" path="res://Scripts/Platformer/LevelUI.cs" id="4_eognl"]
+[ext_resource type="Script" path="res://Scripts/Platformer/UI_Level.cs" id="5_37p2a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bapfk"]
 bg_color = Color(0, 0, 0, 0.607843)
@@ -36,9 +37,10 @@ _levels = Array[PackedScene]([ExtResource("2_iygdd"), ExtResource("3_3liut")])
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(4, 4)
 
-[node name="LevelUI" type="CanvasLayer" parent="."]
+[node name="UI_Level" type="CanvasLayer" parent="."]
+script = ExtResource("5_37p2a")
 
-[node name="PanelContainer" type="PanelContainer" parent="LevelUI"]
+[node name="ScreenShader" type="PanelContainer" parent="UI_Level"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -46,27 +48,28 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bapfk")
 
-[node name="CenterContainer" type="CenterContainer" parent="LevelUI/PanelContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="UI_Level/ScreenShader"]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="LevelUI/PanelContainer/CenterContainer"]
+[node name="UI_LevelCompleted" type="PanelContainer" parent="UI_Level/ScreenShader/CenterContainer"]
+custom_minimum_size = Vector2(350, 200)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_t15su")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI_Level/ScreenShader/CenterContainer/UI_LevelCompleted"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="UI_Level/ScreenShader/CenterContainer/UI_LevelCompleted/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Level Completed!"
 horizontal_alignment = 1
 
-[node name="Control" type="Control" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="UI_Level/ScreenShader/CenterContainer/UI_LevelCompleted/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI_Level/ScreenShader/CenterContainer/UI_LevelCompleted/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -74,14 +77,54 @@ theme_override_constants/separation = 10
 alignment = 1
 script = ExtResource("4_eognl")
 
-[node name="Next" type="Button" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+[node name="Next" type="Button" parent="UI_Level/ScreenShader/CenterContainer/UI_LevelCompleted/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Next Level"
 
-[node name="Replay" type="Button" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+[node name="Replay" type="Button" parent="UI_Level/ScreenShader/CenterContainer/UI_LevelCompleted/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Replay Level"
 
-[node name="Exit" type="Button" parent="LevelUI/PanelContainer/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer"]
+[node name="Exit" type="Button" parent="UI_Level/ScreenShader/CenterContainer/UI_LevelCompleted/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = " Return to Main Menu "
+
+[node name="UI_PlayerDied" type="PanelContainer" parent="UI_Level/ScreenShader/CenterContainer"]
+custom_minimum_size = Vector2(350, 200)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t15su")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI_Level/ScreenShader/CenterContainer/UI_PlayerDied"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI_Level/ScreenShader/CenterContainer/UI_PlayerDied/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "You Died!"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="UI_Level/ScreenShader/CenterContainer/UI_PlayerDied/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI_Level/ScreenShader/CenterContainer/UI_PlayerDied/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("4_eognl")
+
+[node name="Next" type="Button" parent="UI_Level/ScreenShader/CenterContainer/UI_PlayerDied/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Next Level"
+
+[node name="Replay" type="Button" parent="UI_Level/ScreenShader/CenterContainer/UI_PlayerDied/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Replay Level"
+
+[node name="Exit" type="Button" parent="UI_Level/ScreenShader/CenterContainer/UI_PlayerDied/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = " Return to Main Menu "

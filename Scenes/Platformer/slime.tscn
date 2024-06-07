@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3 uid="uid://dxkcehasknjup"]
+
+[ext_resource type="Script" path="res://Scripts/Platformer/Slime.cs" id="1_0e48o"]
+[ext_resource type="Texture2D" uid="uid://gtvne17rgp28" path="res://Assets/sprites/slime_green.png" id="1_rvb6l"]
+[ext_resource type="Script" path="res://Scripts/Platformer/KillBox.cs" id="3_2ng8p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5oxps"]
+atlas = ExtResource("1_rvb6l")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_se15i"]
+atlas = ExtResource("1_rvb6l")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynrm4"]
+atlas = ExtResource("1_rvb6l")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ba7s"]
+atlas = ExtResource("1_rvb6l")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqhsv"]
+atlas = ExtResource("1_rvb6l")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcak7"]
+atlas = ExtResource("1_rvb6l")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c2jvq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5oxps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_se15i")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynrm4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ba7s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqhsv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcak7")
+}],
+"loop": true,
+"name": &"move",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w4ry6"]
+size = Vector2(12, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lojeb"]
+size = Vector2(14, 12)
+
+[node name="Slime" type="CharacterBody2D"]
+script = ExtResource("1_0e48o")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_c2jvq")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.105575
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_w4ry6")
+
+[node name="KillBox" type="Area2D" parent="."]
+script = ExtResource("3_2ng8p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillBox"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_lojeb")

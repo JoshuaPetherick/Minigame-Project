@@ -1,13 +1,19 @@
 using Godot;
-using System;
 
 public partial class Player : CharacterBody2D
 {
 	public const float Speed = 125.0f;
 	public const float JumpVelocity = 300.0f;
 
-    [Export]
-    private AnimatedSprite2D _animatedSprite;
+    private AnimatedSprite2D _animatedSprite
+    {
+        get => GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+    }
+
+    private Timer _deathTimer
+    {
+        get => GetNode<Timer>("DeathTimer");
+    }
 
 	public enum Gravity
 	{
@@ -21,12 +27,50 @@ public partial class Player : CharacterBody2D
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
+    private bool _isDead = false;
     private float _targetRotation = 0.0f;
 
-	public override void _PhysicsProcess(double delta)
+    public override void _Ready()
+    {
+        _deathTimer.Timeout += DeathTimer_Timeout;
+    }
+
+    public override void _PhysicsProcess(double delta)
 	{
-		// Setup
-		Vector2 velocity = Velocity;
+        // Setup
+        Vector2 velocity = Velocity;
+
+        // Check
+        if (_isDead)
+        {
+            // Handle Gravity
+            if (!IsOnFloor())
+            {
+                // Set Velocity
+                switch (CurrentGravity)
+                {
+                    case Gravity.North:
+                        velocity.Y -= gravity * (float)delta;
+                        break;
+                    case Gravity.East:
+                        velocity.X -= gravity * (float)delta;
+                        break;
+                    case Gravity.West:
+                        velocity.X += gravity * (float)delta;
+                        break;
+                    case Gravity.South:
+                        velocity.Y += gravity * (float)delta;
+                        break;
+                }
+
+                // Apply
+                Velocity = velocity;
+                MoveAndSlide();
+            }
+
+            // Escape
+            return;
+        }
 
         // Add the gravity.
         velocity = HandleGravity(velocity, (float)delta);
@@ -48,30 +92,35 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
-    private void HandleAnimation(Vector2 velocity)
-    {
-        // Setup
-        string newAnimation = "idle";
+    #region Events
 
-        // Jumping/Falling
-        if (!IsOnFloor())
-            newAnimation = "jump";
+    private void DeathTimer_Timeout()
+        => LevelManager.instance.PlayerDied();
 
-        // Running
-        else if (velocity != Vector2.Zero)
-            newAnimation = "run";
-
-        // Assign Animation
-        if (_animatedSprite.Animation != newAnimation)
-            _animatedSprite.Animation = newAnimation;
-    }
+    #endregion
 
     #region Public Functions
+
+    public void Kill()
+    {
+        // Check
+        if (Position == Vector2.Zero)
+            return;
+
+        // Set Status
+        _isDead = true;
+
+        // Play Death Animation
+        HandleAnimation(Vector2.Zero);
+
+        // Start Death Timer
+        _deathTimer.Start();
+    }
 
     public void Reset()
     {
         // Reset Animation
-        _animatedSprite.Animation = "idle";
+        _animatedSprite.Play("idle");
 
         // Reset Position
         Position = Vector2.Zero;
@@ -80,6 +129,9 @@ public partial class Player : CharacterBody2D
         // Reset Rotation
         RotationDegrees = 0;
         _targetRotation = 0;
+
+        // Reset Status
+        _isDead = false;
 
         // Reset Game Properties
         CurrentGravity = Gravity.South;
@@ -182,10 +234,6 @@ public partial class Player : CharacterBody2D
 
 	private Vector2 HandleMovement(Vector2 velocity, float delta)
 	{
-        // Checks
-        //if (!IsOnFloor())
-        //    return velocity;
-
         // Setup
         Vector2 result = velocity;
         Vector2 direction = Input.GetVector("left_player_1", "right_player_1", "up_player_1", "down_player_1");
@@ -239,6 +287,29 @@ public partial class Player : CharacterBody2D
             RotationDegrees = 0;
             _targetRotation = 0;
         }
+    }
+
+    private void HandleAnimation(Vector2 velocity)
+    {
+        // Setup
+        string newAnimation = "idle";
+
+        // Running
+        if (velocity != Vector2.Zero)
+            newAnimation = "run";
+
+        // Jumping/Falling
+        if (!IsOnFloor())
+            newAnimation = "jump";
+
+        // Dead
+        if (_isDead)
+            newAnimation = "death";
+
+        // Assign Animation
+        if (_animatedSprite.Animation != newAnimation)
+            _animatedSprite.Play(newAnimation);
+        
     }
 
     #endregion
