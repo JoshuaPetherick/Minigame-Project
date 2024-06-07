@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class Player : CharacterBody2D
 {
@@ -39,15 +40,39 @@ public partial class Player : CharacterBody2D
         // Handle Rotation
         HandleRotation();
 
+        // Handle Animation
+        HandleAnimation(velocity);
+
         // Apply Velocity Changes
         Velocity = velocity;
 		MoveAndSlide();
 	}
 
+    private void HandleAnimation(Vector2 velocity)
+    {
+        // Setup
+        string newAnimation = "idle";
+
+        // Jumping/Falling
+        if (!IsOnFloor())
+            newAnimation = "jump";
+
+        // Running
+        else if (velocity != Vector2.Zero)
+            newAnimation = "run";
+
+        // Assign Animation
+        if (_animatedSprite.Animation != newAnimation)
+            _animatedSprite.Animation = newAnimation;
+    }
+
     #region Public Functions
 
     public void Reset()
     {
+        // Reset Animation
+        _animatedSprite.Animation = "idle";
+
         // Reset Position
         Position = Vector2.Zero;
         Velocity = Vector2.Zero;
