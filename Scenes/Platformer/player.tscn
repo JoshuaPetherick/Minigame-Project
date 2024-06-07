@@ -124,7 +124,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"death",
-"speed": 4.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -212,6 +212,7 @@ animations = [{
 radius = 5.0
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_oloxe")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -219,6 +220,8 @@ position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_ftcrk")
 animation = &"death"
 autoplay = "idle"
+frame = 3
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
